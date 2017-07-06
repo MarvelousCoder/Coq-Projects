@@ -1248,9 +1248,7 @@ Inductive baz : Type :=
 (** How _many_ elements does the type [baz] have?  (Answer in English
     or the natural language of your choice.)
 
-There are two ways to construct a baz: by applying the constructor Baz1 to a baz
-to construct a baz or applying the constructor Baz2 to a baz and a bool to
-construct a baz. So, baz have two elements.
+0 elements because there is no way to construct a element of the type baz.
 *)
 (** [] *)
 
