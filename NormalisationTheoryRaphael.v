@@ -51,22 +51,22 @@ Proof.
   split.
   - unfold Sub.
     intros a b H.
-    inversion H.
-    inversion H0.
-    apply (compose b1).
-    + exact H4.
-    + apply (compose b0).
-      * exact H5.
-      * exact H1.
+    inversion H as [a' b' d Hc Hr3 Heq Heq']; subst.
+    inversion Hc as [a'' b' d Hr1 Hr2 Heq Heq']; subst.
+    apply (compose a'').
+    + exact Hr1.
+    + apply (compose a').
+      * exact Hr2.
+      * exact Hr3.
   - unfold Sub.
     intros a b H.
-    inversion H.
-    inversion H1.
+    inversion H; subst.
+    inversion H1; subst.
     apply (compose b1).
     + apply (compose b0).
-      * exact H0.
-      * exact H4.
-    + exact H5.
+      * assumption.
+      * assumption.
+    + assumption.
 Qed.
 
 (* Composition is monotonous *)
@@ -76,12 +76,12 @@ Proof.
   unfold Sub.
   intros H H0.
   intros a b H'.
-  inversion H'.
+  inversion H'; subst.
   apply (compose b0).
   + apply H in H1.
-    exact H1.
+    assumption.
   + apply H0 in H2.
-    exact H2.
+    assumption.
 Qed.
 
 (* Transitive closure of a reduction relation *)
