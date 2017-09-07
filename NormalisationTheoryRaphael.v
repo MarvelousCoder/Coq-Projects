@@ -170,51 +170,84 @@ Lemma SimulBoth {A B} (redA1 redA2: Red A) (redB: Red B) (R: Rel A B):
   -> StrongSimul redA2 redB R
   -> StrongSimul (redA1 # redA2) redB R.
 Proof.
-  (* unfold StrongSimul.
+  unfold StrongSimul.
   intros H1 H2.
   unfold Sub.
   intros a b H3.
-  inversion H3.
-  inversion H0.
-  unfold Sub in H1. *)
-  rewrite /StrongSimul.
-  move => H1 H2.
-  rewrite/Sub => a b H3.
-  inversion H3; clear H3.
-  clear H4 H5 a0 c.
-  inversion H0; clear H0.
-  clear H5 H6 a0 c.
-  rewrite /Sub in H1.
-  have: ((inverse R # redA1) a b1).
-  apply: (compose b0) =>//.
-  move => H5; move: (H1 a b1 H5); clear H1 => H1.
-  inversion H1; clear H1.
-  clear H7 H8 H5 a0 c.
-  have: ((inverse R # redA2) b2 b).
-  apply: (compose b1) =>//.
-  move => H5; move: (H2 _ _ H5); clear H2 => H2.
-  inversion H2; clear H2.
-  clear H9 H8 H5 a0 c.
-  apply: (compose b3) =>//.
-  apply: (tailtransit b2) => //.
+  inversion H3;subst.
+  inversion H0;subst.
+  unfold Sub in H1.
+  assert(H': (inverse R # redA1) a b1).
+  { apply (compose b0).
+    - assumption.
+    - assumption.
+  }
+  apply H1 in H'.
+  inversion H'; subst.
+  assert(H'': (inverse R # redA2) b2 b).
+  { apply (compose b1).
+    - assumption.
+    - assumption.
+  }
+  apply H2 in H''.
+  inversion H''; subst.
+  apply (compose b3).
+  - apply (tailtransit b2).
+    + assumption.
+    + assumption.
+  - assumption.
 Qed.
 
 (* If redA is strongly simulated, so is its transitive closure *)
 Lemma SimulTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : StrongSimul redA redB R -> StrongSimul (trans redA) redB R.
 Proof.
-  rewrite /StrongSimul.
-  move => H.
-  rewrite/Sub => b a H0.
-  inversion H0.
+  unfold StrongSimul.
+  intros H.
+  intros b a H0.
+  inversion H0; subst.
+  induction H2.
+  - apply H.
+    apply (compose a).
+    + assumption.
+    + assumption.
+  - assert(H': (inverse R # redA) b b0).
+    { apply (compose a).
+      - assumption.
+      - assumption.
+    }
+    assert(H'': trans redA a c).
+    { apply singl in H2.
+      apply (tailtransit b0).
+      - assumption.
+      - assumption.
+    }
+    apply H in H'.
+    inversion H'; subst.
+    apply H.
+    apply (compose a).
+    + assumption.
+    + apply (compose b0).
+      
+    inversion H0.
+    + assumption.
+    + apply inverseof.
+      
+    inversion H'; subst.
+    
+    Abort.
+    
+   
+      
+  (* inversion H0.
   clear H3 H4 a0 c H0.
   move : b H1.
   induction H2.
   move => b0 H1.
   rewrite /Sub in H.
   have : ((inverse R # redA) b0 b).
-  apply: (compose a) => //.
-  move => H5.
+  apply: (compose a) => //. *)
+ (*  move => H5.
   move: (H _ _ H5) =>//.
   move => b0 H1.
   have:((inverse R # redA) b0 b).
@@ -228,8 +261,7 @@ Proof.
   inversion H3.
   clear H6 H7 a0 c0.
   apply: (compose b2) => //.
-  apply: (tailtransit b1) => //.
-Qed.
+  apply: (tailtransit b1) => //. *)
 
 (* Reflexive and transitive closure of a relation *)
 Inductive refltrans {A} (red: Red A) : Red A :=
@@ -241,20 +273,25 @@ Inductive refltrans {A} (red: Red A) : Red A :=
 relation with its reflexive-transitive closure *)
 Lemma trans2refltrans {A} {red: Red A}: trans red -- red # (refltrans red).
 Proof.
-  rewrite /Equiv/Sub.
-  split => a b H.
-  inversion H.
-  apply:(compose b) => //.
-  apply reflex.
-  apply:(compose b0) => //.
-  apply atleast1 =>//.
-  inversion H.
-  inversion H1.
-  apply:(singl).
-  rewrite H5 in H0 => //.
-  apply:(transit b0) =>//.
+  unfold Equiv.
+  unfold Sub.
+  split.
+  - intros a b H.
+    inversion H; subst.
+    + apply (compose b).
+      * assumption.
+      * apply reflex.
+    + apply (compose b0).
+      * assumption.
+      * apply atleast1; assumption.
+  - intros a b H.
+    inversion H; subst.
+    inversion H1; subst.
+    + apply singl in H0; assumption.
+    + apply (transit b0).
+      * assumption.
+      * assumption.
 Qed.
-
 
 (*******************************)
 (* Strong Normalisation theory *)
