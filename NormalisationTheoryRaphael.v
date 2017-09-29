@@ -203,6 +203,7 @@ Lemma SimulTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : StrongSimul redA redB R -> StrongSimul (trans redA) redB R.
 Proof.
   unfold StrongSimul.
+  unfold Sub.
   intros H.
   intros b a H0.
   inversion H0; subst.
@@ -211,34 +212,22 @@ Proof.
     apply (compose a).
     + assumption.
     + assumption.
-  - assert(H': (inverse R # redA) b b0).
+  - apply H. assert(H': (inverse R # redA) b b0).
     { apply (compose a).
       - assumption.
       - assumption.
     }
+    apply H in H'.
+    inversion H'; subst.
     assert(H'': trans redA a c).
     { apply singl in H2.
       apply (tailtransit b0).
       - assumption.
       - assumption.
     }
-    apply H in H'.
-    inversion H'; subst.
-    apply H.
-    apply (compose a).
-    + assumption.
-    + apply (compose b0).
-      
-    inversion H0.
-    + assumption.
-    + apply inverseof.
-      
-    inversion H'; subst.
     
     Abort.
     
-   
-      
   (* inversion H0.
   clear H3 H4 a0 c H0.
   move : b H1.
@@ -307,24 +296,36 @@ Definition SN {A:Type} (red:Red A) (a:A): Prop
 (* If all 1-step reducts of a are SN, so is a *)
 Lemma toSN {A}{red:Red A} {x}: (forall y, red x y -> SN red y) -> SN red x.
 Proof.
-  rewrite/SN => H P H1.
-  move:(H1); rewrite/patriarchal.
-  apply => y H2.
-  apply H => //.
+  unfold SN.
+  intros H P H1.
+  unfold patriarchal in *.
+  apply H1.
+  intros y H2.
+  apply H.
+  - assumption.
+  - assumption.
 Qed.
 
 (* Being SN is a patriarchal predicate *)
 Lemma SNpatriarchal {A} {red: Red A}: patriarchal red (SN red). 
 Proof.
-  rewrite /patriarchal => M H.
-  rewrite/SN => P H1; apply: (H1); intros.
-  move: (H y H0).
-  apply => //.
+  unfold patriarchal.
+  intros M H.
+  unfold SN in *.
+  intros P H1.
+  unfold patriarchal in H1.
+  apply H1.
+  intros y H0.
+  apply H.
+  + assumption.
+  + unfold patriarchal.
+    assumption.
 Qed.
 
 (* If M is SN, so are its 1-step reducts *)
 Lemma SNstable {A} {red: Red A}: forall M, SN red M -> forall N, red M N -> SN red N.
 Proof.
+  intros.  
   have : (patriarchal red (fun a => forall b, red a b -> SN red b)).
   move => P /= H.
   move : (@SNpatriarchal A red) => H1.
