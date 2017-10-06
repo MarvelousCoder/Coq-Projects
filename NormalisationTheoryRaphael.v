@@ -325,16 +325,35 @@ Qed.
 (* If M is SN, so are its 1-step reducts *)
 Lemma SNstable {A} {red: Red A}: forall M, SN red M -> forall N, red M N -> SN red N.
 Proof.
-  intros.  
-  have : (patriarchal red (fun a => forall b, red a b -> SN red b)).
-  move => P /= H.
-  move : (@SNpatriarchal A red) => H1.
-  rewrite /patriarchal in H1 => R HR.
-  apply: H1.
-  apply: H => //.
-  intros.            
-  by apply (H _ x).
-Qed.
+  assert (H: patriarchal red ((fun a => forall b, red a b -> SN red b))).
+  { unfold patriarchal.
+    unfold SN.
+    intros.
+    unfold patriarchal in *.
+    apply H1.
+    intros.
+    apply H with (y := b).
+    - assumption.
+    - assumption.
+    - apply H1.
+  }
+
+
+  
+  intros P H1.
+  apply H in H1.
+  - apply H1.
+  - Admitted.
+(* Como fazer o casamento com fun? *)
+                              
+(*   move => P /= H. *)
+(*   move : (@SNpatriarchal A red) => H1. *)
+(*   rewrite /patriarchal in H1 => R HR. *)
+(*   apply: H1. *)
+(*   apply: H => //. *)
+(*   intros.             *)
+(*   by apply (H _ x). *)
+
 
 (* Induction principle:
 Let P be a predicate such that, for all SN elements a, if the 1-step
@@ -345,35 +364,52 @@ Theorem SNind {A} {red: Red A} {P: A -> Prop}
 : (forall a, (forall b, red a b -> P b) -> SN red a -> P a)
   -> (forall a, SN red a -> P a).
 Proof.
-  move => H3.
-  have: (patriarchal red (fun a => SN red a -> P a)).
-  rewrite /patriarchal => N H H0.
-  apply: H3 =>//.
-  move => R H2.
-  apply: H => //.
-  apply (SNstable N) => //.
-  move => H0 M H1.
-  apply: (H1 (fun a : A => SN red a -> P a)) => //.
-Qed.
+  intros.
+  assert (H': patriarchal red (fun a => SN red a -> P a)).
+  { unfold patriarchal.
+    intros.
+    apply H.
+    - intros.
+      apply H1.
+      + assumption.      
+      + apply (SNstable x).
+        * assumption.
+        * assumption.
+    - assumption.
+  }
+Admitted.
+
+(*  move => H3. *)
+(*   have: (patriarchal red (fun a => SN red a -> P a)). *)
+(*   rewrite /patriarchal => N H H0. *)
+(*   apply: H3 =>//. *)
+(*   move => R H2. *)
+(*   apply: H => //. *)
+(*   apply (SNstable N) => //. *)
+(*   move => H0 M H1. *)
+(*   apply: (H1 (fun a : A => SN red a -> P a)) => //. *)
+(* Qed. *)
 
 (* Being patriarchal for red1 is monotonic in red1 *)
 Lemma Patriarchalmonotonic {A} {red1 red2: Red A}: 
   red1 <# red2 -> forall P, patriarchal red1 P -> patriarchal red2 P.
 Proof.
-  rewrite /Sub/patriarchal => H0 P H1 a H2.
-  apply: H1.
-  move => y H1.
-  apply: H2.
-  apply H0 =>//.
+  unfold Sub; unfold patriarchal.
+  intros H0 P H1 a H2.
+  apply H1.
+  intros y H3.
+  apply H2.
+  apply H0.
+  apply H3.
 Qed.
 
 (* Being SN for red1 is anti-monotonic in red1 *)
 Lemma SNmonotonic {A} {red1 red2: Red A}: red1 <# red2 -> forall a, SN red2 a -> SN red1 a.
 Proof.
-  rewrite/SN.
-  move => H0 a H1 P H2.
-  apply: H1.
-  apply: (Patriarchalmonotonic H0 P H2).
+  unfold SN.
+  intros H0 a H1 P H2.
+  apply H1.
+  apply (Patriarchalmonotonic H0 P H2).
 Qed.
 
 (* Being SN for a relation is the same thing as being SN for its transitive closure *)
