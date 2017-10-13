@@ -147,12 +147,7 @@ Proof.
         ** contradiction.
         ** reflexivity.
 Qed.
-               
-Lemma bubble_preserva_ordem : forall l, 
-    ordenada l -> ordenada (bubble l).
-Proof.
-Admitted.
-
+   
 Lemma ordenada_sub: forall l n, ordenada (n :: l) -> ordenada l.
 Proof.
   destruct l.
@@ -171,17 +166,74 @@ Proof.
   apply leb_correct in Hle.
   rewrite Hle.
   reflexivity.
+Qed. 
+
+Lemma leb_nat: forall a n,
+    (a <=? n) = true -> (n <=? a) = false.
+Proof.
+Admitted.
+
+Lemma bubble_preserva_ordem: forall l n, 
+    ordenada l -> ordenada (bubble (n :: l)).
+Proof.
+  induction l.
+  - intros.
+    rewrite bubble_equation; constructor.
+  - intros.
+    rewrite bubble_equation.
+    destruct (leb a n) eqn: Heq.
+    apply leb_nat in Heq.
+    rewrite Heq.
+    + generalize dependent l; destruct l.
+      * intros.
+        rewrite bubble_equation.
+        constructor.
+        ** constructor.
+        ** apply Nat.leb_gt in Heq.
+           apply Nat.lt_le_incl in Heq.
+           assumption.
+      * intros.
+        rewrite bubble_equation.
+        destruct (leb n n0) eqn: Hnn0.
+        ** constructor.
+           *** rewrite <- bubble_leq.
+               **** apply IHl.
+                    apply ordenada_sub in H; assumption.
+               **** apply leb_complete; assumption.
+           *** apply Nat.leb_gt in Heq.
+               apply Nat.lt_le_incl in Heq.
+               assumption.
+        ** constructor.
+           *** apply ordenada_sub in H.
+               apply IHl with (n := n) in H.
+               rewrite bubble_equation in H.
+               rewrite Hnn0 in H.
+               assumption.
+           *** inversion H; subst.
+               assumption.
+    + apply Nat.leb_gt in Heq.
+      apply Nat.lt_le_incl in Heq.          
+      apply leb_correct in Heq.
+      rewrite Heq.
+      generalize dependent l; destruct l.
+      * intros.
+        rewrite bubble_equation.
+        constructor.
+        ** assumption.
+        ** apply leb_complete; assumption.
+      * intros.
+        rewrite bubble_equation.
+        inversion H; subst.
+        apply leb_correct in H4.
+        rewrite H4.
+        constructor.
+        ** apply IHl with (n := a) in H2.
+           rewrite bubble_equation in H2.
+           rewrite H4 in H2.
+           assumption.
+        ** apply leb_complete; assumption.
 Qed.
 
-Lemma bubble_leq_2: forall n2 a n1 l,
-    n2 <= a /\ a <= n1 -> bubble (n2 :: a :: n1 :: l) = a :: bubble (n2 :: n1 :: l).
-Proof.
-Admitted.
-
-Lemma le_gt: forall a b c,
-    a <= b /\ b <= c -> a < c.
-Proof.
-Admitted.
 
 Lemma bubble_ord: forall l b a,
     a <= b /\ ordenada (bubble(b :: l)) -> ordenada (bubble (a :: b :: l)).
@@ -204,126 +256,157 @@ Proof.
 
   (* Segundo caminho: *)
   
-  intros l b.
-  functional induction (bubble (b :: l)).
-  - intros.
-    rewrite bubble_equation.
-    constructor.
-  - intros.
-    rewrite bubble_equation.
-    destruct (leb a n) eqn: Heq.
-    + rewrite bubble_equation.
-      constructor.
-      * constructor.
-      * apply leb_complete; assumption.
-    + rewrite bubble_equation.
-      constructor.
-      * constructor.
-      * apply Nat.leb_gt in Heq.
-        apply Nat.lt_le_incl in Heq.
-        assumption.
-  - intros.
-    rewrite bubble_equation.
-    destruct (leb a n1) eqn: Heq.
-    + destruct H.
-      rewrite bubble_equation.
-      rewrite e0.
-      constructor.
-      * assumption.
-      * apply leb_complete; assumption.
-    + destruct H.
-      rewrite bubble_equation.
-      destruct (leb a n2) eqn: Han2.
-      * constructor.
-        ** rewrite <- bubble_leq.
-           *** apply IHl1.
-               split.
-               **** assumption.
-               **** apply ordenada_sub in H0.
-                    assumption.
-           *** apply leb_complete; assumption.
-        **  apply Nat.leb_gt in Heq.
-            apply Nat.lt_le_incl in Heq.
-            assumption.
-      * constructor.
-        ** apply ordenada_sub in H0.
-           assert(H': a <= b /\ ordenada (bubble (n2 :: l'))).
-           { split.
-             - assumption.
-             - assumption.
-           }
-           apply IHl1 in H'.
-           rewrite bubble_equation in H'.
-           rewrite Han2 in H'.
-           assumption.
-        ** apply leb_complete; assumption.
-  - intros.
-    destruct H.
-    rewrite bubble_equation.
-    destruct (leb a n1) eqn: Heq.
-    + rewrite bubble_equation.
-      rewrite e0.
-      destruct (leb a n2) eqn: Han2.
-      * constructor.
-        ** assumption.
-        ** apply leb_complete; assumption.
-      * rewrite <- bubble_leq.
-        ** rewrite <- bubble_leq_2.
-           rewrite bubble_equation.
-           apply Nat.leb_gt in Han2.
-           apply Nat.lt_le_incl in Han2.
-           apply leb_correct in Han2.
-           rewrite Han2.
-           rewrite bubble_equation.
-           rewrite Heq.
-           constructor.
-           *** apply ordenada_sub in H0.
-               assert(H': a <= b /\ ordenada (bubble (n1 :: l'))).
-               { split.
-                 - assumption.
-                 - assumption.
-               }
-               apply IHl1 in H'.
-               rewrite <- bubble_leq.
-               **** assumption.
-               **** apply leb_complete; assumption.
-           *** apply leb_complete; assumption.
-           *** split.
-               **** apply Nat.leb_gt in Han2.
-                    apply Nat.lt_le_incl in Han2.
-                    assumption.
-               **** apply leb_complete; assumption.
-        **  apply Nat.leb_gt in e0.
-            apply Nat.lt_le_incl in e0.
-            assumption.
-    + rewrite bubble_equation.
-      assert (H': (a <=? n2) = false).
-      { apply Nat.leb_gt.
-        apply le_gt with (a := n2) (b := n1) (c := a).
-        split.
-        - apply Nat.leb_gt in e0.
-          apply Nat.lt_le_incl in e0.
-          assumption.
-        - apply Nat.leb_gt in Heq.
-          apply Nat.lt_le_incl in Heq.
-          assumption.
-      } 
-      rewrite H'.
-      rewrite <- bubble_leq.
-      * rewrite <- bubble_leq_2 with (n2 := n2) (a := n1) (n1 := a).
-        ** rewrite bubble_equation.
-           apply Nat.leb_gt in e0.
-           apply Nat.lt_le_incl in e0.
-           apply leb_correct in e0.
-           rewrite e0. 
-           rewrite bubble_equation.
-           apply Nat.leb_gt in Heq.
-           apply Nat.lt_le_incl in Heq.
-           apply leb_correct in Heq.
-           rewrite Heq.
-           constructor.
-           *** rewrite <- bubble_leq.
-               
+  (* intros l b. *)
+  (* functional induction (bubble (b :: l)%list). *)
+  (* - intros. *)
+  (*   rewrite bubble_equation. *)
+  (*   constructor. *)
+  (* - intros. *)
+  (*   rewrite bubble_equation. *)
+  (*   destruct (leb a n) eqn: Heq. *)
+  (*   + rewrite bubble_equation. *)
+  (*     constructor. *)
+  (*     * constructor. *)
+  (*     * apply leb_complete; assumption. *)
+  (*   + rewrite bubble_equation. *)
+  (*     constructor. *)
+  (*     * constructor. *)
+  (*     * apply Nat.leb_gt in Heq. *)
+  (*       apply Nat.lt_le_incl in Heq. *)
+  (*       assumption. *)
+  (* - intros. *)
+  (*   rewrite bubble_equation. *)
+  (*   destruct (leb a n1) eqn: Heq. *)
+  (*   + destruct H. *)
+  (*     rewrite bubble_equation. *)
+  (*     rewrite e0. *)
+  (*     constructor. *)
+  (*     * assumption. *)
+  (*     * apply leb_complete; assumption. *)
+  (*   + destruct H. *)
+  (*     rewrite bubble_equation. *)
+  (*     destruct (leb a n2) eqn: Han2. *)
+  (*     * constructor. *)
+  (*       ** rewrite <- bubble_leq. *)
+  (*          *** apply IHl1. *)
+  (*              split. *)
+  (*              **** assumption. *)
+  (*              **** apply ordenada_sub in H0. *)
+  (*                   assumption. *)
+  (*          *** apply leb_complete; assumption. *)
+  (*       **  apply Nat.leb_gt in Heq. *)
+  (*           apply Nat.lt_le_incl in Heq. *)
+  (*           assumption. *)
+  (*     * constructor. *)
+  (*       ** apply ordenada_sub in H0. *)
+  (*          assert(H': a <= b /\ ordenada (bubble (n2 :: l'))). *)
+  (*          { split. *)
+  (*            - assumption. *)
+  (*            - assumption. *)
+  (*          } *)
+  (*          apply IHl1 in H'. *)
+  (*          rewrite bubble_equation in H'. *)
+  (*          rewrite Han2 in H'. *)
+  (*          assumption. *)
+  (*       ** apply leb_complete; assumption. *)
+  (* - intros. *)
+  (*   destruct H. *)
+  (*   rewrite bubble_equation. *)
+  (*   destruct (leb a n1) eqn: Heq. *)
+  (*   + rewrite bubble_equation. *)
+  (*     rewrite e0. *)
+  (*     destruct (leb a n2) eqn: Han2. *)
+  (*     * constructor. *)
+  (*       ** assumption. *)
+  (*       ** apply leb_complete; assumption. *)
+  (*     * rewrite <- bubble_leq. *)
+  (*       apply bubble_preserva_ordem. *)
+  (*       rewrite bubble_equation. *)
+  (*       apply Nat.leb_gt in e0. *)
+  (*       apply Nat.lt_le_incl in e0. *)
+  (*       apply leb_correct in e0. *)
+  (*       rewrite e0. *)
+  (*       ** assumption. *)
+  (*       ** apply Nat.leb_gt in e0. *)
+  (*          apply Nat.lt_le_incl in e0. *)
+  (*          assumption. *)
+    (*     ** rewrite <- bubble_leq_2. *)
+    (*        rewrite bubble_equation. *)
+    (*        apply Nat.leb_gt in Han2. *)
+    (*        apply Nat.lt_le_incl in Han2. *)
+    (*        apply leb_correct in Han2. *)
+    (*        rewrite Han2. *)
+    (*        rewrite bubble_equation. *)
+    (*        rewrite Heq. *)
+    (*        constructor. *)
+    (*        *** apply ordenada_sub in H0. *)
+    (*            assert(H': a <= b /\ ordenada (bubble (n1 :: l'))). *)
+    (*            { split. *)
+    (*              - assumption. *)
+    (*              - assumption. *)
+    (*            } *)
+    (*            apply IHl1 in H'. *)
+    (*            rewrite <- bubble_leq. *)
+    (*            **** assumption. *)
+    (*            **** apply leb_complete; assumption. *)
+    (*        *** apply leb_complete; assumption. *)
+    (*        *** split. *)
+    (*            **** apply Nat.leb_gt in Han2. *)
+    (*                 apply Nat.lt_le_incl in Han2. *)
+    (*                 assumption. *)
+    (*            **** apply leb_complete; assumption. *)
+    (*     **  apply Nat.leb_gt in e0. *)
+    (*         apply Nat.lt_le_incl in e0. *)
+    (*         assumption. *)
+    (* + rewrite bubble_equation. *)
+    (*   assert (H': (a <=? n2) = false). *)
+    (*   { apply Nat.leb_gt. *)
+    (*     apply le_gt with (a := n2) (b := n1) (c := a). *)
+    (*     split. *)
+    (*     - apply Nat.leb_gt in e0. *)
+    (*       apply Nat.lt_le_incl in e0. *)
+    (*       assumption. *)
+    (*     - apply Nat.leb_gt in Heq. *)
+    (*       apply Nat.lt_le_incl in Heq. *)
+    (*       assumption. *)
+    (*   }  *)
+    (*   rewrite H'. *)
+    (*   rewrite <- bubble_leq. *)
+    (*   * rewrite <- bubble_leq_2 with (n2 := n2) (a := n1) (n1 := a). *)
+    (*     ** rewrite bubble_equation. *)
+    (*        apply Nat.leb_gt in e0. *)
+    (*        apply Nat.lt_le_incl in e0. *)
+    (*        apply leb_correct in e0. *)
+    (*        rewrite e0.  *)
+    (*        rewrite bubble_equation. *)
+    (*        apply Nat.leb_gt in Heq. *)
+    (*        apply Nat.lt_le_incl in Heq. *)
+    (*        apply leb_correct in Heq. *)
+    (*        rewrite Heq. *)
+    (*        constructor. *)
+    (*        *** apply ordenada_sub in H0. *)
+    (*            assert(H'': a <= b /\ ordenada (bubble (n1 :: l'))). *)
+    (*            { split. *)
+    (*              - assumption. *)
+    (*              - assumption. *)
+    (*            } *)
+    (*            apply IHl1 in H''. *)
+    (*            rewrite bubble_equation in H''. *)
+    (*            apply le_gt_2 in Heq. *)
+    (*            rewrite Heq in H''. *)
+    (*            assumption. *)
+    (*        *** apply leb_complete; assumption. *)
+    (*     ** split. *)
+    (*        ***  apply Nat.leb_gt in e0. *)
+    (*             apply Nat.lt_le_incl in e0. *)
+    (*             assumption. *)
+    (*        ***  apply Nat.leb_gt in Heq. *)
+    (*             apply Nat.lt_le_incl in Heq. *)
+    (*             assumption. *)
+    (*   *  apply Nat.leb_gt in H'. *)
+    (*      apply Nat.lt_le_incl in H'. *)
+    (*      assumption. *)
+
   (* Terceiro Caminho:  *)
   
   (* induction l. *)
@@ -412,9 +495,8 @@ Proof.
   (*          rewrite e0. *)
            
   (*          rewrite <- bubble_leq. *)
-Admitted.
   
-
+Admitted.
 
 
 Theorem correcao: forall l,  (equiv l (bubbleSort l)) /\ ordenada (bubbleSort l).
@@ -439,25 +521,26 @@ Proof.
            apply H.
     + destruct IHl as [Hequiv Hord].
       simpl bubbleSort in *.
-
+      apply bubble_preserva_ordem; assumption.      
+      
       (* Primeiro caminho: *)
-      functional induction (bubble (a :: bubbleSort l)).
-      * constructor.
-      * constructor.
-      * rewrite <- bubble_leq.
-        ** apply bubble_ord.
-           split.
-           *** apply leb_complete; assumption.
-           *** assumption.
-        ** apply leb_complete; assumption.
-      * apply Nat.leb_gt in e0.
-        apply Nat.lt_le_incl in e0.
-        rewrite <- bubble_leq.
-        ** apply bubble_ord.
-           split.
-           *** assumption.
-           *** assumption.
-        ** assumption.
+      (* functional induction (bubble (a :: bubbleSort l)). *)
+      (* * constructor. *)
+      (* * constructor. *)
+      (* * rewrite <- bubble_leq. *)
+      (*   ** apply bubble_ord. *)
+      (*      split. *)
+      (*      *** apply leb_complete; assumption. *)
+      (*      *** assumption. *)
+      (*   ** apply leb_complete; assumption. *)
+      (* * apply Nat.leb_gt in e0. *)
+      (*   apply Nat.lt_le_incl in e0. *)
+      (*   rewrite <- bubble_leq. *)
+      (*   ** apply bubble_ord. *)
+      (*      split. *)
+      (*      *** assumption. *)
+      (*      *** assumption. *)
+      (*   ** assumption. *)
       
       (* Segundo caminho: *)
       (* functional induction (bubble (a :: bubbleSort l)). *)

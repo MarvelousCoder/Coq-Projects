@@ -1,3 +1,14 @@
+(* 116297 - Tópicos Avançados em Computadores *)
+(* Provas Formais: Uma Introdução à Teoria de Tipos - Turma B *)
+(* Prof. Flávio L.C. de Moura *)
+(* Email: contato@flaviomoura.mat.br *)
+(* Homepage: http://flaviomoura.mat.br *)
+
+(* Aluno: Raphael Soares Ramos *)
+(* Matrícula: 14/0160299 *)
+
+(* Descrição: Esse arquivo contém uma formalização do algoritmo de ordenação Bubble Sort. Foi usado Fixpoint para a definição recursiva do algoritmo. *)
+
 Require Import List.
 Require Import Arith.
 
@@ -231,5 +242,5 @@ Proof.
 Qed.
   
 Recursive Extraction correcao_comp.
-Extraction "insercao.ml" correcao_comp.
+Extraction "Bubble.ml" correcao_comp.
   
