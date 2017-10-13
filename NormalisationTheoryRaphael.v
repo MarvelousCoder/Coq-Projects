@@ -203,54 +203,26 @@ Lemma SimulTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : StrongSimul redA redB R -> StrongSimul (trans redA) redB R.
 Proof.
   unfold StrongSimul.
-  unfold Sub.
-  intros H.
-  intros b a H0.
-  inversion H0; subst.
-  induction H2.
-  - apply H.
-    apply (compose a).
-    + assumption.
-    + assumption.
-  - apply H. assert(H': (inverse R # redA) b b0).
-    { apply (compose a).
-      - assumption.
-      - assumption.
-    }
-    apply H in H'.
-    inversion H'; subst.
-    assert(H'': trans redA a c).
-    { apply singl in H2.
-      apply (tailtransit b0).
-      - assumption.
-      - assumption.
-    }
-    
-    Abort.
-    
-  (* inversion H0.
-  clear H3 H4 a0 c H0.
-  move : b H1.
-  induction H2.
-  move => b0 H1.
-  rewrite /Sub in H.
-  have : ((inverse R # redA) b0 b).
-  apply: (compose a) => //. *)
- (*  move => H5.
-  move: (H _ _ H5) =>//.
-  move => b0 H1.
-  have:((inverse R # redA) b0 b).
-  apply:(compose a) => //.
-  clear H1 => H1.
-  move: (H _ _ H1); clear H1 H => H.
-  inversion H.
-  clear H4 H5 a0 c0.
-  move: (IHtrans _ H3); clear IHtrans H3.
-  move => H3.
-  inversion H3.
-  clear H6 H7 a0 c0.
-  apply: (compose b2) => //.
-  apply: (tailtransit b1) => //. *)
+  unfold Sub in *.
+  intros Hip a b H.
+  inversion H; subst.
+  clear H.
+  generalize dependent a.
+  induction H1.
+  - intros a' H'.
+    apply Hip.
+    apply compose with a; assumption.
+  - intros a' H'.
+    assert (H'': (inverse R # redA) a' b).
+    { apply compose with a; assumption. }
+    apply Hip in H''. clear H'.
+    inversion H''; subst.
+    apply IHtrans in H2.
+    inversion H2; subst.
+    apply compose with b1.
+    apply tailtransit with b0; assumption.
+    assumption.
+Qed.
 
 (* Reflexive and transitive closure of a relation *)
 Inductive refltrans {A} (red: Red A) : Red A :=
