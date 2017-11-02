@@ -297,7 +297,7 @@ Qed.
 (* If M is SN, so are its 1-step reducts *)
 Lemma SNstable {A} {red: Red A}: forall M, SN red M -> forall N, red M N -> SN red N.
 Proof.
-  assert (H: patriarchal red ((fun a => forall b, red a b -> SN red b))).
+  assert (H: patriarchal red (fun a => forall b, red a b -> SN red b)).
   { unfold patriarchal.
     unfold SN.
     intros.
@@ -309,24 +309,12 @@ Proof.
     - assumption.
     - apply H1.
   }
-
-
-  
-  intros P H1.
-  apply H in H1.
-  - apply H1.
-  - Admitted.
-(* Como fazer o casamento com fun? *)
-                              
-(*   move => P /= H. *)
-(*   move : (@SNpatriarchal A red) => H1. *)
-(*   rewrite /patriarchal in H1 => R HR. *)
-(*   apply: H1. *)
-(*   apply: H => //. *)
-(*   intros.             *)
-(*   by apply (H _ x). *)
-
-
+  assert (H1: patriarchal red (SN red)).
+  { apply SNpatriarchal. }
+  intros.
+  apply (H0 _ H).
+  assumption.
+Qed.  
 (* Induction principle:
 Let P be a predicate such that, for all SN elements a, if the 1-step
 reducts of a satisfy P then a satisfies P.
@@ -349,18 +337,10 @@ Proof.
         * assumption.
     - assumption.
   }
-Admitted.
-
-(*  move => H3. *)
-(*   have: (patriarchal red (fun a => SN red a -> P a)). *)
-(*   rewrite /patriarchal => N H H0. *)
-(*   apply: H3 =>//. *)
-(*   move => R H2. *)
-(*   apply: H => //. *)
-(*   apply (SNstable N) => //. *)
-(*   move => H0 M H1. *)
-(*   apply: (H1 (fun a : A => SN red a -> P a)) => //. *)
-(* Qed. *)
+  apply (H0 (fun a : A => SN red a -> P a)).
+  - assumption.
+  - assumption.
+Qed.
 
 (* Being patriarchal for red1 is monotonic in red1 *)
 Lemma Patriarchalmonotonic {A} {red1 red2: Red A}: 
@@ -387,26 +367,33 @@ Qed.
 (* Being SN for a relation is the same thing as being SN for its transitive closure *)
 Lemma SNSNtrans {A} {red: Red A}: forall a, SN red a <-> SN (trans red) a.
 Proof.
-  split;[| apply: SNmonotonic => //; apply transSub].
-  have: (forall M, SN red M -> forall N, refltrans red M N -> SN (trans red) N).
-  apply (@SNind _ _ (fun M => forall N, refltrans red M N -> SN (trans red) N)).
-  move => M IH MSN.
-  have:(forall N, trans red M N -> SN (trans red) N).
-  move => N H.
-  move: (proj1 trans2refltrans _ _ H); clear H => H.
-  inversion H.
-  apply:(IH b) => //.
-  move => H.
-  move: (@SNpatriarchal _ (trans red)).
-  rewrite/patriarchal.
-  move => H1.
-  move: (H1 M H); clear H H1 => H N H1.
-  inversion H1.
-  by rewrite <- H2.
-  apply:(SNstable M) => //.
-  intros.
-  apply:(x a) =>//.
-  apply: reflex.
+  assert(forall M, SN red M -> forall N, refltrans red M N -> SN (trans red) N).
+  { apply (@SNind _ _ (fun M => forall N, refltrans red M N -> SN (trans red) N)).
+    intros M IH MSN.
+    assert(forall N, trans red M N -> SN (trans red) N).
+    { intros N H.
+      apply trans2refltrans in H.
+      inversion H; subst.
+      apply (IH b); assumption.
+    }
+    assert(H'': patriarchal (trans red) (SN (trans red))).
+    { apply (@SNpatriarchal _ (trans red)). }
+    unfold patriarchal in H''.
+    intros N H1.
+    apply H'' in H; clear H''.
+    inversion H1; subst.
+    - assumption.
+    - apply (SNstable M).
+      + assumption.
+      + assumption.
+  }
+  split.
+  - intros.
+    apply (H a).
+    + assumption.
+    + apply reflex.
+  - apply SNmonotonic.
+    apply transSub.
 Qed.
 
 (* Strong Induction principle:
@@ -424,13 +411,15 @@ Theorem SNsind {A} {red: Red A} {P: A -> Prop}
 : (forall a, (forall b, trans red a b -> P b) -> SN red a -> P a)
   -> (forall a, SN red a -> P a).
 Proof.
-  move => H a H0.
-  move: (proj1(SNSNtrans a)H0).
-  clear H0; move: a.
+  intros H a H0.
+  apply (proj1(SNSNtrans a)) in H0.
+  generalize dependent a.
   apply SNind.
-  move => a H0 H1.
-  apply H => //.
-  apply SNSNtrans =>//.
+  intros a H0 H1.
+  apply H.
+  - assumption.
+  - apply SNSNtrans.
+    assumption. 
 Qed.
 
 (* Strong normalisation by simulation:
@@ -441,17 +430,22 @@ then a is SN for redA.
 Theorem SNbySimul {A B} {redA: Red A} {redB: Red B} {R: Rel A B}:
 StrongSimul redA redB R -> forall a, Image (inverse R) (SN redB) a -> SN redA a.
 Proof.
-  move => H M H0.
-  inversion H0; clear H0 H3 b.
-  move : a H1 M H2.
+  intros H M H0.
+  inversion H0.
+  clear H0 H3 b.
+  generalize dependent M. generalize dependent a.
   apply (@SNsind _ _ (fun a => forall M : A, inverse R a M -> SN redA M)).
-  move => N H0 SNN M H1.
-  apply SNpatriarchal => M' H2.
-  rewrite /StrongSimul/Sub in H.
-  have:((inverse R # redA) N M').
-  apply: (compose M)=>//.
-  move => H3.
-  move:(H _ _ H3); clear H H3 => H.
-  inversion H; clear H5 H6 a c.
-  apply:(H0 b) =>//.
+  intros N H0 SNN M H1.
+  apply SNpatriarchal.
+  intros M' H2.
+  unfold StrongSimul in H; unfold Sub in H.
+  assert(H': (inverse R # redA) N M').
+  - apply (compose M).
+    + assumption.
+    + assumption.
+  - apply H in H'.
+    inversion H'; subst.
+    apply (H0 b).
+    + assumption.
+    + assumption.
 Qed.
