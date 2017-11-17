@@ -144,6 +144,9 @@ redA is strongly simulated by redB through R
 Definition StrongSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
   ((inverse R) # redA) <# ((trans redB) # (inverse R)).
 
+Definition WeakSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
+  ((inverse R) # redA) <# ((redB) # (inverse R)).
+
 (* The fact that redA is strongly simulated by redB is
 monotonic in redB and anti-monotonic in redA *)
 Lemma SimulMonotonic {A B} (redA1 redA2: Red A) (redB1 redB2: Red B) (R: Rel A B):
@@ -449,3 +452,6 @@ Proof.
     + assumption.
     + assumption.
 Qed.
+
+(* Theorem 26 {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}: *)
+(*   forall a, (StrongSimul red'A redB R /\ WeakSimul redA redB R /\ SN redA a -- A) -> forall b, Image (inverse R) (SN redB) b <# (* SN redA + red'A *) *)
