@@ -84,6 +84,13 @@ Proof.
     assumption.
 Qed.
 
+(* Union of reduction relations *)
+Inductive union {A} (red1: Red A)(red2: Red A) : Red A :=
+ | union_left: forall a b,  red1 a b -> union red1 red2 a b
+ | union_right: forall a b,  red2 a b -> union red1 red2 a b
+.
+Notation "R1 \u R2" := (union R1 R2) (at level 40).
+
 (* Transitive closure of a reduction relation *)
 Inductive trans {A} (red: Red A) : Red A :=
 | singl: forall a b,  red a b -> trans red a b
@@ -143,9 +150,6 @@ redA is strongly simulated by redB through R
 *)
 Definition StrongSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
   ((inverse R) # redA) <# ((trans redB) # (inverse R)).
-
-Definition WeakSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
-  ((inverse R) # redA) <# ((redB) # (inverse R)).
 
 (* The fact that redA is strongly simulated by redB is
 monotonic in redB and anti-monotonic in redA *)
@@ -232,6 +236,9 @@ Inductive refltrans {A} (red: Red A) : Red A :=
 | reflex: forall a,  refltrans red a a
 | atleast1: forall a b,  trans red a b -> refltrans red a b
 .
+
+Definition WeakSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
+  ((inverse R) # redA) <# ((refltrans redB) # (inverse R)).
 
 (* The transitive closure is equivalent to the composition of the
 relation with its reflexive-transitive closure *)
@@ -453,5 +460,5 @@ Proof.
     + assumption.
 Qed.
 
-(* Theorem 26 {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}: *)
-(*   forall a, (StrongSimul red'A redB R /\ WeakSimul redA redB R /\ SN redA a -- A) -> forall b, Image (inverse R) (SN redB) b <# (* SN redA + red'A *) *)
+(* Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}: *)
+(* (StrongSimul red'A redB R) -> (WeakSimul redA redB R) -> ?? -> ((inverse R) (SN redB)) <#  (SN (redA \u red'A) ). *)
