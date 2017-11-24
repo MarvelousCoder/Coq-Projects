@@ -439,7 +439,8 @@ If a is the image of some element that is SN for redB,
 then a is SN for redA.
 *)
 Theorem SNbySimul {A B} {redA: Red A} {redB: Red B} {R: Rel A B}:
-StrongSimul redA redB R -> forall a, Image (inverse R) (SN redB) a -> SN redA a.
+  StrongSimul redA redB R ->
+  forall a, Image (inverse R) (SN redB) a -> SN redA a.
 Proof.
   intros H M H0.
   inversion H0.
@@ -463,17 +464,17 @@ Qed.
 
 Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}:
   (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
-  (forall b, SN redA b -> A) -> (forall b, A -> SN redA b) ->
+  (forall b: A, SN redA b) ->
   forall a, Image (inverse R) (SN redB) a -> SN (redA \u red'A) a.
 Proof.
-  intros H1 H2 H3 H4 a H5.
+  intros H1 H2 H3 a H4.
   unfold StrongSimul in H1; unfold WeakSimul in H2.
   unfold Sub in *.
-  assert(H': StrongSimul (trans redA # red'A) (redB) R).
+  assert(H': StrongSimul (refltrans redA # red'A) (redB) R).
   { unfold StrongSimul; unfold Sub.
     intros.
     inversion H; subst.
-    inversion H6; subst.
     inversion H5; subst.
+    
   }
   Abort.
