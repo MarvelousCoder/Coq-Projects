@@ -89,6 +89,7 @@ Inductive union {A} (red1: Red A)(red2: Red A) : Red A :=
  | union_left: forall a b,  red1 a b -> union red1 red2 a b
  | union_right: forall a b,  red2 a b -> union red1 red2 a b
 .
+
 Notation "R1 \u R2" := (union R1 R2) (at level 40).
 
 (* Transitive closure of a reduction relation *)
@@ -460,5 +461,19 @@ Proof.
     + assumption.
 Qed.
 
-(* Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}: *)
-(* (StrongSimul red'A redB R) -> (WeakSimul redA redB R) -> ?? -> ((inverse R) (SN redB)) <#  (SN (redA \u red'A) ). *)
+Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}:
+  (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
+  (forall b, SN redA b -> A) -> (forall b, A -> SN redA b) ->
+  forall a, Image (inverse R) (SN redB) a -> SN (redA \u red'A) a.
+Proof.
+  intros H1 H2 H3 H4 a H5.
+  unfold StrongSimul in H1; unfold WeakSimul in H2.
+  unfold Sub in *.
+  assert(H': StrongSimul (trans redA # red'A) (redB) R).
+  { unfold StrongSimul; unfold Sub.
+    intros.
+    inversion H; subst.
+    inversion H6; subst.
+    inversion H5; subst.
+  }
+  Abort.
