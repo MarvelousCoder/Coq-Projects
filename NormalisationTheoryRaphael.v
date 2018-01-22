@@ -240,6 +240,42 @@ Inductive refltrans {A} (red: Red A) : Red A :=
 Definition WeakSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
   ((inverse R) # redA) <# ((refltrans redB) # (inverse R)).
 
+Lemma refltailtransit {A red}: forall (b a c:A),  refltrans red a b -> refltrans red b c -> refltrans red a c.
+Proof.
+  intros b a c H1 H2.
+  induction H1.
+  - assumption.
+  - inversion H2; subst.
+    + constructor; assumption.
+    + constructor.
+      apply (tailtransit b); assumption.
+Qed. 
+
+Lemma SimulWeakTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
+: WeakSimul redA redB R -> WeakSimul (trans redA) redB R.
+Proof.
+  unfold WeakSimul.
+  unfold Sub in *.
+  intros Hip a b H.
+  inversion H; subst.
+  clear H.
+  generalize dependent a.
+  induction H1.
+  - intros a' H'.
+    apply Hip.
+    apply compose with a; assumption.
+  - intros a' H'.
+    assert (H'': (inverse R # redA) a' b).
+    { apply compose with a; assumption. }
+    apply Hip in H''. clear H'.
+    inversion H''; subst.
+    apply IHtrans in H2.
+    inversion H2; subst.
+    apply compose with b1.
+    + apply (refltailtransit b0); assumption.
+    + assumption.
+Qed.
+
 (* The transitive closure is equivalent to the composition of the
 relation with its reflexive-transitive closure *)
 Lemma trans2refltrans {A} {red: Red A}: trans red -- red # (refltrans red).
