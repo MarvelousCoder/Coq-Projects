@@ -47,8 +47,7 @@ Inductive inverse {A B} (R: Rel A B) : Rel B A :=
 Lemma compTrans {A B C D} (R1: Rel A B)(R2: Rel B C)(R3: Rel C D)
   : (R1 # R2) # R3 -- R1 # (R2 # R3).
 Proof.
-  unfold Equiv.
-  split.
+  unfold Equiv. split.
   - unfold Sub.
     intros a b H.
     inversion H as [a' b' d Hc Hr3 Heq Heq']; subst.
@@ -71,7 +70,7 @@ Qed.
 
 (* Composition is monotonous *)
 Lemma SubComp {A B C} (R1 R2: Rel A B)(R3 R4: Rel B C) 
-: R1 <# R2 -> R3 <# R4 -> (comp R1 R3) <# (comp R2 R4).
+: R1 <# R2 -> R3 <# R4 -> (R1 # R3) <# (R2 # R4).
 Proof.
   unfold Sub.
   intros H H0.
@@ -325,7 +324,8 @@ Proof.
   intros.
   apply (H0 _ H).
   assumption.
-Qed.  
+Qed.
+
 (* Induction principle:
 Let P be a predicate such that, for all SN elements a, if the 1-step
 reducts of a satisfy P then a satisfies P.
@@ -461,6 +461,12 @@ Proof.
     + assumption.
     + assumption.
 Qed.
+
+Lemma RCSimul {A B} {redA red'A: Red A} {redB: Red B} {R: Rel A B}:
+  (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
+  (StrongSimul ((refltrans redA) # red'A) redB R).
+Proof.
+Admitted.
 
 Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}:
   (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
