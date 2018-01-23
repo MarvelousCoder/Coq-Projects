@@ -204,7 +204,7 @@ Proof.
     + assumption.
   - assumption.
 Qed.
-
+  
 (* If redA is strongly simulated, so is its transitive closure *)
 Lemma SimulTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : StrongSimul redA redB R -> StrongSimul (trans redA) redB R.
@@ -240,6 +240,16 @@ Inductive refltrans {A} (red: Red A) : Red A :=
 Definition WeakSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
   ((inverse R) # redA) <# ((refltrans redB) # (inverse R)).
 
+(* If redA1 is weakely simulated by a relation 
+   and redA2 is strongly simulated by the same relation
+   then their composition is strongly simulated by the same relation. *)
+Lemma WeakStrongSimul {A B} (redA1 redA2: Red A) (redB: Red B) (R: Rel A B):
+  WeakSimul redA1 redB R
+  -> StrongSimul redA2 redB R
+  -> StrongSimul (redA1 # redA2) redB R.
+Proof.
+  Admitted.
+
 Lemma refltailtransit {A red}: forall (b a c:A),  refltrans red a b -> refltrans red b c -> refltrans red a c.
 Proof.
   intros b a c H1 H2.
@@ -250,6 +260,11 @@ Proof.
     + constructor.
       apply (tailtransit b); assumption.
 Qed. 
+
+Lemma SimulWeakReflTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
+: WeakSimul redA redB R -> WeakSimul (refltrans redA) redB R.
+Proof.
+  Admitted.
 
 Lemma SimulWeakTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : WeakSimul redA redB R -> WeakSimul (trans redA) redB R.
