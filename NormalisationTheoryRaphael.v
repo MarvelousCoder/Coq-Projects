@@ -248,9 +248,22 @@ Lemma WeakStrongSimul {A B} (redA1 redA2: Red A) (redB: Red B) (R: Rel A B):
   -> StrongSimul redA2 redB R
   -> StrongSimul (redA1 # redA2) redB R.
 Proof.
-  Admitted.
+  intros H1 H2.
+  unfold StrongSimul in *.
+  unfold WeakSimul in *.
+  unfold Sub in *.
+  intros a b H3.
+  inversion H3; subst.
+  inversion H0; subst.
+  apply H2.
+  assert (H': (inverse R # redA2) a b).
+  { apply compose with b0.
+    
+Abort.
+  
 
-Lemma refltailtransit {A red}: forall (b a c:A),  refltrans red a b -> refltrans red b c -> refltrans red a c.
+Lemma refltailtransit {A red}: forall (b a c:A),
+    refltrans red a b -> refltrans red b c -> refltrans red a c.
 Proof.
   intros b a c H1 H2.
   induction H1.
@@ -264,7 +277,22 @@ Qed.
 Lemma SimulWeakReflTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : WeakSimul redA redB R -> WeakSimul (refltrans redA) redB R.
 Proof.
-  Admitted.
+  unfold WeakSimul.
+  unfold Sub in *.
+  intros Hip a b H.
+  inversion H; subst.
+  clear H.
+  generalize dependent a.
+  induction H1.
+  - intros a' H'.
+    apply Hip.
+    admit.
+  - intros a' H'.
+    assert (H'': (inverse R # trans redA) a' b).
+    { apply compose with a; assumption. }
+    apply Hip.
+    inversion H''; subst.
+Abort.
 
 Lemma SimulWeakTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : WeakSimul redA redB R -> WeakSimul (trans redA) redB R.
