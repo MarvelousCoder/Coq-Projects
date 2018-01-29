@@ -44,7 +44,7 @@ Inductive inverse {A B} (R: Rel A B) : Rel B A :=
 .
 
 (* Composition is associative *)
-Lemma compTrans {A B C D} (R1: Rel A B)(R2: Rel B C)(R3: Rel C D)
+Lemma compAssoc {A B C D} (R1: Rel A B)(R2: Rel B C)(R3: Rel C D)
   : (R1 # R2) # R3 -- R1 # (R2 # R3).
 Proof.
   unfold Equiv. split.
@@ -237,6 +237,12 @@ Inductive refltrans {A} (red: Red A) : Red A :=
 | atleast1: forall a b,  trans red a b -> refltrans red a b
 .
 
+Lemma refl_plus_trans_is_trans {A red} :
+  forall (a b c : A), (refltrans red a b) -> (trans red b c) ->
+                      trans red a c.
+Proof.
+  Admitted.
+  
 Definition WeakSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
   ((inverse R) # redA) <# ((refltrans redB) # (inverse R)).
 
@@ -253,14 +259,22 @@ Proof.
   unfold WeakSimul in *.
   unfold Sub in *.
   intros a b H3.
-  inversion H3; subst.
-  inversion H0; subst.
-  apply H2.
-  assert (H': (inverse R # redA2) a b).
-  { apply compose with b0.
-    
-Abort.
-  
+  inversion H3; subst. clear H3.
+  inversion H0; subst. clear H0.
+  assert (H': (inverse R # redA1) a b1).
+  { apply compose with b0; assumption. }
+  apply H1 in H'.
+  inversion H'; subst. clear H'.
+  induction H0.
+  - apply H2.
+    apply compose with b1; assumption.
+  - assert (Hstrong: (trans redB # inverse R) b2 b).
+    { apply H2. apply compose with b1; assumption. }
+    inversion Hstrong; subst. clear Hstrong.
+    apply compose with b3. 
+    + apply tailtransit with b2; assumption.
+    + assumption.
+Qed.  
 
 Lemma refltailtransit {A red}: forall (b a c:A),
     refltrans red a b -> refltrans red b c -> refltrans red a c.
