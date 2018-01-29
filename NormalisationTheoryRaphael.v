@@ -236,12 +236,6 @@ Inductive refltrans {A} (red: Red A) : Red A :=
 | reflex: forall a,  refltrans red a a
 | atleast1: forall a b,  trans red a b -> refltrans red a b
 .
-
-Lemma refl_plus_trans_is_trans {A red} :
-  forall (a b c : A), (refltrans red a b) -> (trans red b c) ->
-                      trans red a c.
-Proof.
-  Admitted.
   
 Definition WeakSimul {A B} (redA: Red A) (redB: Red B) (R: Rel A B) := 
   ((inverse R) # redA) <# ((refltrans redB) # (inverse R)).
@@ -288,26 +282,6 @@ Proof.
       apply (tailtransit b); assumption.
 Qed. 
 
-Lemma SimulWeakReflTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
-: WeakSimul redA redB R -> WeakSimul (refltrans redA) redB R.
-Proof.
-  unfold WeakSimul.
-  unfold Sub in *.
-  intros Hip a b H.
-  inversion H; subst.
-  clear H.
-  generalize dependent a.
-  induction H1.
-  - intros a' H'.
-    apply Hip.
-    admit.
-  - intros a' H'.
-    assert (H'': (inverse R # trans redA) a' b).
-    { apply compose with a; assumption. }
-    apply Hip.
-    inversion H''; subst.
-Abort.
-
 Lemma SimulWeakTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
 : WeakSimul redA redB R -> WeakSimul (trans redA) redB R.
 Proof.
@@ -331,6 +305,29 @@ Proof.
     apply compose with b1.
     + apply (refltailtransit b0); assumption.
     + assumption.
+Qed.
+
+Lemma SimulWeakReflTrans {A B} (redA: Red A) (redB: Red B) (R: Rel A B)
+: WeakSimul redA redB R -> WeakSimul (refltrans redA) redB R.
+Proof.
+  unfold WeakSimul.
+  unfold Sub in *.
+  intros Hip a b H.
+  inversion H; subst. clear H.
+  generalize dependent a.
+  induction H1.
+  - intros a' H'.
+    apply compose with a'.
+    + apply reflex.
+    + assumption.      
+  - intros a' Hinv.
+    assert (HWTrans: WeakSimul (trans redA) redB R).
+    apply SimulWeakTrans.
+    unfold WeakSimul.
+    unfold Sub.
+    apply Hip.
+    apply HWTrans.
+    apply compose with a; assumption.
 Qed.
 
 (* The transitive closure is equivalent to the composition of the
