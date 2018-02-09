@@ -91,6 +91,12 @@ Inductive union {A} (red1: Red A)(red2: Red A) : Red A :=
 
 Notation "R1 \u R2" := (union R1 R2) (at level 40).
 
+(* (* Intersection of reduction relations *) *)
+(* Inductive inter {A} (red1: Red A)(red2: Red A) : Red A := *)
+(*  | intersection: forall a b,  red1 a b -> red2 a b -> inter red1 red2 a b. *)
+
+(* Notation "R1 \cap R2" := (union R1 R2) (at level 40). *)
+
 (* Transitive closure of a reduction relation *)
 Inductive trans {A} (red: Red A) : Red A :=
 | singl: forall a b,  red a b -> trans red a b
@@ -556,8 +562,35 @@ Lemma RCSimul {A B} {redA red'A: Red A} {redB: Red B} {R: Rel A B}:
   (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
   (StrongSimul ((refltrans redA) # red'A) redB R).
 Proof.
+  intros Hst Hwk.
+  assert (Hrfl:  WeakSimul (refltrans redA) redB R).
+  {
+    apply SimulWeakReflTrans; assumption.
+  }
+  clear Hwk.
+  apply WeakStrongSimul; assumption.
+Qed.
+
+Inductive Id {A} : Rel A A :=
+  identity: forall a:A, Id a a.
+    
+Lemma UnionStrongSimul {A} {redA red'A: Red A}:
+  StrongSimul redA (redA \u red'A) Id.
+Proof.
 Admitted.
 
+Lemma UnionReflStrongSimul {A} {redA red'A: Red A}:
+  StrongSimul ((refltrans redA) # red'A) (redA \u red'A) Id.
+Proof.
+Admitted.
+
+(* Lemma SNunion {A} {redA red'A: Red A}: forall a, *)
+(*   (* (SN redA) is stable under red'A -> *) *)
+(*   (SN (redA \u red'A) a) <-> (SN ((refltrans redA) # red'A) a) /\ ((SN redA) a)). *)
+(* Proof. *)
+(* Admitted. *)
+
+  
 Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}:
   (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
   (forall b: A, SN redA b) ->
