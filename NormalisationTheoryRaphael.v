@@ -573,7 +573,11 @@ Qed.
 
 Inductive Id {A} : Rel A A :=
   identity: forall a:A, Id a a.
-    
+
+Lemma HId {A} (red: Red A): forall a, SN red a <-> Image (inverse Id) (SN red) a. 
+Proof.
+Admitted.
+
 Lemma UnionStrongSimul {A} {redA red'A: Red A}:
   StrongSimul redA (redA \u red'A) Id.
 Proof.
@@ -584,12 +588,27 @@ Lemma UnionReflStrongSimul {A} {redA red'A: Red A}:
 Proof.
 Admitted.
 
-(* Lemma SNunion {A} {redA red'A: Red A}: forall a, *)
-(*   (* (SN redA) is stable under red'A -> *) *)
-(*   (SN (redA \u red'A) a) <-> (SN ((refltrans redA) # red'A) a) /\ ((SN redA) a)). *)
-(* Proof. *)
-(* Admitted. *)
-
+Lemma SNunion {A} {redA red'A: Red A}: 
+    (forall a b, SN redA a -> red'A a b -> SN redA b) ->
+   forall c, (SN (redA \un red'A) c) <-> (SN ((refltrans redA) # red'A) c) /\ ((SN redA) c).
+Proof.
+  intros Hst c. split.
+  - intro HSN. split.
+    + assert (HSsimul: StrongSimul (refltrans redA # red'A) (redA \un red'A) Id).
+      {
+        apply UnionReflStrongSimul.
+      }
+      apply HId in HSN.
+      generalize dependent HSN.
+      apply SNbySimul; assumption. 
+    + assert (HSsimul: StrongSimul redA (redA \un red'A) Id).
+      {
+        apply UnionStrongSimul.
+      }
+      apply HId in HSN.
+      generalize dependent HSN.
+      apply SNbySimul; assumption. 
+  - Admitted.
   
 Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}:
   (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
