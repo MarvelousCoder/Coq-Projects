@@ -574,9 +574,27 @@ Qed.
 Inductive Id {A} : Rel A A :=
   identity: forall a:A, Id a a.
 
+Lemma inverseId {A}: forall a b :A, inverse Id a b -> a = b.
+Proof.
+Admitted.
+
 Lemma HId {A} (red: Red A): forall a, SN red a <-> Image (inverse Id) (SN red) a. 
 Proof.
 Admitted.
+
+Lemma UnionStrongSimul {A} {redA red'A: Red A}:
+  StrongSimul redA (redA \un red'A) Id.
+Proof.
+  unfold StrongSimul.
+  unfold Sub.
+  intros a b HredA.
+  inversion HredA; subst.
+  apply inverseId in H. subst.
+  apply compose with b.
+  - apply singl.
+    apply union_left; assumption.
+  - apply inverseof. apply identity.
+Qed.
 
 Lemma UnionStrongSimul {A} {redA red'A: Red A}:
   StrongSimul redA (redA \u red'A) Id.
