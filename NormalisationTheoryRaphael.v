@@ -574,60 +574,101 @@ Qed.
 Inductive Id {A} : Rel A A :=
   identity: forall a:A, Id a a.
 
-Lemma inverseId {A}: forall a b :A, inverse Id a b -> a = b.
+Fact inverseId {A}: forall a b :A, inverse Id a b -> a = b.
 Proof.
-Admitted.
+  intros.
+  inversion H; subst.
+  inversion H0; subst.
+  reflexivity.
+Qed.
 
 Lemma HId {A} (red: Red A): forall a, SN red a <-> Image (inverse Id) (SN red) a. 
 Proof.
-Admitted.
-
-Lemma UnionStrongSimul {A} {redA red'A: Red A}:
-  StrongSimul redA (redA \un red'A) Id.
-Proof.
-  unfold StrongSimul.
-  unfold Sub.
-  intros a b HredA.
-  inversion HredA; subst.
-  apply inverseId in H. subst.
-  apply compose with b.
-  - apply singl.
-    apply union_left; assumption.
-  - apply inverseof. apply identity.
+  split.
+  - intros H.
+    apply image with a.
+    + assumption.
+    + apply inverseof. apply identity.
+  - intros H.
+    inversion H; subst.
+    apply inverseId in H1.
+    rewrite H1 in H0; assumption.
 Qed.
 
 Lemma UnionStrongSimul {A} {redA red'A: Red A}:
   StrongSimul redA (redA \u red'A) Id.
 Proof.
-Admitted.
+  unfold StrongSimul.
+  unfold Sub.
+  intros a b HredA.
+  inversion HredA; subst.
+  inversion H; subst.
+  apply compose with b.
+  - apply singl.
+    inversion H1; subst.
+    apply union_left; assumption.
+  - apply inverseof. apply identity.
+Qed.
 
 Lemma UnionReflStrongSimul {A} {redA red'A: Red A}:
   StrongSimul ((refltrans redA) # red'A) (redA \u red'A) Id.
 Proof.
+  unfold StrongSimul.
+  unfold Sub.
+  intros a b H.
+  inversion H; subst.
+  inversion H1; subst.
+  generalize dependent a.
+  generalize dependent b.
+  induction H2.
+  - intros.
+    apply compose with b.
+    + constructor.
+      inversion H0; subst.
+      inversion H2; subst.
+      constructor; assumption.
+    + apply inverseof. apply identity.
+  - intros.
+    generalize dependent b0.
+    apply inverseId in H2.
+    rewrite H2 in *.
+    clear H2.
+    induction H.
+    + intros.
+      apply inverseId in H2.
+      rewrite -> H2 in *.
+      inversion H0; subst.
+      inversion H5; subst.
+    
 Admitted.
+    
 
 Lemma SNunion {A} {redA red'A: Red A}: 
     (forall a b, SN redA a -> red'A a b -> SN redA b) ->
-   forall c, (SN (redA \un red'A) c) <-> (SN ((refltrans redA) # red'A) c) /\ ((SN redA) c).
+   forall c, (SN (redA \u red'A) c) <-> (SN ((refltrans redA) # red'A) c) /\ ((SN redA) c).
 Proof.
   intros Hst c. split.
   - intro HSN. split.
-    + assert (HSsimul: StrongSimul (refltrans redA # red'A) (redA \un red'A) Id).
+    + assert (HSsimul: StrongSimul (refltrans redA # red'A) (redA \u red'A) Id).
       {
         apply UnionReflStrongSimul.
       }
       apply HId in HSN.
       generalize dependent HSN.
       apply SNbySimul; assumption. 
-    + assert (HSsimul: StrongSimul redA (redA \un red'A) Id).
+    + assert (HSsimul: StrongSimul redA (redA \u red'A) Id).
       {
         apply UnionStrongSimul.
       }
       apply HId in HSN.
       generalize dependent HSN.
       apply SNbySimul; assumption. 
-  - Admitted.
-  
+  - intros H.
+    destruct H.
+    apply union_left with (red2 := red'A) (a := c) (b := c) in H0.
+    (* Definir união de forma mais geral, para incluir SN...*)
+Admitted.
+    
 Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}:
   (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
   (forall b: A, SN redA b) ->
