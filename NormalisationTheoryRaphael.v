@@ -616,32 +616,49 @@ Proof.
   unfold StrongSimul.
   unfold Sub.
   intros a b H.
-  inversion H; subst.
-  inversion H1; subst.
+  inversion H; subst. clear H.
+  inversion H1; subst. clear H1.
   generalize dependent a.
   generalize dependent b.
-  induction H2.
+  induction H.
   - intros.
     apply compose with b.
     + constructor.
-      inversion H0; subst.
-      inversion H2; subst.
+      apply inverseId in H0. subst.
       constructor; assumption.
     + apply inverseof. apply identity.
   - intros.
     generalize dependent b0.
-    apply inverseId in H2.
-    rewrite H2 in *.
-    clear H2.
+    apply inverseId in H0. subst.
     induction H.
     + intros.
-      apply inverseId in H2.
-      rewrite -> H2 in *.
-      inversion H0; subst.
-      inversion H5; subst.
-    
+      apply compose with b0.
+      * apply transit with b.
+        ** constructor; assumption.
+        ** constructor; constructor; assumption.
+      * apply inverseof. apply identity.
+    + intros b0 Hred'A.
+      assert (Hone: (redA \u red'A) a b).
+      {
+        constructor; assumption.
+      }
+      apply compose with b0.
+      * apply transit with b.
+        ** assumption.
+        ** apply IHtrans in Hred'A.
+           inversion Hred'A; subst. clear Hred'A.
+           apply inverseId in H2. subst.
+           assumption.
+      * apply inverseof. apply identity.
+Qed.
+
+Lemma inclUnion {A} {redA red'A: Red A}: forall a, (SN redA a) -> (forall b, Image ((refltrans redA) # red'A) (SN redA) b -> (SN (redA \u red'A) b)) -> (SN (redA \u red'A) a).
+Proof.
 Admitted.
-    
+
+  Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
+Proof.
+Admitted.
 
 Lemma SNunion {A} {redA red'A: Red A}: 
     (forall a b, SN redA a -> red'A a b -> SN redA b) ->
@@ -663,11 +680,13 @@ Proof.
       apply HId in HSN.
       generalize dependent HSN.
       apply SNbySimul; assumption. 
-  - intros H.
-    destruct H.
-    apply union_left with (red2 := red'A) (a := c) (b := c) in H0.
-    (* Definir união de forma mais geral, para incluir SN...*)
-Admitted.
+  - intro Hand. destruct Hand as [Hcomp HredA].
+    assert (HSNunion1: (SN ((refltrans redA) # red'A) c) -> (SN redA c) -> (SN (redA \u red'A) c)).
+    {
+      apply SNinclUnion.
+    }
+    apply HSNunion1; assumption.
+Qed.
     
 Theorem LexSimul {A B} {redA: Red A} {red'A: Red A} {redB: Red B} {R: Rel A B}:
   (StrongSimul red'A redB R) -> (WeakSimul redA redB R) ->
