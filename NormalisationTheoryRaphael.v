@@ -654,11 +654,25 @@ Qed.
 
 Lemma inclUnion {A} {redA red'A: Red A}: forall a, (SN redA a) -> (forall b, Image ((refltrans redA) # red'A) (SN redA) b -> (SN (redA \u red'A) b)) -> (SN (redA \u red'A) a).
 Proof.
+  intros a HSN Hun.
+  apply Hun.
+  apply image with a.
+  - assumption.
+  - admit.
 Admitted.
 
-  Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
-Proof.
-Admitted.
+Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
+  Proof.
+    intros a HSNcomp HSN.
+    unfold SN in *.
+    intros P Hpat.
+    apply HSNcomp.
+    unfold patriarchal in *.
+    intros x HP.
+    apply Hpat.
+    intros y Hun.
+    apply HP.
+  Admitted.
 
 Lemma SNunion {A} {redA red'A: Red A}: 
     (forall a b, SN redA a -> red'A a b -> SN redA b) ->
