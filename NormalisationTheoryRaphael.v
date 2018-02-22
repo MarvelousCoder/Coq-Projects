@@ -371,6 +371,13 @@ Definition patriarchal {A} (red:Red A) (P:A -> Prop): Prop
 Definition SN {A:Type} (red:Red A) (a:A): Prop
   := forall P, patriarchal red P -> P a.
 
+Inductive SN_ind {A:Type} (red: Red A) (a:A): Prop :=
+  | sn_acc: forall b, red a b -> SN_ind red b -> SN_ind red a.
+
+Lemma SN_eq_SN_ind {A} {red:Red A}: forall a, SN red a <-> SN_ind red a.
+Proof.
+Admitted.
+
 (* If all 1-step reducts of a are SN, so is a *)
 Lemma toSN {A}{red:Red A} {x}: (forall y, red x y -> SN red y) -> SN red x.
 Proof.
@@ -664,14 +671,22 @@ Admitted.
 Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
   Proof.
     intros a HSNcomp HSN.
-    unfold SN in *.
-    intros P Hpat.
-    apply HSNcomp.
-    unfold patriarchal in *.
-    intros x HP.
-    apply Hpat.
-    intros y Hun.
-    apply HP.
+    apply SN_eq_SN_ind.
+    assert (HSN_indcomp: SN_ind (refltrans redA # red'A) a).
+    { generalize HSNcomp.
+      apply SN_eq_SN_ind. }
+    clear HSNcomp.
+    assert (HSN_ind : SN_ind redA a).
+    { generalize HSN.
+      apply SN_eq_SN_ind. }
+    clear HSN.
+    generalize dependent HSN_ind.
+    induction HSN_indcomp. 
+    intro HSN_ind.
+    assert (Hincl:  (SN redA a) -> (forall b, Image ((refltrans redA) # red'A) (SN redA) b -> (SN (redA \u red'A) b)) -> (SN (redA \u red'A) a)).
+    {
+      apply inclUnion.
+    }
   Admitted.
 
 Lemma SNunion {A} {redA red'A: Red A}: 
