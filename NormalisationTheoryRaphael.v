@@ -668,41 +668,64 @@ Proof.
   - admit.
 Admitted.
 
-Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
-  Proof.
-    intros a HSNcomp HSN.
-    apply SN_eq_SN_ind.
-    assert (HSN_indcomp: SN_ind (refltrans redA # red'A) a).
-    { generalize HSNcomp.
-      apply SN_eq_SN_ind. }
-    clear HSNcomp.
-    assert (HSN_ind : SN_ind redA a).
-    { generalize HSN.
-      apply SN_eq_SN_ind. }
-    clear HSN.
-    generalize dependent HSN_ind.
-    induction HSN_indcomp. 
-    intro HSN_ind.
-    assert (Hincl:  (SN redA a) -> (forall b, Image ((refltrans redA) # red'A) (SN redA) b -> (SN (redA \u red'A) b)) -> (SN (redA \u red'A) a)).
-    {
-      apply inclUnion.
-    }
-  Admitted.
+Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (forall b, SN redA a -> red'A a b -> SN redA b) -> (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \un red'A) a).
+      Proof.
+        Admitted.
+    (* intros a HSNcomp HSN. *)
+    (* apply SN_eq_SN_ind. *)
+    (* assert (HSN_indcomp: SN_ind (refltrans redA # red'A) a). *)
+    (* { generalize HSNcomp. *)
+    (*   apply SN_eq_SN_ind. } *)
+    (* clear HSNcomp. *)
+    (* assert (HSN_ind : SN_ind redA a). *)
+    (* { generalize HSN. *)
+    (*   apply SN_eq_SN_ind. } *)
+    (* clear HSN. *)
+    (* generalize dependent HSN_ind. *)
+    (* induction HSN_indcomp.  *)
+    (* intro HSN_ind. *)
+    (* assert (Hincl:  (SN redA a) -> ((((refltrans redA) # red'A) a b) -> SN (redA \un red'A) b) -> (SN (redA \un red'A) a)). *)
+    (* { *)
+    (*   apply inclUnion. *)
+    (* } *)
+    (* assert (Heq: SN (redA \un red'A) a <-> SN_ind (redA \un red'A) a). *)
+    (* { *)
+    (* apply SN_eq_SN_ind. *)
+    (* } *)
+    (* destruct Heq as [Heq1 Heq2]. *)
+    (* apply Heq1. *)
+    (* apply Hincl. *)
+    (* - apply SN_eq_SN_ind in HSN_ind; assumption. *)
+    (* - intro Hcomp. *)
+    (*   apply SN_eq_SN_ind. *)
+    (*   apply IHHSN_indcomp. *)
+    (*   (* usar a estabilidade *) *)
+    (*   Lemma stabComp {A} {redA red'A: Red A}: forall b, SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b. *)
+    (*   Proof. *)
+    (*   Admitted. *)
+    (*   (* fim do lema de estabilidade *) *)
+    (*   assert (HstabComp: SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b). *)
+    (*   { *)
+    (*   apply stabComp.   *)
+    (*   } *)
+    (*   apply HstabComp. *)
+    (*   + assumption. *)
+    (*   + Admitted. *)
 
 Lemma SNunion {A} {redA red'A: Red A}: 
     (forall a b, SN redA a -> red'A a b -> SN redA b) ->
-   forall c, (SN (redA \u red'A) c) <-> (SN ((refltrans redA) # red'A) c) /\ ((SN redA) c).
+   forall c, (SN (redA \un red'A) c) <-> (SN ((refltrans redA) # red'A) c) /\ ((SN redA) c).
 Proof.
   intros Hst c. split.
   - intro HSN. split.
-    + assert (HSsimul: StrongSimul (refltrans redA # red'A) (redA \u red'A) Id).
+    + assert (HSsimul: StrongSimul (refltrans redA # red'A) (redA \un red'A) Id).
       {
         apply UnionReflStrongSimul.
       }
       apply HId in HSN.
       generalize dependent HSN.
       apply SNbySimul; assumption. 
-    + assert (HSsimul: StrongSimul redA (redA \u red'A) Id).
+    + assert (HSsimul: StrongSimul redA (redA \un red'A) Id).
       {
         apply UnionStrongSimul.
       }
@@ -710,9 +733,10 @@ Proof.
       generalize dependent HSN.
       apply SNbySimul; assumption. 
   - intro Hand. destruct Hand as [Hcomp HredA].
-    assert (HSNunion1: (SN ((refltrans redA) # red'A) c) -> (SN redA c) -> (SN (redA \u red'A) c)).
+    assert (HSNunion1: (SN ((refltrans redA) # red'A) c) -> (SN redA c) -> (SN (redA \un red'A) c)).
     {
       apply SNinclUnion.
+      intro b. apply Hst. 
     }
     apply HSNunion1; assumption.
 Qed.
