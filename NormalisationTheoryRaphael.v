@@ -374,6 +374,14 @@ Definition SN {A:Type} (red:Red A) (a:A): Prop
 Inductive SN_ind {A:Type} (red: Red A) (a:A): Prop :=
   | sn_acc: forall b, red a b -> SN_ind red b -> SN_ind red a.
 
+Lemma SN_ind_is_SN {A} {red:Red A}: forall a, SN_ind red a -> SN red a.
+Proof.
+Admitted.
+
+Lemma SN_is_SN_ind {A} {red:Red A}: forall a, SN red a -> SN_ind red a.
+Proof.
+Admitted.
+
 Lemma SN_eq_SN_ind {A} {red:Red A}: forall a, SN red a <-> SN_ind red a.
 Proof.
 Admitted.
@@ -661,11 +669,34 @@ Qed.
 
 Lemma inclUnion {A} {redA red'A: Red A}: forall a, (SN redA a) -> (forall b, Image ((refltrans redA) # red'A) (SN redA) b -> (SN (redA \u red'A) b)) -> (SN (redA \u red'A) a).
 Proof.
-  intros a HSN Hun.
-  apply Hun.
-  apply image with a.
+  intros a b HSN Hyp.
+  apply SN_ind_is_SN.
+  apply SN_is_SN_ind in HSN.
+  assert (Hyp' : (refltrans redA # red'A) a b -> SN_ind (redA \un red'A) b).
+  { 
+    intro Hrefl.
+    apply SN_is_SN_ind.
+    apply Hyp; assumption.
+  }
+  clear Hyp.
+  generalize dependent Hyp'.
+  generalize dependent b.
+  induction HSN.
+  intros b' Hyp.
+  assert (H': (redA \un red'A) a b).
+  {
+    admit.
+  }
+  apply sn_acc with b.
   - assumption.
-  - admit.
+  - apply IHHSN with b'.
+    intro Hrefl.
+    apply Hyp.
+    assert (Hcomp: redA a b ->  (refltrans redA # red'A) b b' -> (refltrans redA # red'A) a b').
+    {
+      admit.
+    }
+    apply Hcomp; assumption.
 Admitted.
 
 Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (forall b, SN redA a -> red'A a b -> SN redA b) -> (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \un red'A) a).
