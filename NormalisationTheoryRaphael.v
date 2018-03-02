@@ -703,14 +703,20 @@ Proof.
     + assumption.
 Qed.
 
-Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (forall b, SN redA a -> red'A a b -> SN redA b) -> (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
+Lemma stabComp {A} {redA red'A: Red A}: forall b, SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b.
+Proof.
+  intros.
+  Admitted.
+  
+Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (forall a b, SN redA a -> red'A a b -> SN redA b) -> (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
 Proof.
   intros a HStable HSNcomp HSN.
   apply SN_eq_SN_ind.
   generalize dependent HSN.
   apply SN_is_SN_ind in HSNcomp.
+  generalize dependent HStable.
   induction HSNcomp.
-  intros HSN.
+  intros HStable HSN.
   apply SN_is_SN_ind in HSN.
   assert (Hincl:  (SN redA a) -> ((((refltrans redA) # red'A) a b) -> SN (redA \u red'A) b) -> (SN (redA \u red'A) a)).
   {
@@ -720,22 +726,16 @@ Proof.
   apply Hincl.
   - apply SN_ind_is_SN; assumption.
   - intros Hcomp.
-    apply SN_ind_is_SN.
-    apply IHHSNcomp.
-    + Admitted.
-      
-      (* usar a estabilidade *)
-      (* Lemma stabComp {A} {redA red'A: Red A}: forall b, SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b. *)
-      (*  Proof. *)
-      (*  Admitted. *)
-       (* fim do lema de estabilidade *)
-      (* assert (HstabComp: SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b). *)
-      (* { *)
-      (*  apply stabComp. *)
-      (* } *)
-      (* apply HstabComp. *)
-   
-   
+    apply SN_ind_is_SN.    
+    apply IHHSNcomp.  
+    + assumption.
+    + apply SN_ind_is_SN.
+      assert (HstabComp: SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b).
+      {
+        apply stabComp.
+      }      
+      apply HstabComp; assumption.
+Qed.
 
 Lemma SNunion {A} {redA red'A: Red A}: 
     (forall a b, SN redA a -> red'A a b -> SN redA b) ->
