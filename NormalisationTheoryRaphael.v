@@ -529,8 +529,8 @@ but to all n-step reducts. In the natural numbers, we can assume the
 IH holds not only for n-1, but for all m<n.
 *)
 
-Theorem SNsind {A} {red: Red A} {P: A -> Prop}
-: (forall a, (forall b, trans red a b -> P b) -> SN red a -> P a)
+Theorem SNsind {A} {red: Red A} {P: A -> Prop} :
+  (forall a, (forall b, trans red a b -> P b) -> SN red a -> P a)
   -> (forall a, SN red a -> P a).
 Proof.
   intros H a H0.
@@ -589,7 +589,7 @@ Qed.
 Inductive Id {A} : Rel A A :=
   identity: forall a:A, Id a a.
 
-Fact inverseId {A}: forall a b :A, inverse Id a b -> a = b.
+Fact inverseId {A}: forall a b : A, inverse Id a b -> a = b.
 Proof.
   intros.
   inversion H; subst.
@@ -597,7 +597,8 @@ Proof.
   reflexivity.
 Qed.
 
-Lemma HId {A} (red: Red A): forall a, SN red a <-> Image (inverse Id) (SN red) a. 
+Lemma HId {A} (red: Red A): forall a,
+    SN red a <-> Image (inverse Id) (SN red) a. 
 Proof.
   split.
   - intros H.
@@ -703,12 +704,17 @@ Proof.
     + assumption.
 Qed.
 
-Lemma stabComp {A} {redA red'A: Red A}: forall b, SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b.
+Lemma stabComp {A} {redA red'A: Red A}: forall b,
+    SN_ind (refltrans redA # red'A) b ->
+    (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b.
 Proof.
   intros.
   Admitted.
   
-Lemma SNinclUnion {A} {redA red'A: Red A}: forall a, (forall a b, SN redA a -> red'A a b -> SN redA b) -> (SN ((refltrans redA) # red'A) a) -> (SN redA a) -> (SN (redA \u red'A) a).
+Lemma SNinclUnion {A} {redA red'A: Red A}: forall a,
+    (forall a b, SN redA a -> red'A a b -> SN redA b) ->
+    (SN ((refltrans redA) # red'A) a) -> (SN redA a) ->
+    (SN (redA \u red'A) a).
 Proof.
   intros a HStable HSNcomp HSN.
   apply SN_eq_SN_ind.
@@ -730,7 +736,9 @@ Proof.
     apply IHHSNcomp.  
     + assumption.
     + apply SN_ind_is_SN.
-      assert (HstabComp: SN_ind (refltrans redA # red'A) b -> (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b).
+      assert (HstabComp: SN_ind (refltrans redA # red'A) b ->
+                         (forall a b, SN redA a -> red'A a b
+                                      -> SN redA b) -> SN_ind redA b).
       {
         apply stabComp.
       }      
@@ -739,7 +747,8 @@ Qed.
 
 Lemma SNunion {A} {redA red'A: Red A}: 
     (forall a b, SN redA a -> red'A a b -> SN redA b) ->
-   forall c, (SN (redA \u red'A) c) <-> (SN ((refltrans redA) # red'A) c) /\ ((SN redA) c).
+    forall c, (SN (redA \u red'A) c) <->
+              (SN ((refltrans redA) # red'A) c) /\ ((SN redA) c).
 Proof.
   intros Hst c. split.
   - intro HSN. split.
