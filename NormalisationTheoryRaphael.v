@@ -415,7 +415,29 @@ Proof.
     assumption.
 Qed.
 
+
 (* If M is SN, so are its 1-step reducts *)
+Lemma SNstable {A} {red: Red A}: forall M, SN red M -> forall N, red M N -> SN red N.
+Proof.
+  assert (H: patriarchal red (fun a => forall b, red a b -> SN red b)).
+  { unfold patriarchal.
+    unfold SN.
+    intros.
+    unfold patriarchal in *.
+    apply H1.
+    intros.
+    apply H with (y := b).
+    - assumption.
+    - assumption.
+    - apply H1.
+  }
+  assert (H1: patriarchal red (SN red)).
+  { apply SNpatriarchal. }
+  intros.
+  apply (H0 _ H).
+  assumption.
+Qed.
+
 Lemma SNstable {A} {red: Red A}: forall M, SN red M -> forall N, red M N -> SN red N.
 Proof.
   assert (H: patriarchal red (fun a => forall b, red a b -> SN red b)).
@@ -709,7 +731,12 @@ Lemma stabComp {A} {redA red'A: Red A}: forall b,
     (forall a b, SN redA a -> red'A a b -> SN redA b) -> SN_ind redA b.
 Proof.
   intros.
-  Admitted.
+  induction H.
+  apply SN_is_SN_ind.
+  apply H0 with b.
+  apply SN_ind_is_SN; assumption.
+  inversion H; subst.
+  
   
 Lemma SNinclUnion {A} {redA red'A: Red A}: forall a,
     (forall a b, SN redA a -> red'A a b -> SN redA b) ->
@@ -737,9 +764,10 @@ Proof.
     + assumption.
     + apply SN_ind_is_SN.
       assert (HstabComp: SN_ind (refltrans redA # red'A) b ->
-                         (forall a b, SN redA a -> red'A a b
-                                      -> SN redA b) -> SN_ind redA b).
+                         (forall a b, SN redA a -> red'A a b ->
+                                      SN redA b) -> SN_ind redA b).
       {
+        
         apply stabComp.
       }      
       apply HstabComp; assumption.
