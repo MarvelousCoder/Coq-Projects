@@ -1,0 +1,20 @@
+(** 116297 - TÃ³picos AvanÃ§ados em Computadores - 2017/2           **)
+(** Provas Formais: Uma IntroduÃ§Ã£o Ã  Teoria de Tipos - Turma B    **)
+(** Prof. FlÃ¡vio L. C. de Moura                                   **)
+(** Email: contato@flaviomoura.mat.br                             **)
+(** Homepage: http://flaviomoura.mat.br                           **)
+
+(** Aluno:                                                        **)
+(** MatrÃ­cula:                                                    **)
+
+(** Atividade: Formalizar um algoritmo ordenaÃ§Ã£o de sua preferÃªncia. *)
+
+(** Esta atividade pode ser realizada individualmente ou em dupla. *)
+
+(** Algumas dicas:
+    1. Utilize a biblioteca Arith do Coq. Com isto vocÃª terÃ¡ diversas propriedades sobre os nÃºmeros naturais, e listas de nÃºmeros naturais para utilizar. *)
+
+Require Import Arith.
+
+(**
+    2. Utilize a formalizaÃ§Ã£o do algoritmo de ordenaÃ§Ã£o por inserÃ§Ã£o desenvolvida em sala como parÃ¢metro. *)

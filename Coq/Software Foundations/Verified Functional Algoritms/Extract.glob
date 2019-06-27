@@ -1,0 +1,394 @@
+DIGEST af62218818e643bcf3839d130703faf2
+FExtract
+R607:610 Perm <> <> lib
+mod 621:625 <> Sort1
+def 637:642 Sort1 insert
+R647:649 Coq.Init.Datatypes <> nat ind
+R656:659 Coq.Init.Datatypes <> list ind
+R661:663 Coq.Init.Datatypes <> nat ind
+R678:678 Extract <> l var
+R689:691 Coq.Init.Datatypes <> nil constr
+R697:698 Coq.Init.Datatypes <> :list_scope:x_'::'_x not
+R696:696 Extract <> i var
+R699:701 Coq.Init.Datatypes <> nil constr
+R708:709 Coq.Init.Datatypes <> :list_scope:x_'::'_x not
+R719:723 Coq.Arith.PeanoNat <> :nat_scope:x_'<=?'_x not
+R718:718 Extract <> i var
+R745:748 Coq.Init.Datatypes <> :list_scope:x_'::'_x not
+R749:754 Extract <> insert def
+R756:756 Extract <> i var
+R732:733 Coq.Init.Datatypes <> :list_scope:x_'::'_x not
+R731:731 Extract <> i var
+R735:736 Coq.Init.Datatypes <> :list_scope:x_'::'_x not
+def 776:779 Sort1 sort
+R785:788 Coq.Init.Datatypes <> list ind
+R790:792 Coq.Init.Datatypes <> nat ind
+R797:800 Coq.Init.Datatypes <> list ind
+R802:804 Coq.Init.Datatypes <> nat ind
+R817:817 Extract <> l var
+R828:830 Coq.Init.Datatypes <> nil constr
+R835:837 Coq.Init.Datatypes <> nil constr
+R844:845 Coq.Init.Datatypes <> :list_scope:x_'::'_x not
+R851:856 Extract Sort1 insert def
+R861:864 Extract <> sort def
+R956:959 Extract Sort1 sort def
+R1669:1672 Coq.Init.Datatypes <> bool ind
+R1722:1725 Coq.Init.Datatypes <> list ind
+R1787:1791 Extract Sort1 <> mod
+R3233:3238 Coq.ZArith.ZArith <> <> lib
+ax 4160:4162 <> int
+ax 4291:4293 <> ltb
+R4299:4302 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4306:4309 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4310:4313 Coq.Init.Datatypes <> bool ind
+R4303:4305 Extract <> int defax
+R4296:4298 Extract <> int defax
+ax 5031:5035 <> int2Z
+R5041:5044 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R5045:5045 Coq.Numbers.BinNums <> Z ind
+R5038:5040 Extract <> int defax
+ax 5056:5061 <> ltb_lt
+R5078:5080 Extract <> int defax
+R5097:5101 Coq.Init.Logic <> :type_scope:x_'<->'_x not
+R5090:5092 Coq.Init.Logic <> :type_scope:x_'='_x not
+R5083:5085 Extract <> ltb defax
+R5089:5089 Extract <> m var
+R5087:5087 Extract <> n var
+R5093:5096 Coq.Init.Datatypes <> true constr
+R5109:5111 Coq.ZArith.BinInt <> :Z_scope:x_'<'_x not
+R5102:5106 Extract <> int2Z defax
+R5108:5108 Extract <> n var
+R5112:5116 Extract <> int2Z defax
+R5118:5118 Extract <> m var
+prf 6362:6376 <> int_blt_reflect
+R6392:6398 Coq.Bool.Bool <> reflect ind
+R6421:6423 Extract <> ltb defax
+R6427:6427 Extract <> y var
+R6425:6425 Extract <> x var
+R6408:6410 Coq.ZArith.BinInt <> :Z_scope:x_'<'_x not
+R6401:6405 Extract <> int2Z defax
+R6407:6407 Extract <> x var
+R6411:6415 Extract <> int2Z defax
+R6417:6417 Extract <> y var
+R6460:6470 Coq.Bool.Bool <> iff_reflect thm
+R6460:6470 Coq.Bool.Bool <> iff_reflect thm
+R6489:6494 Extract <> ltb_lt prfax
+R6489:6494 Extract <> ltb_lt prfax
+prf 6509:6521 <> Z_eqb_reflect
+R6537:6543 Coq.Bool.Bool <> reflect ind
+R6552:6556 Coq.ZArith.BinInt Z eqb def
+R6560:6560 Extract <> y var
+R6558:6558 Extract <> x var
+R6547:6547 Coq.Init.Logic <> :type_scope:x_'='_x not
+R6546:6546 Extract <> x var
+R6548:6548 Extract <> y var
+R6593:6603 Coq.Bool.Bool <> iff_reflect thm
+R6593:6603 Coq.Bool.Bool <> iff_reflect thm
+R6622:6629 Coq.ZArith.BinInt Z eqb_eq thm
+R6622:6629 Coq.ZArith.BinInt Z eqb_eq thm
+prf 6644:6656 <> Z_ltb_reflect
+R6672:6678 Coq.Bool.Bool <> reflect ind
+R6687:6691 Coq.ZArith.BinInt Z ltb def
+R6695:6695 Extract <> y var
+R6693:6693 Extract <> x var
+R6682:6682 Coq.ZArith.BinInt <> :Z_scope:x_'<'_x not
+R6681:6681 Extract <> x var
+R6683:6683 Extract <> y var
+R6728:6738 Coq.Bool.Bool <> iff_reflect thm
+R6728:6738 Coq.Bool.Bool <> iff_reflect thm
+R6757:6764 Coq.ZArith.BinInt Z ltb_lt thm
+R6757:6764 Coq.ZArith.BinInt Z ltb_lt thm
+R7505:7538 Coq.Logic.FunctionalExtensionality <> <> lib
+mod 7549:7555 <> IntMaps
+def 7569:7577 IntMaps total_map
+R7592:7595 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R7596:7596 Extract <> A var
+R7591:7591 Coq.Numbers.BinNums <> Z ind
+def 7610:7616 IntMaps t_empty
+R7632:7632 Extract <> A var
+R7637:7645 Extract IntMaps total_map def
+R7647:7647 Extract <> A var
+R7663:7663 Extract <> v var
+def 7678:7685 IntMaps t_update
+R7701:7709 Extract IntMaps total_map def
+R7711:7711 Extract <> A var
+R7719:7719 Coq.Numbers.BinNums <> Z ind
+R7727:7727 Extract <> A var
+R7748:7752 Coq.ZArith.BinInt Z eqb def
+R7756:7757 Extract <> x' var
+R7754:7754 Extract <> x var
+R7771:7771 Extract <> m var
+R7773:7774 Extract <> x' var
+R7764:7764 Extract <> v var
+prf 7783:7793 IntMaps t_update_eq
+R7810:7818 Extract IntMaps total_map def
+R7820:7820 Extract <> A var
+R7846:7848 Coq.Init.Logic <> :type_scope:x_'='_x not
+R7829:7836 Extract IntMaps t_update def
+R7842:7842 Extract <> v var
+R7840:7840 Extract <> x var
+R7838:7838 Extract <> m var
+R7845:7845 Extract <> x var
+R7849:7849 Extract <> v var
+R7876:7883 Extract IntMaps t_update def
+R7900:7901 Coq.ZArith.BinInt <> :Z_scope:x_'=?'_x not
+R7900:7901 Coq.ZArith.BinInt <> :Z_scope:x_'=?'_x not
+prf 7936:7947 IntMaps t_update_neq
+R7980:7988 Extract IntMaps total_map def
+R7990:7990 Extract <> X var
+R8004:8008 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R8029:8031 Coq.Init.Logic <> :type_scope:x_'='_x not
+R8010:8017 Extract IntMaps t_update def
+R8024:8024 Extract <> v var
+R8021:8022 Extract <> x1 var
+R8019:8019 Extract <> m var
+R8027:8028 Extract <> x2 var
+R8032:8032 Extract <> m var
+R8034:8035 Extract <> x2 var
+R7998:8001 Coq.Init.Logic <> :type_scope:x_'<>'_x not
+R7996:7997 Extract <> x1 var
+R8002:8003 Extract <> x2 var
+R8062:8069 Extract IntMaps t_update def
+R8087:8088 Coq.ZArith.BinInt <> :Z_scope:x_'=?'_x not
+R8087:8088 Coq.ZArith.BinInt <> :Z_scope:x_'=?'_x not
+prf 8121:8135 IntMaps t_update_shadow
+R8152:8160 Extract IntMaps total_map def
+R8162:8162 Extract <> A var
+R8209:8212 Coq.Init.Logic <> :type_scope:x_'='_x not
+R8178:8185 Extract IntMaps t_update def
+R8207:8208 Extract <> v2 var
+R8205:8205 Extract <> x var
+R8188:8195 Extract IntMaps t_update def
+R8201:8202 Extract <> v1 var
+R8199:8199 Extract <> x var
+R8197:8197 Extract <> m var
+R8213:8220 Extract IntMaps t_update def
+R8226:8227 Extract <> v2 var
+R8224:8224 Extract <> x var
+R8222:8222 Extract <> m var
+R8254:8261 Extract IntMaps t_update def
+R8299:8300 Coq.ZArith.BinInt <> :Z_scope:x_'=?'_x not
+R8299:8300 Coq.ZArith.BinInt <> :Z_scope:x_'=?'_x not
+R8322:8328 Extract IntMaps <> mod
+mod 8472:8482 <> SearchTree2
+sec 8493:8497 SearchTree2 TREES
+var 8509:8509 SearchTree2.TREES V
+var 8528:8534 SearchTree2.TREES default
+R8537:8537 Extract <> SearchTree2.TREES.V var
+def 8552:8554 SearchTree2 key
+R8559:8561 Extract <> int defax
+ind 8575:8578 SearchTree2 tree
+constr 8593:8593 SearchTree2 E
+constr 8605:8605 SearchTree2 T
+R8597:8600 Extract <> tree ind
+R8612:8615 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R8619:8622 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R8624:8627 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R8632:8635 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R8636:8639 Extract <> tree ind
+R8628:8631 Extract <> tree ind
+R8623:8623 Extract <> SearchTree2.TREES.V var
+R8616:8618 Extract SearchTree2 key def
+R8608:8611 Extract <> tree ind
+def 8654:8663 SearchTree2 empty_tree
+R8667:8670 Extract SearchTree2 tree ind
+R8675:8675 Extract SearchTree2 E constr
+def 8688:8693 SearchTree2 lookup
+R8699:8701 Extract SearchTree2 key def
+R8709:8712 Extract SearchTree2 tree ind
+R8717:8717 Extract <> SearchTree2.TREES.V var
+R8730:8730 Extract <> t var
+R8741:8741 Extract SearchTree2 E constr
+R8746:8752 Extract <> SearchTree2.TREES.default var
+R8758:8758 Extract SearchTree2 T constr
+R8776:8778 Extract <> ltb defax
+R8780:8780 Extract <> x var
+R8835:8837 Extract <> ltb defax
+R8841:8841 Extract <> x var
+R8848:8853 Extract <> lookup def
+R8855:8855 Extract <> x var
+R8789:8794 Extract <> lookup def
+R8796:8796 Extract <> x var
+def 8909:8914 SearchTree2 insert
+R8920:8922 Extract SearchTree2 key def
+R8929:8929 Extract <> SearchTree2.TREES.V var
+R8936:8939 Extract SearchTree2 tree ind
+R8944:8947 Extract SearchTree2 tree ind
+R8959:8959 Extract <> s var
+R8970:8970 Extract SearchTree2 E constr
+R8975:8975 Extract SearchTree2 T constr
+R8983:8983 Extract SearchTree2 E constr
+R8981:8981 Extract <> v var
+R8979:8979 Extract <> x var
+R8977:8977 Extract SearchTree2 E constr
+R8988:8988 Extract SearchTree2 T constr
+R9006:9008 Extract <> ltb defax
+R9010:9010 Extract <> x var
+R9075:9077 Extract <> ltb defax
+R9081:9081 Extract <> x var
+R9141:9141 Extract SearchTree2 T constr
+R9147:9147 Extract <> v var
+R9145:9145 Extract <> x var
+R9088:9088 Extract SearchTree2 T constr
+R9098:9103 Extract <> insert def
+R9107:9107 Extract <> v var
+R9105:9105 Extract <> x var
+R9019:9019 Extract SearchTree2 T constr
+R9022:9027 Extract <> insert def
+R9031:9031 Extract <> v var
+R9029:9029 Extract <> x var
+def 9167:9175 SearchTree2 elements'
+R9181:9184 Extract SearchTree2 tree ind
+R9194:9197 Coq.Init.Datatypes <> list ind
+R9203:9203 Coq.Init.Datatypes <> :type_scope:x_'*'_x not
+R9200:9202 Extract SearchTree2 key def
+R9204:9204 Extract <> SearchTree2.TREES.V var
+R9210:9213 Coq.Init.Datatypes <> list ind
+R9219:9221 Coq.Init.Datatypes <> :type_scope:x_'*'_x not
+R9216:9218 Extract SearchTree2 key def
+R9222:9222 Extract <> SearchTree2.TREES.V var
+R9235:9235 Extract <> s var
+R9245:9245 Extract SearchTree2 E constr
+R9250:9253 Extract <> base var
+R9258:9258 Extract SearchTree2 T constr
+R9271:9279 Extract <> elements' def
+R9289:9292 Coq.Init.Datatypes <> :list_scope:x_'::'_x not
+R9284:9284 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R9286:9286 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R9288:9288 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R9293:9301 Extract <> elements' def
+R9305:9308 Extract <> base var
+def 9329:9336 SearchTree2 elements
+R9342:9345 Extract SearchTree2 tree ind
+R9350:9353 Coq.Init.Datatypes <> list ind
+R9359:9361 Coq.Init.Datatypes <> :type_scope:x_'*'_x not
+R9356:9358 Extract SearchTree2 key def
+R9362:9362 Extract <> SearchTree2.TREES.V var
+R9368:9376 Extract SearchTree2 elements' def
+R9380:9382 Coq.Init.Datatypes <> nil constr
+R9378:9378 Extract <> s var
+def 9397:9403 SearchTree2 combine
+R9417:9417 Coq.Numbers.BinNums <> Z ind
+R9428:9436 Extract IntMaps total_map def
+R9438:9438 Extract <> A var
+R9443:9451 Extract IntMaps total_map def
+R9453:9453 Extract <> A var
+R9472:9476 Coq.ZArith.BinInt Z ltb def
+R9480:9484 Extract <> pivot var
+R9478:9478 Extract <> x var
+R9502:9503 Extract <> m2 var
+R9505:9505 Extract <> x var
+R9492:9493 Extract <> m1 var
+R9495:9495 Extract <> x var
+ind 9519:9521 SearchTree2 Abs
+constr 9558:9562 SearchTree2 Abs_E
+constr 9591:9595 SearchTree2 Abs_T
+R9529:9532 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R9544:9547 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R9533:9541 Extract IntMaps total_map def
+R9543:9543 Extract <> SearchTree2.TREES.V var
+R9525:9528 Extract SearchTree2 tree ind
+R9565:9567 Extract <> Abs ind
+R9572:9578 Extract IntMaps t_empty def
+R9580:9586 Extract <> SearchTree2.TREES.default var
+R9569:9569 Extract SearchTree2 E constr
+R9631:9640 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R9648:9657 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R9658:9660 Extract <> Abs ind
+R9676:9683 Extract IntMaps t_update def
+R9719:9719 Extract <> v var
+R9710:9714 Extract <> int2Z defax
+R9716:9716 Extract <> k var
+R9686:9692 Extract SearchTree2 combine def
+R9706:9706 Extract <> b var
+R9704:9704 Extract <> a var
+R9695:9699 Extract <> int2Z defax
+R9701:9701 Extract <> k var
+R9663:9663 Extract SearchTree2 T constr
+R9671:9671 Extract <> r var
+R9669:9669 Extract <> v var
+R9667:9667 Extract <> k var
+R9665:9665 Extract <> l var
+R9641:9643 Extract <> Abs ind
+R9647:9647 Extract <> b var
+R9645:9645 Extract <> r var
+R9624:9626 Extract <> Abs ind
+R9630:9630 Extract <> a var
+R9628:9628 Extract <> l var
+prf 9732:9748 SearchTree2 empty_tree_relate
+R9751:9753 Extract SearchTree2 Abs ind
+R9767:9773 Extract IntMaps t_empty def
+R9775:9781 Extract <> SearchTree2.TREES.default var
+R9755:9764 Extract SearchTree2 empty_tree def
+prf 9866:9878 SearchTree2 lookup_relate
+R9911:9914 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R9925:9928 Coq.Init.Logic <> :type_scope:x_'='_x not
+R9915:9920 Extract SearchTree2 lookup def
+R9924:9924 Extract <> t var
+R9922:9922 Extract <> k var
+R9929:9931 Extract <> cts var
+R9934:9938 Extract <> int2Z defax
+R9940:9940 Extract <> k var
+R9902:9904 Extract SearchTree2 Abs ind
+R9908:9910 Extract <> cts var
+R9906:9906 Extract <> t var
+prf 10102:10114 SearchTree2 insert_relate
+R10149:10156 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R10157:10159 Extract SearchTree2 Abs ind
+R10177:10184 Extract IntMaps t_update def
+R10200:10200 Extract <> v var
+R10191:10195 Extract <> int2Z defax
+R10197:10197 Extract <> k var
+R10186:10188 Extract <> cts var
+R10162:10167 Extract SearchTree2 insert def
+R10173:10173 Extract <> t var
+R10171:10171 Extract <> v var
+R10169:10169 Extract <> k var
+R10140:10142 Extract SearchTree2 Abs ind
+R10146:10148 Extract <> cts var
+R10144:10144 Extract <> t var
+prf 10379:10411 SearchTree2 unrealistically_strong_can_relate
+R10426:10432 Coq.Init.Logic <> :type_scope:'exists'_x_'..'_x_','_x not
+R10436:10437 Coq.Init.Logic <> :type_scope:'exists'_x_'..'_x_','_x not
+R10438:10440 Extract SearchTree2 Abs ind
+R10444:10446 Extract <> cts var
+R10442:10442 Extract <> t var
+R10570:10574 Extract SearchTree2.TREES <> sec
+R11065:11075 Extract SearchTree2 <> mod
+R13542:13551 SearchTree <> <> lib
+mod 13561:13571 <> Experiments
+def 13607:13616 Experiments empty_tree
+R13621:13641 SearchTree <> empty_tree def
+R13643:13645 Coq.Init.Datatypes <> nat ind
+def 13659:13664 Experiments insert
+R13669:13685 SearchTree <> insert def
+R13687:13689 Coq.Init.Datatypes <> nat ind
+def 13703:13708 Experiments lookup
+R13713:13729 SearchTree <> lookup def
+R13731:13733 Coq.Init.Datatypes <> nat ind
+def 13749:13749 Experiments E
+R13754:13765 SearchTree <> E constr
+R13767:13769 Coq.Init.Datatypes <> nat ind
+def 13783:13783 Experiments T
+R13788:13799 SearchTree <> T constr
+R13801:13803 Coq.Init.Datatypes <> nat ind
+R13898:13901 Coq.Init.Logic <> :type_scope:x_'<>'_x not
+R13812:13817 Extract Experiments insert def
+R13824:13829 Extract Experiments insert def
+R13836:13841 Extract Experiments insert def
+R13848:13853 Extract Experiments insert def
+R13860:13865 Extract Experiments insert def
+R13872:13877 Extract Experiments insert def
+R13883:13892 Extract Experiments empty_tree def
+R13902:13902 Extract Experiments E def
+R13917:13917 Extract Experiments E def
+R13932:13932 Extract Experiments T def
+R13917:13917 Extract Experiments E def
+R13932:13932 Extract Experiments T def
+R13932:13932 Extract Experiments T def
+R13932:13932 Extract Experiments T def
+R13932:13932 Extract Experiments T def
+R13932:13932 Extract Experiments T def
+R13932:13932 Extract Experiments T def
+R13932:13932 Extract Experiments T def
+R14442:14452 Extract Experiments <> mod

@@ -1,0 +1,613 @@
+DIGEST 5b5f73dab09bc1ac73e9b92b694c0c67
+FADT
+R50:54 Coq.omega.Omega <> <> lib
+modtype 263:267 <> TABLE
+ax 281:281 TABLE V
+ax 301:307 TABLE default
+R310:310 ADT TABLE V defax
+ax 324:328 TABLE table
+def 349:351 TABLE key
+R356:358 Coq.Init.Datatypes <> nat ind
+ax 372:376 TABLE empty
+R379:383 ADT TABLE table defax
+ax 397:399 TABLE get
+R405:408 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R414:417 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R418:418 ADT TABLE V defax
+R409:413 ADT TABLE table defax
+R402:404 ADT TABLE key def
+ax 432:434 TABLE set
+R440:443 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R445:448 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R454:457 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R458:462 ADT TABLE table defax
+R449:453 ADT TABLE table defax
+R444:444 ADT TABLE V defax
+R437:439 ADT TABLE key def
+ax 472:477 TABLE gempty
+R526:528 Coq.Init.Logic <> :type_scope:x_'='_x not
+R515:517 ADT TABLE get defax
+R521:525 ADT TABLE empty defax
+R519:519 ADT <> k var
+R529:535 ADT TABLE default defax
+ax 545:547 TABLE gss
+R611:613 Coq.Init.Logic <> :type_scope:x_'='_x not
+R594:596 ADT TABLE get defax
+R601:603 ADT TABLE set defax
+R609:609 ADT <> t var
+R607:607 ADT <> v var
+R605:605 ADT <> k var
+R598:598 ADT <> k var
+R614:614 ADT <> v var
+ax 624:626 TABLE gso
+R680:683 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R701:703 Coq.Init.Logic <> :type_scope:x_'='_x not
+R684:686 ADT TABLE get defax
+R691:693 ADT TABLE set defax
+R699:699 ADT <> t var
+R697:697 ADT <> v var
+R695:695 ADT <> k var
+R688:688 ADT <> j var
+R704:706 ADT TABLE get defax
+R710:710 ADT <> t var
+R708:708 ADT <> j var
+R675:678 Coq.Init.Logic <> :type_scope:x_'<>'_x not
+R674:674 ADT <> j var
+R679:679 ADT <> k var
+R717:721 ADT TABLE <> modtype
+R1090:1093 Maps <> <> lib
+R1117:1121 ADT TABLE <> mod
+mod 1104:1112 <> MapsTable
+def 1136:1136 MapsTable V
+def 1159:1165 MapsTable default
+R1168:1168 ADT MapsTable V def
+def 1191:1195 MapsTable table
+R1200:1208 Maps <> total_map def
+R1210:1210 ADT MapsTable V def
+def 1225:1227 MapsTable key
+R1232:1234 Coq.Init.Datatypes <> nat ind
+def 1249:1253 MapsTable empty
+R1257:1261 ADT MapsTable table def
+R1266:1272 Maps <> t_empty def
+R1274:1280 ADT MapsTable default def
+def 1295:1297 MapsTable get
+R1303:1305 ADT MapsTable key def
+R1312:1316 ADT MapsTable table def
+R1321:1321 ADT MapsTable V def
+R1326:1326 ADT <> m var
+R1328:1328 ADT <> k var
+def 1343:1345 MapsTable set
+R1351:1353 ADT MapsTable key def
+R1360:1360 ADT MapsTable V def
+R1367:1371 ADT MapsTable table def
+R1376:1380 ADT MapsTable table def
+R1389:1396 Maps <> t_update def
+R1402:1402 ADT <> v var
+R1400:1400 ADT <> k var
+R1398:1398 ADT <> m var
+prf 1414:1419 MapsTable gempty
+R1443:1445 Coq.Init.Logic <> :type_scope:x_'='_x not
+R1432:1434 ADT MapsTable get def
+R1438:1442 ADT MapsTable empty def
+R1436:1436 ADT <> k var
+R1446:1452 ADT MapsTable default def
+prf 1500:1502 MapsTable gss
+R1537:1539 Coq.Init.Logic <> :type_scope:x_'='_x not
+R1520:1522 ADT MapsTable get def
+R1527:1529 ADT MapsTable set def
+R1535:1535 ADT <> t var
+R1533:1533 ADT <> v var
+R1531:1531 ADT <> k var
+R1524:1524 ADT <> k var
+R1540:1540 ADT <> v var
+R1568:1570 ADT MapsTable get def
+R1573:1575 ADT MapsTable set def
+R1584:1594 Maps <> t_update_eq prfax
+R1584:1594 Maps <> t_update_eq prfax
+prf 1613:1615 MapsTable gso
+R1638:1641 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R1659:1661 Coq.Init.Logic <> :type_scope:x_'='_x not
+R1642:1644 ADT MapsTable get def
+R1649:1651 ADT MapsTable set def
+R1657:1657 ADT <> t var
+R1655:1655 ADT <> v var
+R1653:1653 ADT <> k var
+R1646:1646 ADT <> j var
+R1662:1664 ADT MapsTable get def
+R1668:1668 ADT <> t var
+R1666:1666 ADT <> j var
+R1635:1636 Coq.Init.Logic <> :type_scope:x_'<>'_x not
+R1634:1634 ADT <> j var
+R1637:1637 ADT <> k var
+R1696:1698 ADT MapsTable get def
+R1701:1703 ADT MapsTable set def
+R1712:1723 Maps <> t_update_neq prfax
+R1712:1723 Maps <> t_update_neq prfax
+R1757:1765 ADT MapsTable <> mod
+R2085:2097 ADT <> get def
+R2102:2114 ADT <> set def
+R2124:2136 ADT <> set def
+R2145:2159 ADT <> empty def
+R2140:2143 Coq.Init.Datatypes <> bool ind
+R2118:2121 Coq.Init.Datatypes <> unit ind
+R2821:2830 SearchTree <> <> lib
+R2854:2858 ADT TABLE <> mod
+mod 2841:2849 <> TreeTable
+def 2873:2873 TreeTable V
+def 2896:2902 TreeTable default
+R2906:2906 ADT TreeTable V def
+def 2929:2933 TreeTable table
+R2938:2941 SearchTree <> tree ind
+R2943:2943 ADT TreeTable V def
+def 2958:2960 TreeTable key
+R2965:2967 Coq.Init.Datatypes <> nat ind
+def 2982:2986 TreeTable empty
+R2990:2994 ADT TreeTable table def
+R2999:3008 SearchTree <> empty_tree def
+R3010:3010 ADT TreeTable V def
+def 3025:3027 TreeTable get
+R3033:3035 ADT TreeTable key def
+R3042:3046 ADT TreeTable table def
+R3051:3051 ADT TreeTable V def
+R3056:3061 SearchTree <> lookup def
+R3075:3075 ADT <> m var
+R3073:3073 ADT <> k var
+R3065:3071 ADT TreeTable default def
+R3063:3063 ADT TreeTable V def
+def 3090:3092 TreeTable set
+R3098:3100 ADT TreeTable key def
+R3107:3107 ADT TreeTable V def
+R3114:3118 ADT TreeTable table def
+R3123:3127 ADT TreeTable table def
+R3137:3142 SearchTree <> insert def
+R3150:3150 ADT <> m var
+R3148:3148 ADT <> v var
+R3146:3146 ADT <> k var
+R3144:3144 ADT TreeTable V def
+prf 3162:3167 TreeTable gempty
+R3191:3193 Coq.Init.Logic <> :type_scope:x_'='_x not
+R3180:3182 ADT TreeTable get def
+R3186:3190 ADT TreeTable empty def
+R3184:3184 ADT <> k var
+R3194:3200 ADT TreeTable default def
+prf 3249:3251 TreeTable gss
+R3286:3288 Coq.Init.Logic <> :type_scope:x_'='_x not
+R3269:3271 ADT TreeTable get def
+R3276:3278 ADT TreeTable set def
+R3284:3284 ADT <> t var
+R3282:3282 ADT <> v var
+R3280:3280 ADT <> k var
+R3273:3273 ADT <> k var
+R3289:3289 ADT <> v var
+R3317:3319 ADT TreeTable get def
+R3322:3324 ADT TreeTable set def
+R3342:3374 SearchTree <> unrealistically_strong_can_relate prfax
+R3378:3384 ADT TreeTable default def
+R3376:3376 ADT TreeTable V def
+R3342:3374 SearchTree <> unrealistically_strong_can_relate prfax
+R3378:3384 ADT TreeTable default def
+R3376:3376 ADT TreeTable V def
+R3428:3440 SearchTree <> insert_relate prfax
+R3444:3450 ADT TreeTable default def
+R3442:3442 ADT TreeTable V def
+R3428:3440 SearchTree <> insert_relate prfax
+R3444:3450 ADT TreeTable default def
+R3442:3442 ADT TreeTable V def
+R3485:3497 SearchTree <> lookup_relate prfax
+R3501:3507 ADT TreeTable default def
+R3499:3499 ADT TreeTable V def
+R3485:3497 SearchTree <> lookup_relate prfax
+R3501:3507 ADT TreeTable default def
+R3499:3499 ADT TreeTable V def
+R3542:3552 Maps <> t_update_eq prfax
+R3542:3552 Maps <> t_update_eq prfax
+prf 3698:3700 TreeTable gso
+R3724:3727 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3745:3747 Coq.Init.Logic <> :type_scope:x_'='_x not
+R3728:3730 ADT TreeTable get def
+R3735:3737 ADT TreeTable set def
+R3743:3743 ADT <> t var
+R3741:3741 ADT <> v var
+R3739:3739 ADT <> k var
+R3732:3732 ADT <> j var
+R3748:3750 ADT TreeTable get def
+R3754:3754 ADT <> t var
+R3752:3752 ADT <> j var
+R3721:3722 Coq.Init.Logic <> :type_scope:x_'<>'_x not
+R3720:3720 ADT <> j var
+R3723:3723 ADT <> k var
+R3812:3820 ADT TreeTable <> mod
+R3962:3971 SearchTree <> can_relate prfax
+R5251:5255 Coq.Init.Specif <> exist constr
+R5348:5356 Coq.Init.Specif <> proj1_sig def
+R5438:5446 Coq.Init.Specif <> proj2_sig def
+R5705:5709 ADT TABLE <> mod
+mod 5691:5700 <> TreeTable2
+def 5724:5724 TreeTable2 V
+def 5747:5753 TreeTable2 default
+R5757:5757 ADT TreeTable2 V def
+def 5780:5784 TreeTable2 table
+R5789:5789 Coq.Init.Specif <> :type_scope:'{'_x_'|'_x_'}' not
+R5791:5793 Coq.Init.Specif <> :type_scope:'{'_x_'|'_x_'}' not
+R5808:5808 Coq.Init.Specif <> :type_scope:'{'_x_'|'_x_'}' not
+R5794:5803 SearchTree <> SearchTree ind
+R5805:5805 ADT TreeTable2 V def
+def 5823:5825 TreeTable2 key
+R5830:5832 Coq.Init.Datatypes <> nat ind
+def 5847:5851 TreeTable2 empty
+R5855:5859 ADT TreeTable2 table def
+R5868:5872 Coq.Init.Specif <> exist constr
+R5905:5925 SearchTree <> empty_tree_SearchTree prfax
+R5927:5927 ADT TreeTable2 V def
+R5890:5899 SearchTree <> empty_tree def
+R5901:5901 ADT TreeTable2 V def
+R5875:5884 SearchTree <> SearchTree ind
+R5886:5886 ADT TreeTable2 V def
+def 5943:5945 TreeTable2 get
+R5951:5953 ADT TreeTable2 key def
+R5960:5964 ADT TreeTable2 table def
+R5969:5969 ADT TreeTable2 V def
+R5986:5991 SearchTree <> lookup def
+R6006:6014 Coq.Init.Specif <> proj1_sig def
+R6016:6016 ADT <> m var
+R6003:6003 ADT <> k var
+R5995:6001 ADT TreeTable2 default def
+R5993:5993 ADT TreeTable2 V def
+def 6033:6035 TreeTable2 set
+R6041:6043 ADT TreeTable2 key def
+R6050:6050 ADT TreeTable2 V def
+R6057:6061 ADT TreeTable2 table def
+R6066:6070 ADT TreeTable2 table def
+R6078:6082 Coq.Init.Specif <> exist constr
+R6140:6156 SearchTree <> insert_SearchTree prfax
+R6167:6175 Coq.Init.Specif <> proj2_sig def
+R6177:6177 ADT <> m var
+R6100:6105 SearchTree <> insert def
+R6114:6122 Coq.Init.Specif <> proj1_sig def
+R6124:6124 ADT <> m var
+R6111:6111 ADT <> v var
+R6109:6109 ADT <> k var
+R6107:6107 ADT TreeTable2 V def
+R6085:6094 SearchTree <> SearchTree ind
+R6096:6096 ADT TreeTable2 V def
+prf 6192:6197 TreeTable2 gempty
+R6221:6223 Coq.Init.Logic <> :type_scope:x_'='_x not
+R6210:6212 ADT TreeTable2 get def
+R6216:6220 ADT TreeTable2 empty def
+R6214:6214 ADT <> k var
+R6224:6230 ADT TreeTable2 default def
+prf 6279:6281 TreeTable2 gss
+R6316:6318 Coq.Init.Logic <> :type_scope:x_'='_x not
+R6299:6301 ADT TreeTable2 get def
+R6306:6308 ADT TreeTable2 set def
+R6314:6314 ADT <> t var
+R6312:6312 ADT <> v var
+R6310:6310 ADT <> k var
+R6303:6303 ADT <> k var
+R6319:6319 ADT <> v var
+R6346:6348 ADT TreeTable2 get def
+R6351:6353 ADT TreeTable2 set def
+R6367:6371 ADT TreeTable2 table def
+R6792:6801 SearchTree <> can_relate prfax
+R6805:6811 ADT TreeTable2 default def
+R6803:6803 ADT TreeTable2 V def
+R6792:6801 SearchTree <> can_relate prfax
+R6805:6811 ADT TreeTable2 default def
+R6803:6803 ADT TreeTable2 V def
+R6847:6859 SearchTree <> insert_relate prfax
+R6863:6869 ADT TreeTable2 default def
+R6861:6861 ADT TreeTable2 V def
+R6847:6859 SearchTree <> insert_relate prfax
+R6863:6869 ADT TreeTable2 default def
+R6861:6861 ADT TreeTable2 V def
+R6901:6913 SearchTree <> lookup_relate prfax
+R6917:6923 ADT TreeTable2 default def
+R6915:6915 ADT TreeTable2 V def
+R6901:6913 SearchTree <> lookup_relate prfax
+R6917:6923 ADT TreeTable2 default def
+R6915:6915 ADT TreeTable2 V def
+R6958:6968 Maps <> t_update_eq prfax
+R6958:6968 Maps <> t_update_eq prfax
+prf 7165:7167 TreeTable2 gso
+R7191:7194 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R7212:7214 Coq.Init.Logic <> :type_scope:x_'='_x not
+R7195:7197 ADT TreeTable2 get def
+R7202:7204 ADT TreeTable2 set def
+R7210:7210 ADT <> t var
+R7208:7208 ADT <> v var
+R7206:7206 ADT <> k var
+R7199:7199 ADT <> j var
+R7215:7217 ADT TreeTable2 get def
+R7221:7221 ADT <> t var
+R7219:7219 ADT <> j var
+R7188:7189 Coq.Init.Logic <> :type_scope:x_'<>'_x not
+R7187:7187 ADT <> j var
+R7190:7190 ADT <> k var
+R7279:7288 ADT TreeTable2 <> mod
+sec 7478:7488 <> ADT_SUMMARY
+var 7500:7500 ADT_SUMMARY V
+var 7518:7524 ADT_SUMMARY default
+R7527:7527 ADT <> ADT_SUMMARY.V var
+R7791:7811 SearchTree <> empty_tree_SearchTree prfax
+R7813:7813 ADT <> ADT_SUMMARY.V var
+R7861:7877 SearchTree <> insert_SearchTree prfax
+R7879:7879 ADT <> ADT_SUMMARY.V var
+R9042:9044 SearchTree <> Abs ind
+R9048:9054 ADT <> ADT_SUMMARY.default var
+R9046:9046 ADT <> ADT_SUMMARY.V var
+R9326:9342 SearchTree <> empty_tree_relate thm
+R9346:9352 ADT <> ADT_SUMMARY.default var
+R9344:9344 ADT <> ADT_SUMMARY.V var
+R9426:9439 SearchTree <> lookup_relate' thm
+R9443:9449 ADT <> ADT_SUMMARY.default var
+R9441:9441 ADT <> ADT_SUMMARY.V var
+R9579:9592 SearchTree <> insert_relate' thm
+R9596:9602 ADT <> ADT_SUMMARY.default var
+R9594:9594 ADT <> ADT_SUMMARY.V var
+R9911:9924 ADT <> gso prfax
+R10114:10124 ADT ADT_SUMMARY <> sec
+R10300:10303 Coq.Lists.List <> <> lib
+def 10377:10385 <> fibonacci
+R10391:10393 Coq.Init.Datatypes <> nat ind
+R10407:10407 ADT <> n var
+R10428:10428 Coq.Init.Datatypes <> S constr
+R10457:10457 Coq.Init.Datatypes <> S constr
+R10475:10477 Coq.Init.Peano <> :nat_scope:x_'+'_x not
+R10464:10472 ADT <> fibonacci def
+R10478:10486 ADT <> fibonacci def
+R10517:10519 Coq.Lists.List <> map def
+R10531:10531 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10533:10533 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10535:10535 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10537:10537 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10539:10539 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10541:10541 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10543:10543 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10545:10545 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10521:10529 ADT <> fibonacci def
+def 10634:10639 <> repeat
+R10650:10651 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R10652:10652 ADT <> A var
+R10649:10649 ADT <> A var
+R10659:10659 ADT <> A var
+R10674:10674 ADT <> n var
+R10681:10681 Coq.Init.Datatypes <> O constr
+R10686:10686 ADT <> x var
+R10690:10690 Coq.Init.Datatypes <> S constr
+R10698:10698 ADT <> f var
+R10701:10706 ADT <> repeat def
+R10710:10710 ADT <> x var
+R10708:10708 ADT <> f var
+def 10733:10736 <> step
+R10743:10746 Coq.Init.Datatypes <> list ind
+R10748:10750 Coq.Init.Datatypes <> nat ind
+R10755:10758 Coq.Init.Datatypes <> list ind
+R10760:10762 Coq.Init.Datatypes <> nat ind
+R10768:10776 Coq.Lists.List <> cons syndef
+R10804:10805 ADT <> al var
+R10789:10791 Coq.Init.Peano <> :nat_scope:x_'+'_x not
+R10779:10781 Coq.Lists.List <> nth def
+R10785:10786 ADT <> al var
+R10792:10794 Coq.Lists.List <> nth def
+R10798:10799 ADT <> al var
+R10825:10827 Coq.Lists.List <> map def
+R10851:10851 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10853:10853 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10855:10855 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10857:10857 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10859:10859 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10861:10861 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10863:10863 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10830:10835 ADT <> repeat def
+R10842:10842 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10844:10844 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10846:10846 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10848:10848 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10837:10840 ADT <> step def
+def 10878:10880 <> fib
+R10887:10889 Coq.Lists.List <> nth def
+R10894:10899 ADT <> repeat def
+R10914:10914 ADT <> n var
+R10906:10906 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10908:10908 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10910:10910 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10912:10912 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10901:10904 ADT <> step def
+R10937:10939 Coq.Lists.List <> map def
+R10945:10945 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10947:10947 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10949:10949 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10951:10951 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10953:10953 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10955:10955 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10957:10957 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10959:10959 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R10941:10943 ADT <> fib def
+modtype 11015:11021 <> LISTISH
+ax 11035:11038 LISTISH list
+ax 11058:11063 LISTISH create
+R11070:11073 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R11077:11080 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R11084:11087 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R11088:11091 ADT LISTISH list defax
+R11081:11083 Coq.Init.Datatypes <> nat ind
+R11074:11076 Coq.Init.Datatypes <> nat ind
+R11067:11069 Coq.Init.Datatypes <> nat ind
+ax 11105:11108 LISTISH cons
+R11114:11117 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R11122:11125 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R11126:11129 ADT LISTISH list defax
+R11118:11121 ADT LISTISH list defax
+R11111:11113 Coq.Init.Datatypes <> nat ind
+ax 11143:11145 LISTISH nth
+R11151:11154 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R11159:11162 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R11163:11165 Coq.Init.Datatypes <> nat ind
+R11155:11158 ADT LISTISH list defax
+R11148:11150 Coq.Init.Datatypes <> nat ind
+R11172:11178 ADT LISTISH <> modtype
+R11194:11200 ADT LISTISH <> mod
+mod 11189:11189 <> L
+def 11215:11218 L list
+R11231:11231 Coq.Init.Datatypes <> :type_scope:x_'*'_x not
+R11227:11227 Coq.Init.Datatypes <> :type_scope:x_'*'_x not
+R11224:11226 Coq.Init.Datatypes <> nat ind
+R11228:11230 Coq.Init.Datatypes <> nat ind
+R11232:11234 Coq.Init.Datatypes <> nat ind
+def 11255:11260 L create
+R11270:11272 Coq.Init.Datatypes <> nat ind
+R11277:11280 ADT L list def
+R11285:11285 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11287:11287 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11289:11289 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11291:11291 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11286:11286 ADT <> a var
+R11288:11288 ADT <> b var
+R11290:11290 ADT <> c var
+def 11306:11309 L cons
+R11315:11317 Coq.Init.Datatypes <> nat ind
+R11326:11329 ADT L list def
+R11341:11342 ADT <> il var
+R11349:11349 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11351:11351 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11353:11353 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11355:11355 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11360:11360 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11362:11362 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11364:11364 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11366:11366 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11361:11361 ADT <> i var
+def 11385:11387 L nth
+R11393:11395 Coq.Init.Datatypes <> nat ind
+R11403:11406 ADT L list def
+R11422:11423 ADT <> al var
+R11430:11430 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11432:11432 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11434:11434 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11436:11436 Coq.Init.Datatypes <> :core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11453:11453 ADT <> n var
+R11510:11510 ADT L <> mod
+def 11525:11531 <> sixlist
+R11536:11541 ADT <> cons def
+R11546:11551 ADT <> cons def
+R11556:11561 ADT <> cons def
+R11566:11573 ADT <> create def
+R11602:11604 Coq.Lists.List <> map def
+R11633:11633 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11635:11635 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11637:11637 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11639:11639 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11641:11641 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11643:11643 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11645:11645 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11647:11647 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11649:11649 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11616:11620 ADT <> nth def
+R11624:11630 ADT <> sixlist def
+R11622:11622 ADT <> i var
+def 11800:11806 <> stepish
+R11813:11818 ADT <> list def
+R11823:11828 ADT <> list def
+R11834:11839 ADT <> cons def
+R11867:11868 ADT <> al var
+R11852:11854 Coq.Init.Peano <> :nat_scope:x_'+'_x not
+R11842:11846 ADT <> nth def
+R11850:11851 ADT <> al var
+R11855:11859 ADT <> nth def
+R11863:11864 ADT <> al var
+R11888:11890 Coq.Lists.List <> map def
+R11926:11926 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11928:11928 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11930:11930 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11932:11932 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11934:11934 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11936:11936 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11938:11938 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11893:11898 ADT <> repeat def
+R11909:11916 ADT <> create def
+R11900:11906 ADT <> stepish def
+def 11953:11958 <> fibish
+R11965:11969 ADT <> nth def
+R11974:11979 ADT <> repeat def
+R12007:12007 ADT <> n var
+R11991:11998 ADT <> create def
+R11981:11987 ADT <> stepish def
+R12028:12030 Coq.Lists.List <> map def
+R12039:12039 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12041:12041 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12043:12043 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12045:12045 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12047:12047 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12049:12049 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12051:12051 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12053:12053 Coq.Lists.List ListNotations :list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12032:12037 ADT <> fibish def
+prf 12127:12136 <> nth_firstn
+R12161:12164 Coq.Init.Datatypes <> list ind
+R12166:12166 ADT <> A var
+R12173:12176 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R12198:12200 Coq.Init.Logic <> :type_scope:x_'='_x not
+R12177:12179 Coq.Lists.List <> nth def
+R12197:12197 ADT <> d var
+R12184:12189 Coq.Lists.List <> firstn def
+R12193:12194 ADT <> al var
+R12191:12191 ADT <> j var
+R12181:12181 ADT <> i var
+R12201:12203 Coq.Lists.List <> nth def
+R12210:12210 ADT <> d var
+R12207:12208 ADT <> al var
+R12205:12205 ADT <> i var
+R12171:12171 Coq.Init.Peano <> :nat_scope:x_'<'_x not
+R12170:12170 ADT <> i var
+R12172:12172 ADT <> j var
+ind 12485:12489 <> L_Abs
+R12498:12501 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R12515:12518 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R12502:12510 Coq.Lists.List <> list syndef
+R12512:12514 Coq.Init.Datatypes <> nat ind
+R12492:12497 ADT <> list def
+def 12562:12566 <> O_Abs
+R12578:12582 ADT <> L_Abs ind
+R12587:12589 ADT <> al' var
+R12584:12585 ADT <> al var
+prf 12688:12700 <> create_relate
+R12704:12707 Coq.Init.Logic <> True ind
+prf 12784:12794 <> cons_relate
+R12798:12801 Coq.Init.Logic <> True ind
+prf 12878:12887 <> nth_relate
+R12891:12894 Coq.Init.Logic <> True ind
+R13212:13217 ADT <> list def
+R13227:13234 ADT <> create def
+R13244:13249 ADT <> cons def
+R13259:13263 ADT <> nth def
+R13273:13277 ADT <> O_Abs def
+prf 13287:13297 <> step_relate
+R13332:13339 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R13340:13344 ADT <> O_Abs def
+R13360:13363 ADT <> step def
+R13365:13367 ADT <> al' var
+R13347:13353 ADT <> stepish def
+R13355:13356 ADT <> al var
+R13320:13324 ADT <> O_Abs def
+R13329:13331 ADT <> al' var
+R13326:13327 ADT <> al var
+prf 13414:13431 <> repeat_step_relate
+R13466:13470 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R13471:13475 ADT <> O_Abs def
+R13500:13505 ADT <> repeat def
+R13516:13516 ADT <> n var
+R13512:13514 ADT <> al' var
+R13507:13510 ADT <> step def
+R13478:13483 ADT <> repeat def
+R13496:13496 ADT <> n var
+R13493:13494 ADT <> al var
+R13485:13491 ADT <> stepish def
+R13454:13458 ADT <> O_Abs def
+R13463:13465 ADT <> al' var
+R13460:13461 ADT <> al var
+prf 13563:13576 <> fibish_correct
+R13597:13599 Coq.Init.Logic <> :type_scope:x_'='_x not
+R13589:13594 ADT <> fibish def
+R13596:13596 ADT <> n var
+R13600:13602 ADT <> fib def
+R13604:13604 ADT <> n var

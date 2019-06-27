@@ -1,0 +1,246 @@
+\documentclass[a1,portrait]{a0poster}
+\usepackage[latin1]{inputenc}
+\usepackage[absolute]{textpos} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{verbatim}
+\definecolor{DarkBlue}{rgb}{0.1,0.1,0.5}
+\definecolor{Red}{rgb}{0.9,0.0,0.1}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,fit,arrows}
+\definecolor{myblue}{RGB}{56,94,141}
+
+\let\Textsize\normalsize
+\def\Head#1{\noindent\hbox to \hsize{\hfil{\LARGE\color{DarkBlue} #1}}\bigskip}
+\def\LHead#1{\noindent{\LARGE\color{DarkBlue} #1}\smallskip}
+\def\Subhead#1{\noindent{\large\color{DarkBlue} #1}}
+\newcommand{\quiteHuge}{\fontsize{70.3}{93}\selectfont}
+\def\Title#1{\begin{center}\noindent{\quiteHuge\color{DarkGreen}#1}\end{center}}
+\definecolor{DarkGreen}{rgb}{0.10,0.50,0.10}
+
+\def\refname{}
+
+\TPGrid[40mm,40mm]{23}{12}
+
+\parindent=0pt
+\parskip=0.5\baselineskip
+
+\newcommand{\ddd}{\,\mathrm{d}}
+
+\hyphenation{re-es-cri-ta}
+
+\begin{document}
+
+\begin{textblock}{23}(0,0)
+  {\bf {\textsc {\textsc Ciências Exatas e da Terra - Ciência da Computação - Teoria da Computação}}}
+\end{textblock}
+
+\begin{textblock}{23}(0,0.20)
+\Title{ \LARGE \sf \bf {\textsc {\textsc Formalização do Teorema de Normalização Forte Modular}}}
+\end{textblock}
+\vspace{0.1cm}
+
+
+\begin{textblock}{23}(0,0.53)
+	\begin{center}
+  \color{DarkBlue}{\bf {\textsc {\textsc{Trabalho de Iniciação Científica}}}}
+  \end{center}
+\end{textblock}
+
+
+\begin{textblock}{23}(0,0.8)
+\begin{center}
+\parbox{0.3\textwidth}{
+    \small
+    \begin{center}
+    {\bf Orientador}: Prof. Dr. Flávio L. C. de Moura \\
+    Departamento de Ciência da Computação\\
+    Universidade de Brasília - UnB\\
+    e-mail: {\tt contato@flaviomoura.mat.br}
+    \end{center}
+}
+\parbox{0.3\textwidth}{
+    \small
+    \begin{center}
+    {\bf Aluno}: Raphael Soares Ramos\\
+     Departamento de Ciência da Computação\\
+    Universidade de Brasília - UnB\\
+    e-mail: {\tt raphael.soares.1996@gmail.com}
+    \end{center}
+}\end{center}
+\end{textblock}
+
+\begin{textblock}{11}(0,1.7)
+  \LHead{Introdução}
+  
+Modularidade é uma propriedade desejável de sistemas de reescrita porque permite que um sistema combinado herde as propriedades dos seus componentes. Terminação não é modular, mesmo assim sobre certas restrições modularidade pode ser recuperada. Nesse trabalho, é apresentado uma formalização do Teorema de Normalização Forte Modular no assistente de provas Coq. A prova segue as ideias da tese de PhD do Lengrand \cite{Lengrand}, mas acredita-se que essa é a primeira formalização deste teorema.
+
+As contribuições deste trabalho podem ser resumidas em:
+\begin{itemize}
+\item Foi construída uma prova construtiva do Teorema de Normalização Forte Modular, e
+\item foi provado a equivalência entre a definição do Lengrand de normalização forte e a definição indutiva padrão de normalização forte. 
+\end{itemize} 	
+ 
+\vspace{0.12cm}
+ \LHead{O Teorema de Normalização Forte Modular}
+
+  Uma relação de um conjunto $A$ para si mesmo é uma relação de redução sobre um conjunto, i.e. uma relação de redução sobre $A$ é um subconjunto de $A \times A$. Uma relação de um conjunto para si mesmo é um {\itshape relação de redução sobre um conjunto}, i.e. uma relação de redução sobre A é um subconjunto $A \times A$. Se $\rightarrow_A$ é uma relação de redução sobre A, então uma {\itshape sequência de redução} é uma sequência da forma $a_0 \rightarrow_A a_1 \rightarrow_A a_2
+    \rightarrow_A \ldots$. Uma sequência de redução $a_0 \rightarrow_A a_1 \rightarrow_A a_2
+    \rightarrow_A \ldots \rightarrow_A a_n \, (n\geq 0)$ é umm $n$-passos redução de $a_0$. Uma sequência de redução é finita se ela é uma redução em $n$-passos para algum $n \in \mathbb{N}$, e infinita caso contrário. Nós escrevemos $\rightarrow_A^+$ (resp. $\rightarrow_A^*$) para o fecho transitivo (resp. reflexivo e transitivo) de $\rightarrow_A$.
+    Um elemento $a \in A$ é fortemente normalizado w.r.t. $\rightarrow_A$ se toda sequência de redução começando de $a$ é finita, e neste caso nós escrevemos $a \in {SN}^{\rightarrow_A}$. Normalmente, essa ideia é expressada indutivamente como se segue: $$a \in {SN}^{\rightarrow_A} \mbox{ sse } \forall b, (a \rightarrow_A b \mbox{ implica b } \in {SN}^{\rightarrow_A})$$ 
+Para apresentar o teorema, nós precisamos definir as noções de simulação forte e fraca. Nas seguintes definições $A$ e $B$ são conjuntos arbitrários.
+
+    Seja $\rightarrow$ uma relação de 
+     $A$ para $B$, $\rightarrow_A$ uma relação de redução sobre $A$ e $\rightarrow_B$
+     uma relação de redução sobre $B$. A relação de redução $\rightarrow_B$
+     {\it fortemente} (resp. {\it fracamente}) simula $\rightarrow_A$ através de
+     $\rightarrow$ se $(\leftarrow \# \rightarrow_A) \subseteq (\rightarrow_B^+ \#
+     \leftarrow)$ (resp. $(\leftarrow \# \rightarrow_A) \subseteq (\rightarrow_B^*
+     \# \leftarrow)$).
+
+    \begin{tikzpicture}[scale=.75] \draw[ultra thick,myblue] (0,0)
+    circle [x radius=1.5cm, y radius=4cm] (6,0) circle [x
+    radius=1.5cm, y radius=4cm];
+                     
+    \node[font=\color{myblue}\Large\bfseries] at (0,5) {A};
+    \node[font=\color{myblue}\Large\bfseries] at (6,5) {B};
+ 
+    \node (a1) at (0,2) {a}; \node (a2) at (0,0) {a'};
+ 
+    \node[circle] (b1) at (6,2) {b}; \node[circle] (b2) at (6,-2)
+    {b'}; \node[above= 0.0001cm of b2] (aux) {};
+
+    \node[left= 0.00002cm of aux] (aux2) {}; \node[right= 0.000002cm
+    of aux2, red] (aux3) {+};
+ 
+    \draw[->] (a1.east) .. controls +(up:0cm) and +(left:1cm)
+    .. node[above,sloped] {} (b1.west);
+
+    \draw[->,red] (a2.east) .. controls +(up:0cm) and +(left:1cm)
+    .. node[above,sloped] {} (b2.west);
+
+    \draw[->] (a1.south) .. controls +(up:0cm) and +(left:0cm)
+    .. node[left] {\scriptsize A} (a2.north);
+
+    \draw[->,red] (b1.south) .. controls +(up:0cm) and +(left:0cm)
+    .. node[left] {\scriptsize B} (b2.north);
+
+    \draw[ultra thick,myblue] (12,0) circle [x radius=1.5cm, y
+    radius=4cm] (18,0) circle [x radius=1.5cm, y radius=4cm];
+                     
+    \node[font=\color{myblue}\Large\bfseries] at (12,5) {A};
+
+    \node[font=\color{myblue}\Large\bfseries] at (18,5) {B};
+ 
+    \node (a1) at (12,2) {a}; \node (a2) at (12,0) {a'};
+ 
+    \node[circle] (b1) at (18,2) {b}; \node[circle] (b2) at (18,-2)
+    {b'};
+
+    \node[above= 0.0001cm of b2] (aux) {}; \node[left= 0.000002cm of
+    aux] (aux2) {}; \node[right= 0.000002cm of aux2, red] (aux3) {*};
+
+
+    \draw[->] (a1.east) .. controls +(up:0cm) and +(left:1cm)
+    .. node[above,sloped] {} (b1.west);
+
+    \draw[->,red] (a2.east) .. controls +(up:0cm) and +(left:1cm)
+    .. node[above,sloped] {} (b2.west);
+
+    \draw[->] (a1.south) .. controls +(up:0cm) and +(left:0cm)
+    .. node[left] {\scriptsize A} (a2.north);
+
+    \draw[->,red] (b1.south) .. controls +(up:0cm) and +(left:0cm)
+    .. node[left] {\scriptsize B} (b2.north); \end{tikzpicture}
+    
+ 
+ 
+ Seja $\rightarrow$ uma relação de $A$ para $B$, $\rightarrow_1$ e
+      $\rightarrow_2$ duas relações de redução em $A$, e $\rightarrow_B$ uma relação de redução em $B$. Suponha que:
+      \begin{enumerate}
+        \item $\rightarrow_B$ simula fortemente $\rightarrow_1$
+                             através de $\rightarrow$;
+        \item $\rightarrow_B$ simula fracamente $\rightarrow_2$ através de $\rightarrow$;
+        \item $A \subseteq SN^{\rightarrow_2}$.
+      \end{enumerate}
+
+      Então $\leftarrow ({SN}^{\rightarrow_B}) \subseteq {SN}^{\rightarrow_1\cup\rightarrow_2}$. Em outras palavras, $$\forall a:A, a\in \leftarrow({SN}^{\rightarrow_B}) \mbox{ implica } a \in {SN}^{\rightarrow_1 \cup \rightarrow_2}.$$
+      
+\vspace{-1.2cm}
+\end{textblock}
+\begin{textblock}{12}(12,1.7)
+\LHead{Metodologia}
+\normalfont
+
+Para verificar formalmente o teorema em questão, optou-se por utilizar o
+assistente de provas Coq \cite{coq}, que provê uma linguagem formal
+com o intuito de facilitar a escrita de definições matemáticas,
+teoremas e especificações em geral, checando sua validade via
+{\em software}. Em relação à prova do teorema de normalização forte modular e da equivalência,
+a prova foi quebrada em diversos resultados intermediários. O projeto com os códigos está disponível no link: {\tt https://github.com/flaviodemoura/MSNorm}.
+%\end{textblock}
+
+%\begin{textblock}{11}(0,11.0)
+\LHead{Resultados}
+\normalfont
+
+Lengrand usa a seguinte definição para normalização forte: \newline
+{\color{blue}
+$Definition SN \{A : Type\} \{red : Red A\} (a : A) : Prop := \newline
+\forall P,\, patriarchal\, red\, P \rightarrow P\, a$.
+}
+
+Neste trabalho foi usada a definição indutiva e foi provado a equivalência entre as duas definições: \newline
+{\color{blue}
+Definition SN' \{A : Type\} \{red : Red A\} (a : A) : Prop := \newline
+$sn\_acc: (\forall b,\, red\,a\, b\, \rightarrow SN'\, red b) \rightarrow SN'\, red\, a$.
+}
+
+O teorema seguinte {\itshape SNbySimul} é conhecido como normalização forte por simulação. O teorema afirma que se uma relação de redução sobre A, digamos {\itshape redA}, é fortemente simulada por uma relação de redução sobre B, digamos {\itshape redB}, através de R então a pré-imagem de qualquer elemento que satisfaz o predicado $(SN' redB)$ também satisfaz $(SN' redA)$. \newline
+{\color{blue}
+Theorem SNbySimul \{A B\} \{redA : Red A\} \{redB: Red B\} \{R: Rel A B\} : \newline
+$StrongSimul\, redA\, redB\, R \rightarrow \forall a,\, Imagem (inverse R) (SN' redB)\, a \newline \rightarrow 
+SN' redA\, a$.
+}
+
+O lema {\itshape SNunion}, que é um resultado também utilizado na prova do teorema principal, dá uma caracterização do predicado $SN' (redA !\_! red'A)$. 
+Uma propriedade importante usada é a chamada estabilidade. Nós dizemos que um predicado P é estável w.r.t. a relação de redução R quando, para todo $a$ e $b$ tal que $R\,a\, b$, $P\, a \mbox { implica } P\, b$. 
+%Sob a hipótese de estabilidade de $(SN'\, redA)$ w.r.t. a relação de redução $red'A$, o predicado $SN'(redA !\_! red'A)$  pode então ser decomposto na conjunção $(SN' ((refltrans redA) \# red'A)) \land (SN' redA)$.
+
+O Teorema de Normalização Forte Modular é specificado na sintaxe de Coq como abaixo: \newline
+{\color{blue}
+Theorem ModStrNorm \{A B: Type\} \{redA red'A: Red A\} \{redB: Red B\} \{R: Rel A B\} : \newline
+$(StrongSimul\, red'A\, redB\, R) \rightarrow (WeakSimul\, redA\, redB\, R) \rightarrow \newline (\forall b: A,\, SN'\, redA\, b) \rightarrow \forall a: A,\, Imagem (inverse R) (SN' redB)\, a \rightarrow \newline SN' (redA !\_! red'A)\, a$.
+}
+\normalfont
+
+%\vspace{0.55cm}
+ \LHead{Conclusão}
+ 
+  A prova formalizada é construtiva, no sentido que não depende da lógica clássica, o que é interessante do ponto de vista computacional devido ao conteúdo algorítmico correspondente das provas. Provas construtivas são normalmente mais difíceis e elaboradas do que as clássicas, mas são mais preferíveis no contexto da ciência da computação. 
+ 
+O teorema da normalização forte modular é um resultado abstrato que diz as condições para a união de duas relações de redução que preservam a normalização forte. Esse teorema é, por exemplo, aplicado em \cite{Substi} para estabelecer a propriedade PSN de um cálculo com substituições explícitas.
+ 
+%Em vez de usar a definição do Lengrand foi usada uma definição indutiva padrão de normalização forte e a prova de equivalência entre essas definições foi apresentada. Desta forma, foi atingido uma formalização mais simples da teoria construtiva de normalização.
+
+\vspace{0.1cm}
+	\LHead{Referências} 
+\vspace{-4cm}
+
+
+\begin{thebibliography}{99}
+\bibitem{Substi} KESNER, D. A Theory of Explicit Substituitions with Safe and Full Composition. Logical Methods in Computer Science 5.3:1 (2009), pp. 1-29.
+
+\bibitem{Lengrand} LENGRAND, S. Normalisation \& Equivalence in Proof Theory \& Type Theory. PhD Thesis. Université Paris 7 \& University of St Andrews, 2006.
+
+\bibitem{coq} The Coq Development Team, (2008). The Coq Proof Assistant
+  Reference Manual V8.2. INRIA. Disponível em:
+  {\tt http://coq.inria.fr/coq/distrib/current/refman/}
+\end{thebibliography}
+\color{DarkGreen}{\bf {\textsc {\textsc Instituição de Fomento: CNPq}}}
+\end{textblock}
+
+
+
+\end{document}

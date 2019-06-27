@@ -1,0 +1,387 @@
+\documentclass[a1,portrait]{a0poster}
+\usepackage[latin1]{inputenc}
+\usepackage[absolute]{textpos} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{verbatim}
+\definecolor{DarkBlue}{rgb}{0.1,0.1,0.5}
+\definecolor{Red}{rgb}{0.9,0.0,0.1}
+
+\let\Textsize\normalsize
+\def\Head#1{\noindent\hbox to \hsize{\hfil{\LARGE\color{DarkBlue} #1}}\bigskip}
+\def\LHead#1{\noindent{\LARGE\color{DarkBlue} #1}\smallskip}
+\def\Subhead#1{\noindent{\large\color{DarkBlue} #1}}
+\newcommand{\quiteHuge}{\fontsize{70.3}{93}\selectfont}
+\def\Title#1{\begin{center}\noindent{\quiteHuge\color{DarkGreen}#1}\end{center}}
+\definecolor{DarkGreen}{rgb}{0.10,0.50,0.10}
+
+\def\refname{}
+
+\TPGrid[40mm,40mm]{23}{12}
+
+\parindent=0pt
+\parskip=0.5\baselineskip
+
+\newcommand{\ddd}{\,\mathrm{d}}
+
+\hyphenation{re-es-cri-ta}
+
+\begin{document}
+
+\begin{textblock}{23}(0,0)
+  {\bf {\textsc {\textsc Ciências Exatas e da Terra - Ciência da Computação - Teoria da Computação}}}
+\end{textblock}
+
+\begin{textblock}{23}(0,0.20)
+\Title{ \LARGE \sf \bf {\textsc {\textsc Formalização do Teorema de Fermat Generalizado}}}
+\end{textblock}
+\vspace{0.1cm}
+
+
+\begin{textblock}{23}(0,0.53)
+	\begin{center}
+  \color{DarkBlue}{\bf {\textsc {\textsc{Trabalho de Iniciação Científica}}}}
+  \end{center}
+\end{textblock}
+
+% Colocar A.2.16 ?
+% Colocar trabalho de IC
+
+
+\begin{textblock}{23}(0,0.8)
+\begin{center}
+\parbox{0.3\textwidth}{
+    \small
+    \begin{center}
+    {\bf Orientador}: Prof. Dr. Flávio L. C. de Moura \\
+    Departamento de Ciência da Computação\\
+    Universidade de Brasília - UnB\\
+    e-mail: {\tt flaviomoura@unb.br}
+    \end{center}
+}
+\parbox{0.3\textwidth}{
+    \small
+    \begin{center}
+    {\bf Aluno}: Lucas de Melo Guimarães\\
+     Departamento de Ciência da Computação\\
+    Universidade de Brasília - UnB\\
+    e-mail: {\tt lucasmgcic@gmail.com}
+    \end{center}
+}\end{center}
+\end{textblock}
+
+\begin{textblock}{11}(0,1.7)
+  \LHead{Introdução}
+
+  O algoritmo AKS \cite{aks} tem como finalidade testar a primalidade
+  de um número inteiro dado. Existem diversos outros testes de
+  primalidade, desde os mais simples, como o crivo de Eratóstenes, até
+  testes proba\-bilísticos que atualmente são os mais eficientes para
+  testar primalidade. A grande vantagem do algoritmo
+  AKS é conseguir aliar o determi\-nismo à execução em tempo
+  polinomial, sendo assim o primeiro teste determinístico de
+  primalidade a funcionar em tempo polinomial.
+  
+  O foco principal deste projeto é formalizar a correção de uma
+  genera\-lização do teorema de Fermat em Coq, que será necessária na 
+  forma\-lização do algoritmo AKS, a ser concluída posteriormente.
+	
+  %	Lembrando que o Pequeno teorema de Fermat afirma que: $n
+  % \in\mathbb{P} \Rightarrow a^{n} \equiv a(mod\ n), \forall a
+  % \in\mathbb{Z},\ 0 \leq a$.
+
+  % \vspace{0.15cm} \LHead{Precursores}
+ 
+  % Crivo de Eratóstenes: Teste determinístico de primalidade mais
+  % antigo que consiste no fato de que se, para um $n$ dado, $\forall
+  % p, \ p\in\mathbb{P}, p\leq \sqrt{n}, n\not\equiv 0\ (mod \ n)$,
+  % então $n\in\mathbb{P}$.
+ 
+  % Teste de Primalidade de Fermat: Baseia-se na suposição da validade
+  % da volta do pequeno teorema de Fermat. Vale ressaltar que tal
+  % teorema afirma que: $n \in\mathbb{P} \Rightarrow a^{n} \equiv
+  % a(mod\ n), \forall a \in\mathbb{Z},\ 0 \leq a$.  Entretanto,
+  % alguns números quebram a condição suposta, sendo estes denominados
+  % números de Carmichael \cite{Coutinho}.  Portanto, se trata de um
+  % teste probabilístioc, pois tal teste não fornece a saída correta
+  % em todos os casos.
+ 
+\vspace{0.12cm}
+ \LHead{Algoritmo AKS}
+
+ Seja $\mathbb{P}$ o conjunto dos números primos. O algoritmo AKS
+ baseia-se em uma generalização do Teorema de Fermat, onde
+ para todo inteiro $n$, 
+ \begin{equation}\label{eq1}
+   n \in\mathbb{P} \Leftrightarrow (X + a)^n \equiv  X^n + a
+   \;\;\mbox{ em } \;\;\mathbb{Z}_n[X]
+ \end{equation}
+
+ O problema do teste (\ref{eq1}) é que o mesmo tem ordem $\Omega(n)$,
+ e portanto é exponencial. Para reduzir a complexidade, a solução foi
+ considerar a equação (\ref{eq1}) no anel quociente
+ $\frac{\mathbb{Z}_n[X]}{(x^r -1)}$ para um $r$ adequado. Desta forma,
+ o algoritmo AKS é o primeiro teste de primalidade determinístico e
+ polinomial. A apresentação do algoritmo a seguir é baseada em
+ \cite{Coutinho}. 
+ \begin {tabbing}
+   \= \ \ \ \= \ \ \ \= \ \ \ \= \ \ \ \\
+   \textbf{ENTRADA}: Um inteiro ímpar.\\
+   Se $n = a^{b}, a,b\in\mathbb{N}, \ \ b > 1$\\
+   \> \> Imprime \textbf{COMPOSTO e pára.} \> \\
+   $W = 2\cdot{n}\cdot{(n-1)}\cdot{(n^{2}-1)}\cdot{(n^{3}-1)}\cdots({n^{4\cdot{\lceil\log_2{n}\rceil}^{2}}} - 1)$\\
+   Seja $r$ o menor primo tal que $r \not\equiv 0\ (mod\ W)$\\
+   Para todo $q$ primo, \ \ $q<r$\\
+   \> \> Se $n \equiv 0\ (mod\ q)$ E $q=n$ \> \\
+   \> \> \> Imprime \textbf{PRIMO e pára.} \> \\
+   \> \> Se $n \equiv 0\ (mod\ q)$ E $q<n$ \> \\
+   \> \> \> Imprime \textbf{COMPOSTO e pára.} \> \\
+   \> \> Se $n \not\equiv 0\ (mod\ q)$ \> \\
+   \> \> \> Passa para o próximo $q$ \> \\
+   Fim-Para\\
+   Se $(x+a)^{n} \equiv x^{n} + a$ em $\frac{\mathbb{Z}_n[X]}{(x^r
+     -1)},
+   \forall a \in S = \{1,2,\cdots, r\}$\\
+   \> \> Imprime \textbf{PRIMO e pára.} \> \\
+   Imprime \textbf{COMPOSTO e pára.}\\
+ \end{tabbing} 
+\vspace{-1.2cm}
+\LHead{Metodologia}
+
+Para verificar formalmente a generalização em questão, optou-se por utilizar o
+assistente de provas Coq \cite{coq}, que provê uma linguagem formal
+com o intuito de facilitar a escrita de definições matemáticas,
+teoremas e especificações em geral, checando sua validade via
+{\em software}. Em relação à prova da generalização do teorema de Fermat,
+realizou-se primeiramente provas com papel e lápis para se analisar a 
+melhor estratégia de se formalizar a generalização em Coq, quebrando 
+a prova em diversos resultados intermediários.
+\end{textblock}
+
+\begin{textblock}{11}(0,11.0)
+\LHead{Resultados}
+\tt {\color{blue}
+
+Lemma binomial\_rec : forall n k, (le k n) ->\\
+(binomial n k) * Z\_of\_nat(fact k * fact(n - k)) = \\
+Z\_of\_nat (fact n).
+}
+
+\normalfont
+Este cabeçalho de Coq indica o seguinte lema:
+$\displaystyle\binom{n}{k} \cdot k! \cdot (n-k)! = n!\ , \ \ \forall n,k
+\in\mathbb{N},\ k\le n$.
+\end{textblock}
+
+\begin{textblock}{12}(12,1.7)
+%\LHead{Resultados}
+\normalfont
+A prova deste lema utiliza indução sobre $n$. O passo indutivo
+baseia-se no fato de que: $(n+1)! = (n+1)\cdot n!$. O mesmo argumento
+pode ser aplicado em $k$. No passo indutivo, analisou-se também os
+possíveis valores de $k$. A prova para os casos $k = 0$ e $k>n$ é
+trivial, e para $k\leq n$, utilizou-se diversas táticas para
+simplificação algébrica e de termos, como por exemplo, \emph{simpl}
+que busca simplificar alguns termos a partir de sua definição. Esta
+prova, sem contar com os resultados auxiliares, possui aproximadamente
+100 linhas de código.
+
+% \tt {\color{blue}
+% Lemma pos\_mult : forall (n m:nat), (lt 0 n) ->\\
+% (lt 0 m) -> lt 0 (mult m n).
+% }
+
+% \normalfont
+% Este cabeçalho Coq indica o seguinte lema: $0 < n,\ 0 < m\ \Rightarrow  (m\cdot n) < 0$. Esta prova foi concluída após uma aplicação de um resultado já existente, mult\_lt\_compat\_r, na biblioteca Zmult do Coq. 
+
+%\normalfont Uma outra prova importante consiste no seguinte lema:
+%$$\displaystyle\binom{n}{k} = \frac{n!} {k! \cdot (n-k)!} \ ,\forall
+%n,k \in\mathbb{N},\ k<n$$ que é apresentado na linguagem do Coq a seguir:
+
+%{\tt {\color{blue}
+%Lemma binomial\_def5 : forall n k, (le k n) -> binomial n k = \\
+%Z\_of\_nat(fact n)/((Z\_of\_nat(fact k)) * (Z\_of\_nat(fact (n-k)))).
+%}}
+
+%A prova deste lema baseia-se na aplicação de {\tt binomial\_rec}, que
+%depende das definições recursivas de binomial e fatorial dadas a seguir:
+
+%{\tt {\color{blue}
+%Fixpoint binomial (a: nat) : nat  -> Z := \\
+%  fun b =>\\
+%  match a, b with\\
+%  | \_, O => 1\%Z\\
+%  | O, S b' => 0\%Z\\
+%  | S a', S b' => (binomial a' (S b') + binomial a' b')\%Z\\
+%  end.\\
+%}}
+%{\tt {\color{DarkBlue}
+%Fixpoint fact (n : nat) : nat := \\
+%  match n with \\
+%  | 0\%nat => 1\%nat\\
+%  | S n0 => (S n0 * fact n0)\%nat\\
+%  end
+%}}
+Ainda sobre os resultados obtidos, foi possível verificar, a partir
+da aplicação de \textbf{binomial\_rec},  a seguinte decomposição
+de binomiais: 
+
+$\displaystyle \ \binom{n+1}{i+1} = \frac{n+1}{i+1}\cdot\binom{n}{i} \ \
+\forall n,i\in\mathbb{N}, \ i\le n$.
+
+{\tt {\color{blue}
+Lemma dec\_bin: forall (n i : nat), (le i n) -> binomial (S n)(S i)
+ = ((Z\_of\_nat(S n))/(Z\_of\_nat(S i))) * (binomial n i).
+}}
+\vspace{-1cm}
+\normalfont
+
+%{\tt {\color{blue}
+%Lemma binomial\_def5 : forall n k, (le k n) -> binomial n k = \\
+%Z\_of\_nat(fact n)/((Z\_of\_nat(fact k)) * (Z\_of\_nat(fact (n-k)))).
+%}}
+
+Outro resultado importante provado sobre binomiais, diz respeito a 
+divisibilidade e é importante para a formalização proposta. Este resultado é dado
+pelo teorema:
+
+$\displaystyle \ i \ | \ \binom{n-1}{i-1}  \ \ 
+\forall n,i\in\mathbb{Z}, \  1<i<n, $.
+
+{\tt {\color{blue}
+Lemma div\_bin: forall (i n: Z), 1 < i -> i < n ->  \\
+(i | binomial (Zabs\_nat(n-1)) (Zabs\_nat(i-1))).
+}}
+
+\normalfont
+%{\tt {\color{blue}
+%Lemma binomial\_def5 : forall n k, (le k n) -> binomial n k = \\
+%Z\_of\_nat(fact n)/((Z\_of\_nat(fact k)) * (Z\_of\_nat(fact (n-k)))).
+%}}
+
+Ainda sobre divisibilidade, outro resultado de suma importância para
+a ve\-rificação da formalização proposta foi provado.  Este resultado é dado
+pelo teorema:
+
+$\displaystyle \ i \ | \ x \ \Rightarrow \ i \ \not| \ x \ + \ k \ \ \ \ \forall k,\ i,\ x \ \in\mathbb{Z}, \ \ 0 < k < i$
+
+{\tt {\color{blue}
+Lemma prod\_inaux : forall (x i k : Z), 0 < k < i -> (i|x)\\
+-> $\sim$(i|(x+k)).
+}}
+
+\normalfont
+Um resultado relevante consiste em provar que o resultado de um
+binomial qualquer é sempre um número inteiro. Este resultado é dado
+pelo teorema:
+
+$\displaystyle\exists k\in\mathbb{Z}, \ \binom{n}{i} = k, \ \
+\forall n,i\in\mathbb{N}$.
+
+\tt {\color{blue}
+Theorem bin\_int:forall (n i:nat),(exists k, binomial n i=k).
+}
+
+\normalfont 
+\vspace{-1cm}
+A prova deste teorema baseia-se numa indução sobre $n$, na qual o
+passo indutivo está baseado na relação de Stifel que afirma:
+$\binom{n}{i} + \binom{n}{i+1} =
+\binom{n+1}{i+1}$. %$\displaystyle\binom{n}{i} + \binom{n}{i+1} =
+                   %\binom{n+1}{i+1}$.
+%Sobre as provas apresentadas, o código fonte está disponível em:\\
+%{\tt http://www.cic.unb.br/$\sim$flavio/ic/tfq.tar.gz}
+Código fonte disponível em: {\tt http://www.cic.unb.br/$\sim$flavio/ic/tfq.tar.gz}
+%\tt {\color{blue}
+%Inductive subsexp\textunderscore term : Set := \\
+%| var : variable -> subsexp\textunderscore term \\
+%| app : subsexp\textunderscore term -> subsexp\textunderscore term ->  subsexp\textunderscore term \\
+%| abs : variable -> subsexp\textunderscore term -> subsexp\textunderscore term \\
+%| clo : subsexp\textunderscore term -> subs -> subsexp\textunderscore term \\
+%with subs : Set := sub : variable -> subsexp\textunderscore term -> subs.}
+%\normalfont
+
+%O sistema de reescrita do $\lambda_{es}$ é dado pelas seguintes regras:
+%$$\begin{array}{lll}
+  %(\lambda x. t)\; u & \to_B &  t[x/u] \\
+  %x[x/u] & \to_{Var} &  u \\
+  %t[x/u] & \to_{Gc} & t, \mbox{ se } x \not\in FV(t) \\
+  %(t\; u)[x/v] & \to_{App_1} &  (t[x/v]\; u[x/v]), \mbox{ se } x \in FV(t)
+  %\mbox{ e } x \in FV(u) \\
+  %(t\; u)[x/v] & \to_{App_1} &  (t[x/v]\; u[x/v]), \mbox{ se } x \in FV(t)
+  %\mbox{ e } x \in FV(u) \\
+  %(t\; u)[x/v] & \to_{App_2} & (t\; u[x/v]), \mbox{ se } x \not\in FV(t)
+  %\mbox{ e } x \in FV(u) \\
+  %(t\; u)[x/v] & \to_{App_3} & (t[x/v]\; u), \mbox{ se } x \in FV(t)
+  %\mbox{ e } x \not\in FV(u) \\
+  %(\lambda y. t)[x/v] & \to_{Lamb} & \lambda y. t[x/v], \mbox{ se } y
+  %\not\in FV(v) \\
+  %t[x/u][y/v] & \to_{Comp_1} & t[y/v][x/u[y/v]], \mbox{ se } y\in
+  %FV(u)\cup FV(t) \\
+  %t[x/u][y/v] & \to_{Comp_2} & t[x/u[y/v]], \mbox{ se } y\in
+  %FV(u) \mbox{ e } y \not\in FV(t) \\
+%\end{array}$$
+\end{textblock}
+
+\begin{textblock}{12}(12,8.25)
+%Uma propriedade deste cálculo cuja prova foi completada diz que : {\em
+  %nenhuma variável é introduzida após a aplicação de uma regra do
+  %sistema}. Em outras palavras: sejam $t_1$ e $t_2$ termos do cálculo
+%$\lambda_{es}$, se $t_1 \rightarrow_{\lambda_{es}} t_2$, então $FV
+%(t_1) \subseteq FV (t_2)$.
+
+%\tt {\color{blue}
+%Lemma fv\textunderscore bs : forall (x:variable)(t1 t2:subsexp\textunderscore term),\\
+%(rel\textunderscore bs t1 t2) -> (is\textunderscore fv x t2) -> (is\textunderscore fv x t1).}
+\normalfont
+
+\vspace{0.55cm}
+ \LHead{Conclusão}
+ 
+ Inicialmente, o teste de primalidade de um número, pode parecer mais
+ uma curiosidade matemática e de interesse apenas teórico 
+ do que algo que possua aplicações relevantes.
+ Entretanto, com o desenvolvimento atual
+ das comunicações utilizando redes de computadores, o algoritmo AKS
+ pode representar uma importante contribuição para a segurança dos
+ dados que trafegam nas redes, uma vez que algumas das técnicas de
+ criptografia vigentes se baseiam na utilização de números primos
+ grandes. 
+ 
+ Para se verificar tal algoritmo, é necessária a formalização
+ do Teorema de Fermat generalizado proposta neste trabalho. Como
+ continuação deste trabalho, espera-se concluir a verificação
+ formal do algoritmo AKS.
+ 
+ % Portanto, os testes para saber se um número grande é ou não
+ % primo são de extrema relevância.
+
+ %Este trabalho continua em desenvolvimento, e em breve esperamos
+ %concluir a prova de correção do algoritmo AKS. A abordagem de
+ %verificação formal utilizada permitiu compreender melhor o algoritmo,
+ %o que pode viabilizar uma melhora em sua eficiência, o que seria
+ %bastante relevante, apesar de ser certamente um trabalho muito árduo.
+
+\vspace{0.1cm}
+\LHead{Referências} 
+
+\vspace{-4cm}
+\begin{thebibliography}{99}
+\bibitem{aks} AGRAWAL, M., KAYAL, N., SAXENA, N. PRIMES is in
+  P. Annals of Mathematics v.160 n.2 p.781-793. 2004.
+
+\bibitem{Coutinho} COUTINHO S.C. Primalidade em Tempo Polinomial: uma
+  introdução ao Algoritmo AKS. Sociedeade Brasileira de Matemática,
+  2004.
+
+\bibitem{coq} The Coq Development Team, (2008). The Coq Proof Assistant
+  Reference Manual V8.2. INRIA. Disponível em:
+  {\tt http://coq.inria.fr/coq/distrib/current/refman/}
+\end{thebibliography}
+\color{DarkGreen}{\bf {\textsc {\textsc Instituição de Fomento: CNPq}}}
+ \end{textblock}
+
+
+
+\end{document}

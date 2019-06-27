@@ -1,0 +1,462 @@
+Require Import Arith List.
+Require Import Recdef.
+
+Notation "[ ]" := nil.
+Notation "[ x ; .. ; y ]" := (cons x .. (cons y nil) ..).
+
+Fixpoint select_min (x: nat) (l: list nat) : nat * list nat :=
+  match l with
+  | nil => (x,nil)
+  | h :: tl => if x <=? h
+               then let (m,l') := select_min x tl in (m, h::l')
+               else let (m,l') := select_min h tl in (m, x::l')
+  end.
+
+Compute (select_min 2 (1::nil)).
+Compute (select_min 2 (1::2::3::0::1::nil)).
+
+Lemma select_min_length: forall l l' x y, select_min x l = (y, l') -> length l = length l'.
+Proof.
+  induction l.
+  - intros.
+    inversion H.
+    reflexivity.
+  - intros.
+    inversion H; subst.
+    destruct (le_lt_dec x a).
+    + destruct (select_min x l) eqn: H'.
+      apply leb_correct in l0.
+      rewrite l0 in H1.
+      inversion H1; subst.
+      simpl; apply f_equal.
+      apply IHl with (x:= x) (y := y).
+      assumption.
+    + destruct (select_min a l) eqn: H'.
+      apply leb_correct_conv in l0.
+      rewrite l0 in H1.
+      inversion H1; subst.
+      simpl; apply f_equal.
+      apply IHl with (x:= a) (y := y).
+      assumption.
+Qed.
+      
+Function select (l: list nat) {measure length} : list nat :=
+  match l with
+  | [] => []
+  | h :: tl => let (m,l') := select_min h tl in (m :: (select l'))
+  end.
+Proof.
+  intros.
+  apply select_min_length in teq0.
+  rewrite <- teq0.
+  simpl.
+  apply lt_n_Sn.
+Qed.
+
+Fixpoint num_oc (n : nat) (l:list nat) : nat :=
+  match l with 
+    | [] => 0
+    | h :: tl =>
+      match eq_nat_dec n h with
+        | left _  => S (num_oc n tl)
+        | right _ => num_oc n tl 
+      end
+  end.
+
+Definition equiv l l' := forall n, num_oc n l = num_oc n l'.
+
+Inductive ordenada : list nat -> Prop :=
+  | nil_ord : ordenada nil
+  | one_ord : forall n : nat, ordenada [n]
+  | mult_ord : forall (x y : nat) (l : list nat), ordenada (y :: l) -> le x y -> ordenada (x :: (y :: l)).
+
+Theorem ex_falso_quodlibet : forall (P:Prop),
+  False -> P.
+Proof.
+  intros P contra.
+  destruct contra.  
+Qed.
+
+Lemma num_oc_comm: forall n n1 n2 l,
+    num_oc n2 (n :: n1 :: l) = num_oc n2 (n1 :: n :: l).
+Proof.
+  intros.
+  generalize dependent n1; generalize dependent n.
+  generalize dependent n2; induction l.
+  - simpl.
+    intros.
+    destruct (eq_nat_dec n2 n).
+    + destruct (Nat.eq_dec n2 n1).
+      * reflexivity.
+      * reflexivity.
+    + reflexivity.
+  -  intros.
+     simpl.
+     destruct (eq_nat_dec n2 n).
+     + destruct (eq_nat_dec n2 n1).
+       * destruct (eq_nat_dec n2 a).
+         ** reflexivity.
+         ** reflexivity.
+       * reflexivity.
+     + reflexivity.
+Qed.  
+
+Fact num_oc_fact: forall l n,
+    num_oc n (n :: l) = S (num_oc n l).
+Proof.
+  induction l.
+  - simpl.
+    intros n.
+    destruct (eq_nat_dec n n).
+    + reflexivity.
+    + unfold not in n0.
+      apply ex_falso_quodlibet.
+      apply n0; reflexivity.
+  - simpl num_oc.
+    intros n.
+    destruct (eq_nat_dec n n).
+    + reflexivity.
+    + apply ex_falso_quodlibet.
+      apply n0; reflexivity.
+Qed.
+
+(* Fact select_fact: forall (a : nat), *)
+(*     select[a] = [a]. *)
+(* Proof. *)
+(*   intros a. *)
+(*   rewrite select_equation. *)
+(*   destruct (select_min a []) eqn: eq. *)
+(*   inversion eq. *)
+(*   rewrite select_equation. *)
+(*   reflexivity. *)
+(* Qed. *)
+
+Lemma select_min_equiv: forall l l' x y, select_min x l = (y, l') -> equiv (x::l) (y::l').
+Proof.
+  induction l.
+  - intros.
+    inversion H; subst.
+    unfold equiv.
+    reflexivity.
+  - intros.
+    unfold equiv in *.
+    intros n.
+    inversion H; subst.
+    destruct (x <=? a) eqn: Heq.
+    + destruct (select_min x l) eqn: Heq'.
+      inversion H1; subst.
+      apply IHl with (x:= x) (l':= l0) (y:= y) (n:= n) in Heq'.
+      rewrite num_oc_comm with (n2:= n) (n := x) (n1 := a).
+      rewrite num_oc_comm with (n2:= n) (n := y) (n1 := a).
+      destruct (eq_nat_dec n a).
+      * rewrite <- e.
+        rewrite  num_oc_fact, num_oc_fact.
+        rewrite Heq'; reflexivity.
+      * simpl num_oc.     
+        destruct (eq_nat_dec n a).
+        ** contradiction.
+        ** simpl num_oc in Heq'.
+           assumption.
+    + destruct (select_min a l) eqn: Heq'.
+      inversion H1; subst.
+      apply IHl with (x:= a) (l':= l0) (y:= y) (n:= n) in Heq'.
+      rewrite num_oc_comm with (n2:= n) (n := y) (n1 := x).
+      destruct (eq_nat_dec n x).
+      * rewrite <- e.
+        rewrite  num_oc_fact, num_oc_fact.
+        rewrite Heq'; reflexivity.
+      * simpl num_oc.     
+        destruct (eq_nat_dec n x).
+        ** contradiction.
+        ** simpl num_oc in Heq'.
+           assumption.
+Qed.
+
+Theorem selectionSort_equiv: forall l, equiv l (select l).
+Proof.
+  intros l.
+  functional induction (select l).
+  - unfold equiv; reflexivity.
+  - unfold equiv in *.
+    apply select_min_equiv in e0.
+    simpl num_oc at 2.
+    intros n.
+    destruct (eq_nat_dec n m).
+    + unfold equiv in e0.
+      rewrite e0.
+      rewrite <- IHl0.
+      rewrite <- num_oc_fact.
+      rewrite <- e.
+      reflexivity.
+    + rewrite <- IHl0.
+      unfold equiv in e0.
+      rewrite e0.
+      simpl num_oc at 1.
+      destruct (eq_nat_dec n m).
+      * contradiction.
+      * reflexivity.
+Qed.
+
+Inductive Permutation : list nat -> list nat -> Prop :=
+| perm_nil: Permutation nil nil
+| perm_skip x l l' : Permutation l l' -> Permutation (x::l) (x::l')
+| perm_swap x y l : Permutation (y::x::l) (x::y::l)
+| perm_trans l l' l'' :
+    Permutation l l' -> Permutation l' l'' -> Permutation l l''.
+
+Lemma Forall_perm: forall (f: nat -> Prop) l l',
+    Permutation l l' ->
+    Forall f l -> Forall f l'.
+Proof.
+  intros f l l' H1 H2.
+  induction H1.
+  - assumption.
+  - inversion H2; subst.
+    apply IHPermutation in H4.
+    auto.
+  - inversion H2; subst.
+    inversion H3; subst.
+    auto.
+  - apply IHPermutation2.
+    apply IHPermutation1.
+    assumption.
+Qed.
+
+Lemma forall_permutation: forall y l l', Permutation l l' -> Forall (fun z => y <= z) l -> Forall (fun z => y <= z) l'.
+Proof.
+  intros.
+  apply Forall_perm with (f := fun z => y <= z) (l := l) (l' := l'); assumption.
+Qed.
+
+Lemma Permutation_implies_equiv: forall l l', Permutation l l' -> equiv l l'.
+Proof.
+  intros.
+  induction H.
+  - unfold equiv; reflexivity.
+  - unfold equiv in *.
+    simpl num_oc.
+    intros.
+    destruct (eq_nat_dec n x).
+    + apply f_equal; apply IHPermutation.
+    + apply IHPermutation.
+  - unfold equiv.
+    intros n.
+    apply num_oc_comm.
+  - unfold equiv in *.
+    intros n.
+    rewrite <- IHPermutation2.
+    apply IHPermutation1.
+Qed.
+
+Lemma list_length_ind: forall (A : Type) (P : list A -> Prop),
+       P nil ->
+       (forall (l : list A), (forall (l' : list A), length l' < length l -> P l') -> P l) ->
+       forall l : list A, P l.
+Proof.
+  intros A P BI PI.
+  assert (H: forall (l1 l2: list A), length l2 <= length l1 -> P l2).
+  {
+    induction l1.
+    - intros l H.
+      inversion H.
+      apply length_zero_iff_nil in H1.
+      subst. assumption.
+    - intros l2 H.
+      apply PI.
+      simpl in H.
+      intros l' H'.
+      apply IHl1.
+      assert (H'': length l' < S (length l1)).
+      {
+        apply Nat.lt_le_trans with (length l2); assumption.        
+      }
+      apply lt_n_Sm_le; assumption.      
+  }
+  intro l.
+  apply H with l.
+  auto.
+Qed.
+
+Lemma equiv_nil: forall l, equiv nil l -> l = nil.
+Proof.
+  induction l.
+  - intro H.
+    reflexivity.
+  - intro H.
+    unfold equiv in H.
+    assert (H': num_oc a nil =  num_oc a (a :: l)).
+    {
+      apply H.
+    }
+    simpl in H'.
+    destruct (Nat.eq_dec a a).
+    + inversion H'.
+    + apply False_ind.
+      apply n; reflexivity.
+Qed.
+
+Lemma equiv_implies_Permutation: forall l l', equiv l l' -> Permutation l l'.
+Proof.
+  induction l using list_length_ind.
+  - intros.
+    apply equiv_nil in H.
+    rewrite H; constructor.
+  - intros.
+    generalize dependent l'; destruct l'.
+    + intros H2.
+      unfold equiv in H2.
+      symmetry in H2.
+      apply equiv_nil in H2.
+      rewrite H2; constructor.
+    + intros.
+      
+      
+
+    (* generalize dependent l'; destruct l'. *)
+    (* + intros. *)
+    (*   simpl in *. *)
+    (*   assert (H': (if Nat.eq_dec a a then S (num_oc a l) else num_oc a l) = 0). *)
+    (*   { apply H. } *)
+    (*   destruct (eq_nat_dec a a). *)
+    (*   * inversion H'. *)
+    (*   * unfold not in n; contradiction. *)
+    (* + intros. *)
+    (*   assert(H':  num_oc n (a :: l) = num_oc n (n :: l')). *)
+    (*   { apply H. } *)
+    (*   destruct (eq_nat_dec n a). *)
+    (*   * rewrite e. *)
+        
+Admitted.
+
+Lemma Permutation_equiv: forall l l', Permutation l l' <-> equiv l l'.
+Proof.
+  split.
+  - apply Permutation_implies_equiv.
+  - apply equiv_implies_Permutation.
+Qed.
+
+Lemma forall_equiv: forall y l l',
+    Forall (fun z => y <= z) l ->
+    equiv l l' -> Forall (fun z => y <= z) l'.
+Proof.
+  intros.
+  apply Permutation_equiv in H0.
+  apply Forall_perm with (l' := l') (l := l); assumption.
+Qed.
+
+Lemma forall_leq_head: forall y h l, Forall (fun z => y <= z) (h::l) -> y <= h.
+Proof.
+  intros.
+  inversion H; subst.
+  assumption.
+Qed.
+
+Lemma select_min_leq: forall h l m l',
+    select_min h l = (m, l') -> m <= h.
+Proof.
+  intros h l; revert h; induction l.
+  - intros.
+    inversion H; subst.
+    reflexivity.
+  - intros.
+    inversion H.
+    destruct (h <=? a) eqn: H'.
+    + destruct (select_min h l) eqn: Heq.
+      apply IHl with (l' := l0).
+      inversion H1; subst.
+      assumption.
+    + destruct (select_min a l) eqn: Heq.
+      inversion H1; subst.
+      apply Nat.leb_gt in H'.
+      apply Nat.lt_le_incl in H'.
+      apply IHl in Heq.
+      apply Nat.le_trans with a; assumption.
+Qed.  
+     
+Lemma select_min_smallest: forall x l y l',
+    select_min x l = (y,l') -> Forall (fun z => y <= z) l'.
+Proof.
+  intros x l; revert x; induction l; intros; simpl in *.
+  - inversion H; subst.
+    auto.
+  - destruct (x <=? a) eqn: H'.
+    + destruct (select_min x l) eqn: Heq.
+      inversion H; subst.
+      assert(Heq':= Heq).
+      apply select_min_leq in Heq.
+      apply leb_complete in H'.
+      assert(H2: y <= a).
+      { apply Nat.le_trans with x; assumption. }
+      apply IHl in Heq'.
+      apply Forall_cons; assumption.      
+    + destruct (select_min a l) eqn: Heq.
+      inversion H; subst.
+      assert(Heq':= Heq).
+      apply select_min_leq in Heq.
+      apply Nat.leb_gt in H'.
+      apply Nat.lt_le_incl in H'.
+      assert(H2: y <= x).
+      { apply Nat.le_trans with a; assumption. }
+      apply IHl in Heq'.
+      apply Forall_cons; assumption.
+Qed.
+
+Lemma select_forall: forall l m,
+    ordenada l ->
+    Forall (fun z => m <= z) l -> ordenada (m :: l).
+Proof.
+  intros.
+  destruct l.
+  - constructor.
+  - constructor.
+    + assumption.
+    + inversion H0; assumption.
+Qed.
+
+Theorem selectionSort_sorts: forall l, ordenada (select l).
+Proof.
+  induction l using list_length_ind.
+  - rewrite select_equation.
+    constructor.
+  - rewrite select_equation.
+    generalize dependent l; destruct l.
+    + intros.
+      constructor.
+    + intros.
+      destruct (select_min n l) eqn: H'.
+      apply select_forall.
+      * apply H.
+        apply select_min_length in H'.
+        rewrite <- H'.
+        auto.
+      * apply select_min_smallest in H'.
+        apply forall_equiv with (l := l0).
+        ** assumption.
+        ** apply selectionSort_equiv.
+Qed.
+
+(** Exercício extra. *)
+Lemma select_min_min: forall h1 l1 m1 m2 h2 l2 l3,
+    select_min h1 l1 = (m1, h2::l2) ->
+    select_min h2 l2 = (m2, l3) -> m1 <= m2.
+Proof.
+  intros h1.
+  induction l1.
+  - intros.
+    inversion H; subst.
+  - intros.
+    assert(H': select_min h1 l1 = (m1, h2 :: l2)).
+    { inversion H; subst.
+      destruct (h1 <=? a) eqn: Heq.
+      - destruct (select_min h1 l1) eqn: Heq'.
+        
+  apply select_min_smallest in H.
+Abort.
+  
+Theorem selectionSort_correct: forall l, equiv l (select l) /\ ordenada (select l).
+Proof.
+  split.
+  - apply selectionSort_equiv.
+  - apply selectionSort_sorts.
+Qed.
+

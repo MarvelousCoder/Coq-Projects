@@ -1,0 +1,13 @@
+DIGEST 699d417d958a06227bf42685f8973345
+FIndPrinciplesTest
+R61:73 IndPrinciples <> <> lib
+ax 86:92 <> MISSING
+mod 109:113 <> Check
+R171:177 IndPrinciplesTest <> MISSING defax
+R171:177 IndPrinciplesTest <> MISSING defax
+R343:349 IndPrinciplesTest <> MISSING defax
+R343:349 IndPrinciplesTest <> MISSING defax
+R434:438 IndPrinciplesTest Check <> mod
+R457:469 IndPrinciples <> <> lib
+R502:513 ProofObjects <> <> lib
+R543:546 Coq.Init.Logic <> True ind

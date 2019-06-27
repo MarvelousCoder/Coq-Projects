@@ -1,0 +1,26 @@
+Section exercicios.
+Variables p q r: Prop.
+Lemma conj_imp: (p -> q -> r) <-> ((p /\ q) -> r).
+Proof.
+    split.
+    - intros.
+      apply H.
+      + apply H0.
+      + apply H0.
+    - intros.
+      apply H.
+      + split.
+        * assumption.
+        * assumption.
+Qed.
+
+Lemma disj_comm: p \/ q -> q \/ p.
+Proof.
+  intros.
+  apply
+  destruct H as [Hp | Hq].
+  (* Focus 2 irá focar no segundo objetivo *)
+  - right. assumption.
+  - left; assumption.
+Qed.
+Print disj_comm.

@@ -1,0 +1,303 @@
+DIGEST 262c1018ff9a0b66672490d2047dc467
+Fnaturais20172
+ind 575:581 <> natural
+constr 588:588 <> z
+constr 602:602 <> s
+R591:597 naturais20172 <> natural ind
+R612:615 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R616:622 naturais20172 <> natural ind
+R605:611 naturais20172 <> natural ind
+ind 827:830 <> disj
+constr 857:859 <> esq
+constr 881:883 <> dir
+R864:867 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R868:871 naturais20172 <> disj ind
+R888:891 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R892:895 naturais20172 <> disj ind
+ind 1078:1082 <> falso
+def 1104:1110 <> beq_nat
+R1119:1125 naturais20172 <> natural ind
+R1130:1133 Coq.Init.Datatypes <> bool ind
+R1146:1146 naturais20172 <> n var
+R1157:1157 naturais20172 <> z constr
+R1168:1168 naturais20172 <> m var
+R1186:1186 naturais20172 <> z constr
+R1191:1194 Coq.Init.Datatypes <> true constr
+R1207:1207 naturais20172 <> s constr
+R1215:1219 Coq.Init.Datatypes <> false constr
+R1238:1238 naturais20172 <> s constr
+R1252:1252 naturais20172 <> m var
+R1273:1273 naturais20172 <> z constr
+R1278:1282 Coq.Init.Datatypes <> false constr
+R1298:1298 naturais20172 <> s constr
+R1306:1312 naturais20172 <> beq_nat def
+prf 1352:1377 <> restricted_excluded_middle
+R1395:1395 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R1410:1414 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R1415:1418 naturais20172 <> disj ind
+R1424:1427 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R1428:1432 naturais20172 <> falso ind
+R1423:1423 naturais20172 <> P var
+R1420:1420 naturais20172 <> P var
+R1397:1401 Coq.Init.Logic <> :type_scope:x_'<->'_x not
+R1396:1396 naturais20172 <> P var
+R1403:1405 Coq.Init.Logic <> :type_scope:x_'='_x not
+R1402:1402 naturais20172 <> b var
+R1406:1409 Coq.Init.Datatypes <> true constr
+R1510:1512 Coq.Init.Logic <> not def
+prf 1593:1604 <> beq_nat_true
+R1642:1645 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R1647:1649 Coq.Init.Logic <> :type_scope:x_'='_x not
+R1646:1646 naturais20172 <> n var
+R1650:1650 naturais20172 <> m var
+R1635:1637 Coq.Init.Logic <> :type_scope:x_'='_x not
+R1624:1630 naturais20172 <> beq_nat def
+R1634:1634 naturais20172 <> m var
+R1632:1632 naturais20172 <> n var
+R1638:1641 Coq.Init.Datatypes <> true constr
+prf 1907:1918 <> beq_nat_refl
+R1933:1939 naturais20172 <> natural ind
+R1948:1950 Coq.Init.Logic <> :type_scope:x_'='_x not
+R1944:1947 Coq.Init.Datatypes <> true constr
+R1951:1957 naturais20172 <> beq_nat def
+R1961:1961 naturais20172 <> n var
+R1959:1959 naturais20172 <> n var
+prf 2122:2127 <> eq_dec
+R2143:2149 naturais20172 <> natural ind
+R2153:2156 naturais20172 <> disj ind
+R2168:2171 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R2172:2176 naturais20172 <> falso ind
+R2166:2166 Coq.Init.Logic <> :type_scope:x_'='_x not
+R2165:2165 naturais20172 <> n var
+R2167:2167 naturais20172 <> m var
+R2160:2160 Coq.Init.Logic <> :type_scope:x_'='_x not
+R2159:2159 naturais20172 <> n var
+R2161:2161 naturais20172 <> m var
+R2210:2235 naturais20172 <> restricted_excluded_middle thm
+R2246:2252 naturais20172 <> beq_nat def
+R2239:2241 Coq.Init.Logic <> :type_scope:x_'='_x not
+R2210:2235 naturais20172 <> restricted_excluded_middle thm
+R2246:2252 naturais20172 <> beq_nat def
+R2239:2241 Coq.Init.Logic <> :type_scope:x_'='_x not
+R2324:2335 naturais20172 <> beq_nat_refl thm
+R2324:2335 naturais20172 <> beq_nat_refl thm
+R2348:2359 naturais20172 <> beq_nat_true thm
+R2348:2359 naturais20172 <> beq_nat_true thm
+R2378:2383 naturais20172 <> eq_dec thm
+prf 2395:2402 <> sucessor
+R2417:2423 naturais20172 <> natural ind
+R2437:2440 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R2442:2444 Coq.Init.Logic <> :type_scope:x_'='_x not
+R2441:2441 naturais20172 <> n var
+R2445:2445 naturais20172 <> m var
+R2431:2433 Coq.Init.Logic <> :type_scope:x_'='_x not
+R2428:2428 naturais20172 <> s constr
+R2430:2430 naturais20172 <> n var
+R2434:2434 naturais20172 <> s constr
+R2436:2436 naturais20172 <> m var
+prf 2631:2641 <> eq_sn_not_n
+R2661:2664 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R2665:2669 naturais20172 <> falso ind
+R2657:2659 Coq.Init.Logic <> :type_scope:x_'='_x not
+R2654:2654 naturais20172 <> s constr
+R2656:2656 naturais20172 <> n var
+R2660:2660 naturais20172 <> n var
+R2761:2761 naturais20172 <> s constr
+R2741:2748 naturais20172 <> sucessor thm
+R2761:2761 naturais20172 <> s constr
+R2741:2748 naturais20172 <> sucessor thm
+ind 2929:2930 <> le
+constr 2966:2972 <> le_refl
+constr 2994:3000 <> le_n_sm
+R2941:2944 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R2952:2955 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R2945:2951 naturais20172 <> natural ind
+R2934:2940 naturais20172 <> natural ind
+R2985:2986 naturais20172 <> le ind
+R2990:2990 naturais20172 <> n var
+R2988:2988 naturais20172 <> n var
+R3021:3024 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3025:3026 naturais20172 <> le ind
+R3031:3031 naturais20172 <> s constr
+R3033:3033 naturais20172 <> m var
+R3028:3028 naturais20172 <> n var
+R3015:3016 naturais20172 <> le ind
+R3020:3020 naturais20172 <> m var
+R3018:3018 naturais20172 <> n var
+prf 3067:3072 <> le_n_z
+R3091:3094 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3096:3098 Coq.Init.Logic <> :type_scope:x_'='_x not
+R3095:3095 naturais20172 <> n var
+R3099:3099 naturais20172 <> z constr
+R3085:3086 naturais20172 <> le ind
+R3090:3090 naturais20172 <> z constr
+R3088:3088 naturais20172 <> n var
+prf 3261:3264 <> le_z
+R3277:3278 naturais20172 <> le ind
+R3282:3282 naturais20172 <> n var
+R3280:3280 naturais20172 <> z constr
+R3327:3333 naturais20172 <> le_refl constr
+R3327:3333 naturais20172 <> le_refl constr
+R3346:3352 naturais20172 <> le_n_sm constr
+R3346:3352 naturais20172 <> le_n_sm constr
+prf 3395:3402 <> le_trans
+R3425:3428 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3435:3438 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3439:3440 naturais20172 <> le ind
+R3444:3444 naturais20172 <> k var
+R3442:3442 naturais20172 <> n var
+R3429:3430 naturais20172 <> le ind
+R3434:3434 naturais20172 <> k var
+R3432:3432 naturais20172 <> m var
+R3419:3420 naturais20172 <> le ind
+R3424:3424 naturais20172 <> m var
+R3422:3422 naturais20172 <> n var
+R3516:3522 naturais20172 <> le_n_sm constr
+R3516:3522 naturais20172 <> le_n_sm constr
+prf 3580:3583 <> le_s
+R3612:3616 Coq.Init.Logic <> :type_scope:x_'<->'_x not
+R3598:3599 naturais20172 <> le ind
+R3608:3608 naturais20172 <> s constr
+R3610:3610 naturais20172 <> m var
+R3602:3602 naturais20172 <> s constr
+R3604:3604 naturais20172 <> n var
+R3617:3618 naturais20172 <> le ind
+R3622:3622 naturais20172 <> m var
+R3620:3620 naturais20172 <> n var
+R3680:3686 naturais20172 <> le_refl constr
+R3680:3686 naturais20172 <> le_refl constr
+R3719:3719 naturais20172 <> s constr
+R3699:3706 naturais20172 <> le_trans thm
+R3719:3719 naturais20172 <> s constr
+R3699:3706 naturais20172 <> le_trans thm
+R3735:3741 naturais20172 <> le_n_sm constr
+R3750:3756 naturais20172 <> le_refl constr
+R3735:3741 naturais20172 <> le_n_sm constr
+R3750:3756 naturais20172 <> le_refl constr
+R3816:3822 naturais20172 <> le_refl constr
+R3816:3822 naturais20172 <> le_refl constr
+R3837:3843 naturais20172 <> le_n_sm constr
+R3837:3843 naturais20172 <> le_n_sm constr
+prf 3899:3908 <> le_n_sm_eq
+R3923:3923 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3939:3943 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3944:3944 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3955:3959 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3961:3963 Coq.Init.Logic <> :type_scope:x_'='_x not
+R3960:3960 naturais20172 <> n var
+R3964:3964 naturais20172 <> s constr
+R3966:3966 naturais20172 <> m var
+R3945:3946 naturais20172 <> le ind
+R3951:3951 naturais20172 <> s constr
+R3953:3953 naturais20172 <> m var
+R3948:3948 naturais20172 <> n var
+R3930:3933 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R3934:3938 naturais20172 <> falso ind
+R3924:3925 naturais20172 <> le ind
+R3929:3929 naturais20172 <> m var
+R3927:3927 naturais20172 <> n var
+prf 4180:4197 <> ex_falso_quodlibet
+R4225:4228 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4229:4229 naturais20172 <> P var
+R4220:4224 naturais20172 <> falso ind
+prf 4314:4324 <> le_nm_falso
+R4339:4339 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4355:4360 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4367:4367 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4361:4362 naturais20172 <> le ind
+R4366:4366 naturais20172 <> n var
+R4364:4364 naturais20172 <> m var
+R4346:4349 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4350:4354 naturais20172 <> falso ind
+R4340:4341 naturais20172 <> le ind
+R4345:4345 naturais20172 <> m var
+R4343:4343 naturais20172 <> n var
+R4450:4453 naturais20172 <> le_z thm
+R4450:4453 naturais20172 <> le_z thm
+R4498:4515 naturais20172 <> ex_falso_quodlibet thm
+R4498:4515 naturais20172 <> ex_falso_quodlibet thm
+R4545:4548 naturais20172 <> le_z thm
+R4545:4548 naturais20172 <> le_z thm
+R4577:4580 naturais20172 <> le_s thm
+R4577:4580 naturais20172 <> le_s thm
+R4641:4644 naturais20172 <> le_s thm
+R4641:4644 naturais20172 <> le_s thm
+prf 4707:4717 <> le_sn_not_n
+R4740:4743 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R4744:4748 naturais20172 <> falso ind
+R4730:4731 naturais20172 <> le ind
+R4739:4739 naturais20172 <> n var
+R4734:4734 naturais20172 <> s constr
+R4736:4736 naturais20172 <> n var
+R4839:4842 naturais20172 <> le_s thm
+R4839:4842 naturais20172 <> le_s thm
+def 4873:4875 <> leb
+R4884:4890 naturais20172 <> natural ind
+R4895:4898 Coq.Init.Datatypes <> bool ind
+R4911:4911 naturais20172 <> n var
+R4922:4922 naturais20172 <> z constr
+R4927:4930 Coq.Init.Datatypes <> true constr
+R4936:4936 naturais20172 <> s constr
+R4950:4950 naturais20172 <> m var
+R4969:4969 naturais20172 <> z constr
+R4974:4978 Coq.Init.Datatypes <> false constr
+R4992:4992 naturais20172 <> s constr
+R5000:5002 naturais20172 <> leb def
+prf 5040:5047 <> leb_refl
+R5060:5066 naturais20172 <> natural ind
+R5075:5077 Coq.Init.Logic <> :type_scope:x_'='_x not
+R5071:5074 Coq.Init.Datatypes <> true constr
+R5078:5080 naturais20172 <> leb def
+R5084:5084 naturais20172 <> n var
+R5082:5082 naturais20172 <> n var
+prf 5220:5230 <> leb_correct
+R5254:5259 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R5267:5269 Coq.Init.Logic <> :type_scope:x_'='_x not
+R5260:5262 naturais20172 <> leb def
+R5266:5266 naturais20172 <> m var
+R5264:5264 naturais20172 <> n var
+R5270:5273 Coq.Init.Datatypes <> true constr
+R5248:5249 naturais20172 <> le ind
+R5253:5253 naturais20172 <> m var
+R5251:5251 naturais20172 <> n var
+R5321:5323 naturais20172 <> leb def
+R5366:5368 naturais20172 <> leb def
+R5425:5427 naturais20172 <> leb def
+R5425:5427 naturais20172 <> leb def
+R5459:5462 naturais20172 <> le_s thm
+R5459:5462 naturais20172 <> le_s thm
+prf 5497:5508 <> leb_complete
+R5540:5543 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R5544:5545 naturais20172 <> le ind
+R5549:5549 naturais20172 <> m var
+R5547:5547 naturais20172 <> n var
+R5533:5535 Coq.Init.Logic <> :type_scope:x_'='_x not
+R5526:5528 naturais20172 <> leb def
+R5532:5532 naturais20172 <> m var
+R5530:5530 naturais20172 <> n var
+R5536:5539 Coq.Init.Datatypes <> true constr
+R5596:5599 naturais20172 <> le_z thm
+R5596:5599 naturais20172 <> le_z thm
+R5687:5690 naturais20172 <> le_s thm
+R5687:5690 naturais20172 <> le_s thm
+prf 5800:5805 <> le_dec
+R5821:5827 naturais20172 <> natural ind
+R5831:5834 naturais20172 <> disj ind
+R5852:5855 Coq.Init.Logic <> :type_scope:x_'->'_x not
+R5856:5860 naturais20172 <> falso ind
+R5846:5847 naturais20172 <> le ind
+R5851:5851 naturais20172 <> m var
+R5849:5849 naturais20172 <> n var
+R5837:5838 naturais20172 <> le ind
+R5842:5842 naturais20172 <> m var
+R5840:5840 naturais20172 <> n var
+R5896:5921 naturais20172 <> restricted_excluded_middle thm
+R5933:5935 naturais20172 <> leb def
+R5924:5925 naturais20172 <> le ind
+R5896:5921 naturais20172 <> restricted_excluded_middle thm
+R5933:5935 naturais20172 <> leb def
+R5924:5925 naturais20172 <> le ind
+R5975:5985 naturais20172 <> leb_correct thm
+R5975:5985 naturais20172 <> leb_correct thm
+R6031:6042 naturais20172 <> leb_complete thm
+R6031:6042 naturais20172 <> leb_complete thm

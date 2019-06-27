@@ -1,0 +1,17 @@
+DIGEST 9289ab36346e3bb0a2f4b4bf458ae8b8
+FAutoTest
+R61:64 Auto <> <> lib
+ax 77:83 <> MISSING
+mod 100:104 <> Check
+R162:168 AutoTest <> MISSING defax
+R162:168 AutoTest <> MISSING defax
+R334:340 AutoTest <> MISSING defax
+R334:340 AutoTest <> MISSING defax
+R425:429 AutoTest Check <> mod
+R448:451 Auto <> <> lib
+R484:498 Coq.omega.Omega <> <> lib
+R529:532 Maps <> <> lib
+R563:565 Imp <> <> lib
+mod 588:597 <> TestRepeat
+R619:628 AutoTest TestRepeat <> mod
+R636:639 Coq.Init.Logic <> True ind

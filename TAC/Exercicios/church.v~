@@ -1,0 +1,212 @@
+(** Atividade sobre os numerais de Church. Adaptado de [Pierce:SF]. *)
+
+Definition admit {T: Type} : T.  Admitted.
+
+(** Tipo dos numerais. *)
+Definition num := forall X : Type, (X -> X) -> X -> X.
+
+(** Alguns numerais. *)
+Definition zero : num :=
+  fun (X : Type) (f : X -> X) (x : X) => x.
+
+Definition um : num := 
+  fun (X : Type) (f : X -> X) (x : X) => f x.
+
+Definition dois : num :=
+  fun (X : Type) (f : X -> X) (x : X) => f (f x).
+
+Definition tres : num :=
+  fun (X : Type) (f : X -> X) (x : X) => f (f (f x)).
+
+
+(** ExercÃ­cio 1: Defina a funÃ§Ã£o sucessor. *)
+Definition suc (n : num) : num := fun (X : Type) (f : X -> X) (x : X) => f (n X f x).
+
+(** ExercÃ­cio 2: Prove os seguintes fatos: *)
+Example suc_1 : suc zero = um.
+Proof. reflexivity. Qed.
+
+Example suc_2 : suc um = dois.
+Proof. reflexivity. Qed.
+  
+Example suc_3 : suc dois = tres.
+Proof. reflexivity. Qed.
+
+(** 
+De uma forma geral podemos gerar o numeral de Church Cn, dado o natural n.
+ *)
+
+Fixpoint ch (n:nat) : num :=
+  match n with
+    | O => zero
+    | S k => suc (ch k)
+  end.
+
+Compute (ch 0).
+Compute (ch 1).
+Compute (ch 2).
+Compute (ch 3).
+
+(** ExercÃ­cio 3: *)
+Theorem suc_S: forall n,  suc (ch n) = (ch (S n)).
+  induction n.
+  - simpl. reflexivity.
+  - simpl. rewrite -> IHn. reflexivity.
+Qed.
+
+(** ExercÃ­cio 4: Defina a adiÃ§Ã£o de dois numerais. *)
+Definition soma (n m : num) : num :=  fun (X : Type) (f : X -> X) (x : X) => m X f (n X f x).
+
+(** ExercÃ­cio 5: Prove os seguintes fatos: *)
+Example soma_1 : soma zero um = um.
+Proof. reflexivity. Qed.
+  
+Example soma_2 : soma dois tres = soma tres dois.
+Proof. reflexivity. Qed.
+  
+Example soma_3 :
+  soma (soma dois dois) tres = soma um (soma tres tres).
+Proof. reflexivity. Qed.
+  
+(** ExercÃ­cio 6: *)
+Theorem suc_soma: forall n m, suc(soma n m) = soma (suc n) m.
+Proof.
+  intros n m.
+  unfold soma.
+  unfold suc.
+Admitted.
+
+(** ExercÃ­cio 7: *)
+Theorem suc_soma': forall n m, suc(soma (ch n) m) = soma (ch n) (suc m).
+  induction n.
+  - simpl. reflexivity.
+  - simpl.
+    (* rewrite -> suc_S. *)
+    intros m.
+    rewrite <- suc_soma.
+    rewrite -> IHn.
+    rewrite <- suc_soma.
+    reflexivity.
+Qed.
+                                                
+ (** ExercÃ­cio 8: *)
+Theorem suc_soma_zero: forall m, suc(soma zero m) = soma zero (suc m).
+Proof.
+  reflexivity.
+Qed.
+    
+(** ExercÃ­cio 9: *)
+Theorem soma_com: forall n m, soma  (ch n) (ch m) = soma (ch m) (ch n).
+Proof.
+  induction n.
+  - reflexivity.
+  - rewrite <- suc_S.
+    intros m.
+    destruct m.
+    + simpl.
+      reflexivity.
+    + rewrite <- suc_soma.
+      rewrite <- suc_soma'.
+      rewrite <- IHn.
+      reflexivity.
+Qed.
+
+Lemma soma_suc: forall n m, soma(suc (ch n)) m = suc (soma (ch n) m).
+Proof.
+  destruct n.
+  - simpl.
+    intros m.
+    rewrite <- suc_soma.
+    reflexivity.
+  - intros m.
+    rewrite -> suc_S.
+    rewrite <- suc_S.
+    rewrite <- suc_soma.
+    rewrite <- suc_S.
+    reflexivity.
+Qed.
+
+(** ExercÃ­cio 10: *)
+Theorem soma_zero_dir: forall n, soma (ch n) zero = (ch n).
+Proof.
+  induction n.
+  - reflexivity.
+  - (* apply soma_com with (n := S n) (m := ch 0). *)
+    rewrite <- suc_S.
+    rewrite <- IHn.
+    rewrite -> suc_soma.
+    apply soma_suc.    
+Qed.
+    
+    
+(** ExercÃ­cio 11: *)
+Theorem soma_zero_esq: forall n, soma zero n = n.
+Proof.
+  reflexivity.
+Qed.
+
+(** ExercÃ­cio 12: *)
+Theorem suc_soma_um: forall n, suc (ch n) = soma um (ch n).
+Proof.
+  induction n.
+  - reflexivity.
+  - rewrite <- suc_S.
+    rewrite -> IHn.    
+    Check suc_soma.
+    apply suc_soma.
+Qed.
+
+(** ExercÃ­cio 13: *)
+Theorem soma_assoc: forall n m k, soma (soma n m) k = soma n (soma m k).
+Proof.
+  unfold soma.
+  reflexivity.
+Qed.
+
+(** ExercÃ­cio 14: Defina a multiplicaÃ§Ã£o de dois numerais. *)
+Definition mult (n m : num) : num := fun (X : Type) (f : X -> X) (x : X) => n X (m X f) x.
+
+(** ExercÃ­cio 15: Prove os seguintes fatos: *)
+Example mult_1 : mult um um = um.
+Proof. reflexivity. Qed.
+
+Example mult_2 : mult zero (soma tres tres) = zero.
+Proof. reflexivity. Qed.
+
+Example mult_3 : mult dois tres = soma tres tres.
+Proof.
+  unfold mult; unfold soma.
+  reflexivity.
+Qed.
+
+(** ExercÃ­cio 16: *)
+Theorem mult_zero_dir: forall n, mult (ch n) zero = zero.
+Proof.
+  induction n.
+  - simpl. reflexivity.
+  - simpl. unfold mult in *.
+    apply IHn.
+Qed.    
+    
+(** ExercÃ­cio 17: *)
+Theorem mult_zero_esq: forall n, mult zero n = zero.
+Proof.
+  reflexivity. 
+Qed.
+
+(** ExercÃ­cio 18: Defina a exponenciaÃ§Ã£o de dois numerais. *)
+Definition exp (n m : num) : num :=
+  fun (X : Type) (f : X -> X) (x : X) => m (X -> X) (n X) f x.
+
+(** ExercÃ­cio 19: Prove os seguintes fatos: *)
+Example exp_0 : exp um um = um.
+Proof. reflexivity. Qed.
+
+Example exp_1 : exp dois dois = soma dois dois.
+Proof. reflexivity. Qed.
+
+Example exp_2 : exp tres dois = soma (mult dois (mult dois dois)) um.
+Proof. reflexivity. Qed.
+
+Example exp_3 : exp tres zero = um.
+Proof. reflexivity. Qed.
